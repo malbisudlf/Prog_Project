@@ -1,25 +1,35 @@
 
 package pruba_package;
 
-
+import java.util.Random;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyEvent;
+import java.awt.event.KeyListener;
+
+
 
 public class AhorcadoGUI extends JFrame {
-    private String palabra = "JAVA";  // La palabra a adivinar
-    private char[] palabraAdivinada;  // Guarda el progreso del jugador
-    private int intentosRestantes = 6;  // Máximo de intentos
-    private JLabel labelPalabra;  // Muestra la palabra oculta
-    private JLabel labelIntentos;  // Muestra los intentos restantes
-    private JTextField inputLetra;  // Campo para la letra ingresada
-    private JLabel labelAhorcado;  // Lugar para el dibujo del ahorcado
-    
+    private String[] palabras = {"JAVA", "PRUEBA", "AHORCADO", "CLASE", "OBJETO"};
+    private String palabra;
+    private char[] palabraAdivinada;  
+    private int intentosRestantes = 6;  
+    private JLabel labelPalabra;  
+    private JLabel labelIntentos;  
+    private JTextField inputLetra;  
+    private DibujoAhorcado panelAhorcado;  
+
     public AhorcadoGUI() {
-        // Inicializa el JFrame
+    	// Lista de palabras para el juego
+    	
+    	Random random = new Random();
+    	palabra = palabras[random.nextInt(palabras.length)];
+
+        // Inicializa el J-Frame
         setTitle("Juego del Ahorcado");
-        setSize(400, 300);
+        setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
 
@@ -36,8 +46,8 @@ public class AhorcadoGUI extends JFrame {
         add(panelSuperior, BorderLayout.NORTH);
 
         // Panel central para el dibujo del ahorcado
-        labelAhorcado = new JLabel("Intentos restantes: " + intentosRestantes);
-        add(labelAhorcado, BorderLayout.CENTER);
+        panelAhorcado = new DibujoAhorcado();
+        add(panelAhorcado, BorderLayout.CENTER);
 
         // Panel inferior para los controles
         JPanel panelInferior = new JPanel();
@@ -54,14 +64,36 @@ public class AhorcadoGUI extends JFrame {
 
         add(panelInferior, BorderLayout.SOUTH);
 
-        // Acción del botón "Verificar"
-        botonVerificar.addActionListener(new ActionListener() {
+        ActionListener verificarAction = new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verificarLetra(inputLetra.getText().toUpperCase());
                 inputLetra.setText("");  // Limpia el campo de texto
             }
-        });
+        };
+        botonVerificar.addActionListener(verificarAction);
+        
+        KeyListener keylistener = new KeyListener() {
+
+			@Override
+			public void keyTyped(KeyEvent e) {
+			}
+
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER){
+					verificarAction.actionPerformed(null);
+				}
+			}
+
+			@Override
+			public void keyReleased(KeyEvent e) {
+				// TODO Auto-generated method stub
+				
+			}
+        	
+        };
+        inputLetra.addKeyListener(keylistener);
     }
 
     private void verificarLetra(String letra) {
@@ -87,7 +119,7 @@ public class AhorcadoGUI extends JFrame {
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
         
         // Actualiza el dibujo del ahorcado
-        actualizarAhorcado();
+        panelAhorcado.repaint();
 
         // Comprueba si ha ganado o perdido
         if (String.valueOf(palabraAdivinada).equals(palabra)) {
@@ -99,19 +131,6 @@ public class AhorcadoGUI extends JFrame {
         }
     }
 
-    private void actualizarAhorcado() {
-        String dibujo = "";
-        switch (intentosRestantes) {
-            case 5: dibujo = "Cabeza"; break;
-            case 4: dibujo = "Cuerpo"; break;
-            case 3: dibujo = "Brazo izquierdo"; break;
-            case 2: dibujo = "Brazo derecho"; break;
-            case 1: dibujo = "Pierna izquierda"; break;
-            case 0: dibujo = "Pierna derecha"; break;
-        }
-        labelAhorcado.setText(dibujo);
-    }
-
     private void reiniciarJuego() {
         // Reinicia el juego
         intentosRestantes = 6;
@@ -120,7 +139,41 @@ public class AhorcadoGUI extends JFrame {
         }
         labelPalabra.setText(String.valueOf(palabraAdivinada));
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
-        labelAhorcado.setText("");
+        panelAhorcado.repaint();
+    }
+
+    // Clase para el panel donde se dibujará el ahorcado
+    private class DibujoAhorcado extends JPanel {
+        @Override
+        protected void paintComponent(Graphics g) {
+            super.paintComponent(g);
+
+            // Dibuja la estructura del ahorcado
+            g.drawLine(50, 250, 150, 250);  // Base
+            g.drawLine(100, 250, 100, 50);  // Poste vertical
+            g.drawLine(100, 50, 200, 50);   // Poste horizontal
+            g.drawLine(200, 50, 200, 100);  // Cuerda
+
+            // Dibuja partes del cuerpo según los intentos restantes
+            if (intentosRestantes <= 5) {
+                g.drawOval(175, 100, 50, 50);  // Cabeza
+            }
+            if (intentosRestantes <= 4) {
+                g.drawLine(200, 150, 200, 200);  // Cuerpo
+            }
+            if (intentosRestantes <= 3) {
+                g.drawLine(200, 160, 170, 180);  // Brazo izquierdo
+            }
+            if (intentosRestantes <= 2) {
+                g.drawLine(200, 160, 230, 180);  // Brazo derecho
+            }
+            if (intentosRestantes <= 1) {
+                g.drawLine(200, 200, 170, 230);  // Pierna izquierda
+            }
+            if (intentosRestantes <= 0) {
+                g.drawLine(200, 200, 230, 230);  // Pierna derecha
+            }
+        }
     }
 
     public static void main(String[] args) {
