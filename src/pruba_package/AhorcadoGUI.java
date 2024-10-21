@@ -22,6 +22,7 @@ public class AhorcadoGUI extends JFrame {
 
     public AhorcadoGUI() {
     	// Lista de palabras para el juego
+    	this.setVisible(true);
     	
     	Random random = new Random();
     	palabra = palabras[random.nextInt(palabras.length)];
@@ -186,12 +187,7 @@ public class AhorcadoGUI extends JFrame {
                 g.drawLine(200, 200, 230, 230);  // Pierna derecha
             }
         }
+       }
     }
+    
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            AhorcadoGUI gui = new AhorcadoGUI();
-            gui.setVisible(true);
-        });
-    }
-}
