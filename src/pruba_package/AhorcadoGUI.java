@@ -1,4 +1,3 @@
-
 package pruba_package;
 
 import java.util.Random;
@@ -12,7 +11,7 @@ import java.awt.event.KeyListener;
 
 
 public class AhorcadoGUI extends JFrame {
-    private String[] palabras = {"JAVA", "PRUEBA", "AHORCADO", "CLASE", "OBJETO"};
+    private String[] palabras = {"J A V A", "P R U E B A", "A H O R C A D O", "C L A S E", "O B J E T O"};
     private String palabra;
     private char[] palabraAdivinada;  
     private int intentosRestantes = 6;  
@@ -36,7 +35,11 @@ public class AhorcadoGUI extends JFrame {
         // Inicializa el array de la palabra a adivinar
         palabraAdivinada = new char[palabra.length()];
         for (int i = 0; i < palabra.length(); i++) {
+        	if (i % 2 == 0) {
             palabraAdivinada[i] = '_';
+        	} else {
+        		palabraAdivinada[i] = ' ';
+        	}
         }
 
         // Panel superior para mostrar la palabra
@@ -133,9 +136,18 @@ public class AhorcadoGUI extends JFrame {
 
     private void reiniciarJuego() {
         // Reinicia el juego
+    	Random random = new Random();
+    	palabra = palabras[random.nextInt(palabras.length)];
+    	
+    	palabraAdivinada = new char[palabra.length()];
+    	
         intentosRestantes = 6;
         for (int i = 0; i < palabra.length(); i++) {
+        	if (i % 2 == 0) {
             palabraAdivinada[i] = '_';
+        	} else {
+        		palabraAdivinada[i] = ' ';
+        	}
         }
         labelPalabra.setText(String.valueOf(palabraAdivinada));
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
