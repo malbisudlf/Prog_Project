@@ -1,4 +1,4 @@
-package pruba_package;
+package GUI;
 
 import java.util.Random;
 import javax.swing.*;

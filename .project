@@ -14,4 +14,21 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
+	<linkedResources>
+		<link>
+			<name>src/Images/portadaAhorcado.png</name>
+			<type>1</type>
+			<location>C:/Users/alvaro.franco/Downloads/portadaAhorcado.png</location>
+		</link>
+		<link>
+			<name>src/Images/portadaPong.png</name>
+			<type>1</type>
+			<location>C:/Users/alvaro.franco/Downloads/portadaPong.png</location>
+		</link>
+		<link>
+			<name>src/Images/portadaSnake.png</name>
+			<type>1</type>
+			<location>C:/Users/alvaro.franco/Downloads/portadaSnake.png</location>
+		</link>
+	</linkedResources>
 </projectDescription>
