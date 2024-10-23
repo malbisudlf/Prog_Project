@@ -1,6 +1,8 @@
 package GUI;
 
 import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -16,7 +18,7 @@ public class MainMenuGUI extends JFrame{
 	public MainMenuGUI(){
 		
 		setTitle("MAIN MENU");
-		setSize(300, 400);
+		setSize(400, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 1));
@@ -26,6 +28,25 @@ public class MainMenuGUI extends JFrame{
 		JButton botonPong = new JButton("PONG");
 		JButton botonSnake = new JButton("SNAKE");
 		
+		botonAhorcado.setFocusable(false);
+		botonPong.setFocusable(false);
+		botonSnake.setFocusable(false);
+		
+		Font fontPortada = new Font("MV BOLI", Font.BOLD, 50);
+		botonAhorcado.setFont(fontPortada);
+		botonPong.setFont(fontPortada);
+		botonSnake.setFont(fontPortada);
+		
+		botonAhorcado.setBackground(Color.black);
+		botonPong.setBackground(Color.black);
+		botonSnake.setBackground(Color.black);
+		
+		botonAhorcado.setForeground(Color.green);
+		botonPong.setForeground(Color.green);
+		botonSnake.setForeground(Color.green);
+		
+		
+		/*
 		ImageIcon portadaAhorcado = new ImageIcon("src/Images/portadaAhorcado.png");
 		botonAhorcado.setIcon(portadaAhorcado);
 		
@@ -34,6 +55,7 @@ public class MainMenuGUI extends JFrame{
 		
 		ImageIcon portadaSnake = new ImageIcon("src/Images/portadaSnake.png");
 		botonSnake.setIcon(portadaSnake);
+		*/
 		
 		
 		add(botonAhorcado);
@@ -66,6 +88,8 @@ public class MainMenuGUI extends JFrame{
 				 new SnakeGUI();	
 			}
 		});
+		
+		
 		
 		setVisible(true);
 		

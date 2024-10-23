@@ -32,6 +32,8 @@ public class AhorcadoGUI extends JFrame {
         setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        
+        getContentPane().setBackground(Color.BLACK);
 
         // Inicializa el array de la palabra a adivinar
         palabraAdivinada = new char[palabra.length()];
@@ -45,7 +47,9 @@ public class AhorcadoGUI extends JFrame {
 
         // Panel superior para mostrar la palabra
         JPanel panelSuperior = new JPanel();
+        panelSuperior.setBackground(Color.BLACK);
         labelPalabra = new JLabel(String.valueOf(palabraAdivinada));
+        labelPalabra.setForeground(Color.GREEN);
         panelSuperior.add(labelPalabra);
         add(panelSuperior, BorderLayout.NORTH);
 
@@ -55,15 +59,23 @@ public class AhorcadoGUI extends JFrame {
 
         // Panel inferior para los controles
         JPanel panelInferior = new JPanel();
+        panelInferior.setBackground(Color.BLACK);
         panelInferior.setLayout(new FlowLayout());
+        labelPalabra.setBackground(Color.BLACK);
+        labelPalabra.setForeground(Color.GREEN);
 
         inputLetra = new JTextField(5);
+        inputLetra.setBackground(Color.BLACK);
+        inputLetra.setForeground(Color.GREEN);
         panelInferior.add(inputLetra);
 
         JButton botonVerificar = new JButton("Verificar");
+        botonVerificar.setBackground(Color.BLACK);
+        botonVerificar.setForeground(Color.GREEN);
         panelInferior.add(botonVerificar);
 
         labelIntentos = new JLabel("Intentos restantes: " + intentosRestantes);
+        labelIntentos.setForeground(Color.GREEN);
         panelInferior.add(labelIntentos);
 
         add(panelInferior, BorderLayout.SOUTH);
@@ -157,9 +169,14 @@ public class AhorcadoGUI extends JFrame {
 
     // Clase para el panel donde se dibujará el ahorcado
     private class DibujoAhorcado extends JPanel {
+    	
         @Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
+            
+            setBackground(Color.BLACK);
+            
+            g.setColor(Color.GREEN);
 
             // Dibuja la estructura del ahorcado
             g.drawLine(50, 250, 150, 250);  // Base
