@@ -6,4 +6,5 @@ public class SnakeGui {
 	public SnakeGui(){
 		
 	}
+	
 }
