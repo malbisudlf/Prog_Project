@@ -147,7 +147,7 @@ public class AhorcadoGUI extends JFrame {
         	if (i % 2 == 0) {
             palabraAdivinada[i] = '_';
         	} else {
-        		palabraAdivinada[i] = ' ';
+        		palabraAdivinada[i] = '  ';
         	}
         }
         labelPalabra.setText(String.valueOf(palabraAdivinada));
