@@ -1,4 +1,4 @@
-package GUI;
+package Menus;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -13,6 +13,10 @@ import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.SwingConstants;
 
+import GUI.AhorcadoGUI;
+import GUI.PongGUI;
+import GUI.SnakeGUI;
+
 public class MainMenuGUI extends JFrame{
 
 	public MainMenuGUI(){
@@ -22,7 +26,6 @@ public class MainMenuGUI extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 1));
-		
 		
 		JButton botonAhorcado = new JButton("AHORCADO");
 		JButton botonPong = new JButton("PONG");
@@ -67,7 +70,8 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new AhorcadoGUI();	
+				 new AhorcadoGUI();
+				 dispose();
 			}
 		});
 		
@@ -77,6 +81,7 @@ public class MainMenuGUI extends JFrame{
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
 				 new PongGUI();
+				 //dispose();
 			}
 		});
 		
@@ -85,13 +90,13 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new SnakeGUI();	
+				 new menuSnake();
+				 dispose();
 			}
 		});
-		
-		
-		
+			
 		setVisible(true);
 		
 	}
+	
 }
