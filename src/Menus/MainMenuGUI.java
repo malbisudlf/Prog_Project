@@ -19,6 +19,9 @@ import GUI.SnakeGUI;
 
 public class MainMenuGUI extends JFrame{
 
+	
+	private static final long serialVersionUID = 1L;
+
 	public MainMenuGUI(){
 		
 		setTitle("MAIN MENU");
@@ -49,16 +52,17 @@ public class MainMenuGUI extends JFrame{
 		botonSnake.setForeground(Color.green);
 		
 		
-		/*
-		ImageIcon portadaAhorcado = new ImageIcon("src/Images/portadaAhorcado.png");
+		
+		ImageIcon portadaAhorcado = new ImageIcon("/resources/images/portadaAhorcado.png");
 		botonAhorcado.setIcon(portadaAhorcado);
 		
-		ImageIcon portadaPong = new ImageIcon("src/Images/portadaPong.png");
+		
+		ImageIcon portadaPong = new ImageIcon("/resources/images/portadaPong.png");
 		botonPong.setIcon(portadaPong);
 		
-		ImageIcon portadaSnake = new ImageIcon("src/Images/portadaSnake.png");
+		ImageIcon portadaSnake = new ImageIcon("/resources/images/portadaSnake.png");
 		botonSnake.setIcon(portadaSnake);
-		*/
+		
 		
 		
 		add(botonAhorcado);
@@ -70,7 +74,7 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new AhorcadoGUI();
+				 new menuAhorcado();
 				 dispose();
 			}
 		});
