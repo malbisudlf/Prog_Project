@@ -74,7 +74,7 @@ public class menuAhorcado extends JFrame{
 			leaderbutton.setBackground(Color.BLACK);
 			leaderbutton.setForeground(Color.GREEN);
 			leaderbutton.setFont(fontBotones);
-			playbutton.addActionListener(new ActionListener() {
+			leaderbutton.addActionListener(new ActionListener() {
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
