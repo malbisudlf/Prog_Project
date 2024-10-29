@@ -2,7 +2,7 @@ package Menus;
 
 import javax.swing.*;
 
-import GUI.SnakeGUI;
+import GUI.*;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -109,7 +109,9 @@ public class menuSnake extends JFrame{
 		botonVolverMenu.setBackground(Color.BLACK);
 		botonVolverMenu.setForeground(Color.GREEN);
 		botonVolverMenu.setFont(fontBotones);
-		
+
+
+		/*
 		botonVolverMenu.addActionListener(new ActionListener() {
 			
 			@Override
@@ -119,6 +121,7 @@ public class menuSnake extends JFrame{
 				dispose();
 			}
 		});
+        */
 		
 		
 		
