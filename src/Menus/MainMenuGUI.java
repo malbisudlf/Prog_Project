@@ -29,6 +29,7 @@ public class MainMenuGUI extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 1));
+		setResizable(false);
 		
 		JButton botonAhorcado = new JButton("AHORCADO");
 		JButton botonPong = new JButton("PONG");

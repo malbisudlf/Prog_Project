@@ -23,7 +23,7 @@ public class SnakeGUI extends JFrame {
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
-        
+        setResizable(false);
 
         
 

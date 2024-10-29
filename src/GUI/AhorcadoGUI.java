@@ -36,6 +36,7 @@ public class AhorcadoGUI extends JFrame {
         setSize(400, 400);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
+        setResizable(false);
         
         getContentPane().setBackground(Color.BLACK);
 

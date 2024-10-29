@@ -20,6 +20,7 @@ public class menuPausaSnake extends JFrame{
 		setSize(300, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 
         setLayout(new GridLayout(3, 1, 2, 2));
 

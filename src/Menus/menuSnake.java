@@ -17,6 +17,7 @@ public class menuSnake extends JFrame{
 		setSize(600, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
+		setResizable(false);
 		
 		
 		setBackground(Color.BLACK);
