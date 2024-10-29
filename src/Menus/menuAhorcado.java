@@ -64,7 +64,7 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new AhoracadoLeaderboard();
+					AhorcadoLeaderboard();
 					
 				}
 				
@@ -78,11 +78,13 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new AhorcadoSkin();
+					AhorcadoSkin();
 					
 				}
 				
 			});
+			
+			
 		}
 		
 		private void AhorcadoLeaderboard() {
