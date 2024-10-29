@@ -53,6 +53,7 @@ public class SnakeGUI extends JFrame{
 		JPanel panelAbajo = new JPanel();
 		panelAbajo.setBackground(Color.BLACK);
 		panelAbajo.setLayout(new FlowLayout());
+		//prueba
 		
 		//VOLVER Y PAUSA (JButton) (Respectivamente, Abajo izquierda, Abajo Derecha)
 		
