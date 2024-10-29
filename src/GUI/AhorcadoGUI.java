@@ -11,7 +11,11 @@ import java.awt.event.KeyListener;
 
 
 public class AhorcadoGUI extends JFrame {
-    private String[] palabras = {"J A V A", "P R U E B A", "A H O R C A D O", "C L A S E", "O B J E T O"};
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private String[] palabras = {"J A V A", "P R U E B A", "A H O R C A D O", "C L A S E", "O B J E T O"};
     private String palabra;
     private char[] palabraAdivinada;  
     private int intentosRestantes = 6;  
@@ -170,7 +174,12 @@ public class AhorcadoGUI extends JFrame {
     // Clase para el panel donde se dibujará el ahorcado
     private class DibujoAhorcado extends JPanel {
     	
-        @Override
+        /**
+		 * 
+		 */
+		private static final long serialVersionUID = 1L;
+
+		@Override
         protected void paintComponent(Graphics g) {
             super.paintComponent(g);
             

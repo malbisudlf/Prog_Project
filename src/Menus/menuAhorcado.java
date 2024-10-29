@@ -17,6 +17,11 @@ import javax.swing.SwingConstants;
 import GUI.AhorcadoGUI;
 
 public class menuAhorcado extends JFrame{
+		/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
 		public menuAhorcado() {
 			
 			setTitle("MENU AHORCADO");
@@ -33,9 +38,11 @@ public class menuAhorcado extends JFrame{
 			
 			JLabel titulo = new JLabel("AHORCADO", SwingConstants.CENTER);
 			titulo.setFont(new Font("Arial", Font.BOLD, 50));
-			mainpanel.add(titulo, SwingConstants.NORTH);
+			mainpanel.add(titulo, BorderLayout.NORTH);
 			titulo.setBackground(Color.BLACK);
 	        titulo.setForeground(Color.GREEN);
+	        Font fontBotones = new Font("MV BOLI", Font.BOLD, 30);
+	        
 			
 			JPanel button = new JPanel();
 			button.setLayout(new GridLayout(2,2));
@@ -44,6 +51,9 @@ public class menuAhorcado extends JFrame{
 			
 			JButton playbutton = new JButton("Jugar");
 			playbutton.setFocusable(false);
+			playbutton.setBackground(Color.BLACK);
+			playbutton.setForeground(Color.GREEN);
+			playbutton.setFont(fontBotones);
 			
 			
 			playbutton.addActionListener(new ActionListener() {
@@ -52,6 +62,7 @@ public class menuAhorcado extends JFrame{
 				public void actionPerformed(ActionEvent e) {
 					// TODO Auto-generated method stub
 					new AhorcadoGUI();
+					dispose();
 				}
 				
 			}
@@ -59,7 +70,9 @@ public class menuAhorcado extends JFrame{
 			
 			JButton leaderbutton = new JButton("Leaderboard");
 			leaderbutton.setFocusable(false);
-			
+			leaderbutton.setBackground(Color.BLACK);
+			leaderbutton.setForeground(Color.GREEN);
+			leaderbutton.setFont(fontBotones);
 			playbutton.addActionListener(new ActionListener() {
 
 				@Override
@@ -73,6 +86,9 @@ public class menuAhorcado extends JFrame{
 			
 			JButton skinbutton = new JButton("Skins");
 			skinbutton.setFocusable(false);
+			skinbutton.setBackground(Color.BLACK);
+			skinbutton.setForeground(Color.GREEN);
+			skinbutton.setFont(fontBotones);
 			
 			skinbutton.addActionListener(new ActionListener() {
 
@@ -84,7 +100,30 @@ public class menuAhorcado extends JFrame{
 				
 			});
 			
+			JButton volverbutton = new JButton("VOLVER");
+			volverbutton.setFocusable(false);
+			volverbutton.setBackground(Color.BLACK);
+			volverbutton.setForeground(Color.GREEN);
+			volverbutton.setFont(fontBotones);
 			
+			volverbutton.addActionListener(new ActionListener() {
+
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					new MainMenuGUI();
+					dispose();
+					
+				}
+				
+			});
+			
+			button.add(playbutton);
+			button.add(volverbutton);
+			button.add(skinbutton);
+			button.add(leaderbutton);
+			mainpanel.add(button, BorderLayout.CENTER);
+			add(mainpanel);
+			setVisible(true);
 		}
 		
 		private void AhorcadoLeaderboard() {
