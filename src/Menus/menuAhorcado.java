@@ -49,7 +49,7 @@ public class menuAhorcado extends JFrame{
 			button.setBackground(Color.BLACK);
 			
 			
-			JButton playbutton = new JButton("Jugar");
+			JButton playbutton = new JButton("JUGAR");
 			playbutton.setFocusable(false);
 			playbutton.setBackground(Color.BLACK);
 			playbutton.setForeground(Color.GREEN);
@@ -68,7 +68,7 @@ public class menuAhorcado extends JFrame{
 			}
 			);
 			
-			JButton leaderbutton = new JButton("Leaderboard");
+			JButton leaderbutton = new JButton("LEADERBOARD");
 			leaderbutton.setFocusable(false);
 			leaderbutton.setBackground(Color.BLACK);
 			leaderbutton.setForeground(Color.GREEN);
@@ -84,7 +84,7 @@ public class menuAhorcado extends JFrame{
 			
 			});
 			
-			JButton skinbutton = new JButton("Skins");
+			JButton skinbutton = new JButton("SKINS");
 			skinbutton.setFocusable(false);
 			skinbutton.setBackground(Color.BLACK);
 			skinbutton.setForeground(Color.GREEN);
@@ -118,9 +118,9 @@ public class menuAhorcado extends JFrame{
 			});
 			
 			button.add(playbutton);
-			button.add(volverbutton);
-			button.add(skinbutton);
 			button.add(leaderbutton);
+			button.add(skinbutton);
+			button.add(volverbutton);
 			mainpanel.add(button, BorderLayout.CENTER);
 			add(mainpanel);
 			setVisible(true);

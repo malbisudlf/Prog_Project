@@ -42,7 +42,6 @@ public class menuSnake extends JFrame{
 		JButton botonJugar = new JButton("JUGAR");
 		
 		botonJugar.setFocusable(false);
-		botonJugar.setBorderPainted(false);
 		botonJugar.setBackground(Color.BLACK);
 		botonJugar.setForeground(Color.GREEN);
 		botonJugar.setFont(fontBotones);
@@ -63,7 +62,6 @@ public class menuSnake extends JFrame{
 		JButton botonLeaderboard = new JButton("LEADERBOARD");
 		
 		botonLeaderboard.setFocusable(false);
-		botonLeaderboard.setBorderPainted(false);
 		botonLeaderboard.setBackground(Color.BLACK);
 		botonLeaderboard.setForeground(Color.GREEN);
 		botonLeaderboard.setFont(fontBotones);
@@ -84,7 +82,6 @@ public class menuSnake extends JFrame{
 		JButton botonSkins = new JButton("SKINS");
 		
 		botonSkins.setFocusable(false);
-		botonSkins.setBorderPainted(false);
 		botonSkins.setBackground(Color.BLACK);
 		botonSkins.setForeground(Color.GREEN);
 		botonSkins.setFont(fontBotones);
@@ -105,13 +102,12 @@ public class menuSnake extends JFrame{
 		JButton botonVolverMenu = new JButton("VOLVER");
 		
 		botonVolverMenu.setFocusable(false);
-		botonVolverMenu.setBorderPainted(false);
 		botonVolverMenu.setBackground(Color.BLACK);
 		botonVolverMenu.setForeground(Color.GREEN);
 		botonVolverMenu.setFont(fontBotones);
 
 
-		/*
+		
 		botonVolverMenu.addActionListener(new ActionListener() {
 			
 			@Override
@@ -121,7 +117,7 @@ public class menuSnake extends JFrame{
 				dispose();
 			}
 		});
-        */
+        
 		
 		
 		
