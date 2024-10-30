@@ -22,9 +22,11 @@ public class AhorcadoGUI extends JFrame {
     private String palabra;
     private char[] palabraAdivinada;  
     private int intentosRestantes = 6;  
+    private int score = 0;
     private JLabel labelPalabra;  
     private JLabel labelIntentos; 
     private JLabel palabrasMal;
+    private JLabel labelScore;
     private JTextField inputLetra;  
     private DibujoAhorcado panelAhorcado;  
 
@@ -63,6 +65,11 @@ public class AhorcadoGUI extends JFrame {
         palabrasMal.setForeground(Color.WHITE);
         panelDerecha.add(palabrasMal);
         add(panelDerecha, BorderLayout.EAST);
+        JLabel puntuacion = new JLabel("0");
+        puntuacion.setBackground(Color.BLACK);
+        puntuacion.setForeground(Color.WHITE);
+        
+        
         
         
         JPanel panelSuperior = new JPanel();
@@ -90,11 +97,12 @@ public class AhorcadoGUI extends JFrame {
         });
         
         
-        JLabel puntuacion = new JLabel("0");
+        
         JPanel panelIzquierda = new JPanel();
         panelIzquierda.setBackground(Color.BLACK);
         panelIzquierda.add(volverbutton, BorderLayout.NORTH);
         add(panelIzquierda, BorderLayout.WEST);
+        panelIzquierda.add(puntuacion, BorderLayout.NORTH);
 
         // Panel central para el dibujo del ahorcado
         panelAhorcado = new DibujoAhorcado();
@@ -122,6 +130,10 @@ public class AhorcadoGUI extends JFrame {
         labelIntentos.setForeground(Color.WHITE);
         panelInferior.add(labelIntentos);
 
+        labelScore = new JLabel("Score: " + score);
+        labelScore.setForeground(Color.WHITE);
+        panelInferior.add(labelScore);
+        
         add(panelInferior, BorderLayout.SOUTH);
 
         ActionListener verificarAction = new ActionListener() {
@@ -167,18 +179,20 @@ public class AhorcadoGUI extends JFrame {
         for (int i = 0; i < palabra.length(); i++) {
             if (palabra.charAt(i) == letraChar) {
                 palabraAdivinada[i] = letraChar;
-                
                 acierto = true;
+                score += 10;
             } 
         }
 
         if (!acierto) {
             intentosRestantes--;
             palabrasMal.setText(palabrasMal.getText() + " " + letraChar);
+            score--;
         }
 
         labelPalabra.setText(String.valueOf(palabraAdivinada));
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
+        labelScore.setText("Score: " + score);
         
         // Actualiza el dibujo del ahorcado
         panelAhorcado.repaint();
@@ -211,6 +225,7 @@ public class AhorcadoGUI extends JFrame {
         labelPalabra.setText(String.valueOf(palabraAdivinada));
         palabrasMal.setText(null);
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
+        
         panelAhorcado.repaint();
     }
 
