@@ -33,7 +33,8 @@ public class AhorcadoGUI extends JFrame {
 
         // Inicializa el J-Frame
         setTitle("Juego del Ahorcado");
-        setSize(400, 400);
+        setSize(600, 500);
+        setLocationRelativeTo(null);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setResizable(false);
