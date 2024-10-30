@@ -169,13 +169,12 @@ public class AhorcadoGUI extends JFrame {
                 palabraAdivinada[i] = letraChar;
                 
                 acierto = true;
-            } else {
-            	palabrasMal.setText(String.valueOf(palabrasMal.getText() + letraChar));
-            }
+            } 
         }
 
         if (!acierto) {
             intentosRestantes--;
+            palabrasMal.setText(palabrasMal.getText() + " " + letraChar);
         }
 
         labelPalabra.setText(String.valueOf(palabraAdivinada));
@@ -210,6 +209,7 @@ public class AhorcadoGUI extends JFrame {
         	}
         }
         labelPalabra.setText(String.valueOf(palabraAdivinada));
+        palabrasMal.setText(null);
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
         panelAhorcado.repaint();
     }
