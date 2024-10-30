@@ -53,10 +53,7 @@ public class MainMenuGUI extends JFrame{
 		
 		botonAhorcado.setForeground(Color.green);
 		botonPong.setForeground(Color.green);
-		botonSnake.setForeground(Color.green);
-		
-		
-		
+		botonSnake.setForeground(Color.green);	
 
 		ImageIcon portadaAhorcado = new ImageIcon("resources/images/portadaHangman.png");
 		botonAhorcado.setIcon(portadaAhorcado);
