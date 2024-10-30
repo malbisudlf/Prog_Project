@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -29,7 +32,7 @@ public class MainMenuGUI extends JFrame{
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 1));
-		setResizable(false);
+		//setResizable(false);
 		
 		JButton botonAhorcado = new JButton();
 		JButton botonPong = new JButton();
@@ -55,14 +58,56 @@ public class MainMenuGUI extends JFrame{
 		
 		
 
-		ImageIcon portadaAhorcado = new ImageIcon(new ImageIcon("resources/images/portadaHangman.png").getImage().getScaledInstance(600, 155, java.awt.Image.SCALE_SMOOTH));
+		ImageIcon portadaAhorcado = new ImageIcon("resources/images/portadaHangman.png");
 		botonAhorcado.setIcon(portadaAhorcado);
 		
-		ImageIcon portadaPong = new ImageIcon(new ImageIcon("resources/images/portadaPongClasico.png").getImage().getScaledInstance(500, 100, java.awt.Image.SCALE_SMOOTH));
+		ImageIcon portadaPong = new ImageIcon("resources/images/portadaPongClasico.png");
 		botonPong.setIcon(portadaPong);
 		
-		ImageIcon portadaSnake = new ImageIcon(new ImageIcon("resources/images/portadaSnakeVerde.png").getImage().getScaledInstance(650, 150, java.awt.Image.SCALE_SMOOTH));
+		ImageIcon portadaSnake = new ImageIcon("resources/images/portadaSnakeVerde.png");
 		botonSnake.setIcon(portadaSnake);
+		
+		
+		// Agregar un ComponentListener para detectar cambios de tamaño
+        botonAhorcado.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Obtener el tamaño actual del botón
+                int anchoBoton = botonAhorcado.getWidth();
+                int altoBoton = botonAhorcado.getHeight();
+
+                // Redimensionar la imagen para ajustarse al tamaño del botón
+                Image imagenEscalada = portadaAhorcado.getImage().getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH);
+                botonAhorcado.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
+        
+        botonPong.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Obtener el tamaño actual del botón
+                int anchoBoton = botonPong.getWidth();
+                int altoBoton = botonPong.getHeight();
+
+                // Redimensionar la imagen para ajustarse al tamaño del botón
+                Image imagenEscalada = portadaPong.getImage().getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH);
+                botonPong.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
+        
+        botonSnake.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Obtener el tamaño actual del botón
+                int anchoBoton = botonSnake.getWidth();
+                int altoBoton = botonSnake.getHeight();
+
+                // Redimensionar la imagen para ajustarse al tamaño del botón
+                Image imagenEscalada = portadaSnake.getImage().getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH);
+                botonSnake.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
+
 		
 		add(botonAhorcado);
 		add(botonPong);
