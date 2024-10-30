@@ -2,6 +2,9 @@ package GUI;
 
 import java.util.Random;
 import javax.swing.*;
+
+import Menus.menuAhorcado;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -20,7 +23,8 @@ public class AhorcadoGUI extends JFrame {
     private char[] palabraAdivinada;  
     private int intentosRestantes = 6;  
     private JLabel labelPalabra;  
-    private JLabel labelIntentos;  
+    private JLabel labelIntentos; 
+    private JLabel palabrasMal;
     private JTextField inputLetra;  
     private DibujoAhorcado panelAhorcado;  
 
@@ -50,43 +54,72 @@ public class AhorcadoGUI extends JFrame {
         		palabraAdivinada[i] = ' ';
         	}
         }
-
-        // Panel superior para mostrar la palabra
         
+       
+        // Panel superior para mostrar la palabra
+        JPanel panelDerecha = new JPanel();
+        panelDerecha.setBackground(Color.BLACK);
+        palabrasMal = new JLabel();
+        palabrasMal.setForeground(Color.WHITE);
+        panelDerecha.add(palabrasMal);
+        add(panelDerecha, BorderLayout.EAST);
         
         
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(Color.BLACK);
         labelPalabra = new JLabel(String.valueOf(palabraAdivinada));
-        labelPalabra.setForeground(Color.GREEN);
+        labelPalabra.setForeground(Color.WHITE);
         panelSuperior.add(labelPalabra);
         add(panelSuperior, BorderLayout.NORTH);
-        JLabel puntuacion = new JLabel("0");
         
+        JButton volverbutton = new JButton("Volver");
+        volverbutton.setBackground(Color.BLACK);
+        volverbutton.setForeground(Color.WHITE);
+        volverbutton.setFocusable(false);
+        
+        
+        volverbutton.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new menuAhorcado();
+				dispose();
+				
+			}
+        	
+        });
+        
+        
+        JLabel puntuacion = new JLabel("0");
+        JPanel panelIzquierda = new JPanel();
+        panelIzquierda.setBackground(Color.BLACK);
+        panelIzquierda.add(volverbutton, BorderLayout.NORTH);
+        add(panelIzquierda, BorderLayout.WEST);
 
         // Panel central para el dibujo del ahorcado
         panelAhorcado = new DibujoAhorcado();
         add(panelAhorcado, BorderLayout.CENTER);
+        
 
         // Panel inferior para los controles
         JPanel panelInferior = new JPanel();
         panelInferior.setBackground(Color.BLACK);
         panelInferior.setLayout(new FlowLayout());
         labelPalabra.setBackground(Color.BLACK);
-        labelPalabra.setForeground(Color.GREEN);
+        labelPalabra.setForeground(Color.WHITE);
 
         inputLetra = new JTextField(5);
         inputLetra.setBackground(Color.BLACK);
-        inputLetra.setForeground(Color.GREEN);
+        inputLetra.setForeground(Color.WHITE);
         panelInferior.add(inputLetra);
 
         JButton botonVerificar = new JButton("Verificar");
         botonVerificar.setBackground(Color.BLACK);
-        botonVerificar.setForeground(Color.GREEN);
+        botonVerificar.setForeground(Color.WHITE);
         panelInferior.add(botonVerificar);
 
         labelIntentos = new JLabel("Intentos restantes: " + intentosRestantes);
-        labelIntentos.setForeground(Color.GREEN);
+        labelIntentos.setForeground(Color.WHITE);
         panelInferior.add(labelIntentos);
 
         add(panelInferior, BorderLayout.SOUTH);
@@ -134,7 +167,10 @@ public class AhorcadoGUI extends JFrame {
         for (int i = 0; i < palabra.length(); i++) {
             if (palabra.charAt(i) == letraChar) {
                 palabraAdivinada[i] = letraChar;
+                
                 acierto = true;
+            } else {
+            	palabrasMal.setText(String.valueOf(palabrasMal.getText() + letraChar));
             }
         }
 
@@ -192,7 +228,7 @@ public class AhorcadoGUI extends JFrame {
             
             setBackground(Color.BLACK);
             
-            g.setColor(Color.GREEN);
+            g.setColor(Color.WHITE);
 
             // Dibuja la estructura del ahorcado
             g.drawLine(50, 250, 150, 250);  // Base

@@ -37,9 +37,9 @@ public class menuPausaSnake extends JFrame{
         botonReiniciar.setBackground(Color.BLACK);
         botonVolver.setBackground(Color.BLACK);
 
-        botonReanudar.setForeground(Color.GREEN);
-        botonReiniciar.setForeground(Color.GREEN);
-        botonVolver.setForeground(Color.GREEN);
+        botonReanudar.setForeground(Color.WHITE);
+        botonReiniciar.setForeground(Color.WHITE);
+        botonVolver.setForeground(Color.WHITE);
 
         Font font = new Font("ARIAL", Font.BOLD, 25);
 

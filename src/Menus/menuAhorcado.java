@@ -41,7 +41,7 @@ public class menuAhorcado extends JFrame{
 			titulo.setFont(new Font("Arial", Font.BOLD, 50));
 			mainpanel.add(titulo, BorderLayout.NORTH);
 			titulo.setBackground(Color.BLACK);
-	        titulo.setForeground(Color.GREEN);
+	        titulo.setForeground(Color.WHITE);
 	        Font fontBotones = new Font("MV BOLI", Font.BOLD, 30);
 	        
 			
@@ -53,7 +53,7 @@ public class menuAhorcado extends JFrame{
 			JButton playbutton = new JButton("JUGAR");
 			playbutton.setFocusable(false);
 			playbutton.setBackground(Color.BLACK);
-			playbutton.setForeground(Color.GREEN);
+			playbutton.setForeground(Color.WHITE);
 			playbutton.setFont(fontBotones);
 			
 			
@@ -72,7 +72,7 @@ public class menuAhorcado extends JFrame{
 			JButton leaderbutton = new JButton("LEADERBOARD");
 			leaderbutton.setFocusable(false);
 			leaderbutton.setBackground(Color.BLACK);
-			leaderbutton.setForeground(Color.GREEN);
+			leaderbutton.setForeground(Color.WHITE);
 			leaderbutton.setFont(fontBotones);
 			leaderbutton.addActionListener(new ActionListener() {
 
@@ -88,7 +88,7 @@ public class menuAhorcado extends JFrame{
 			JButton skinbutton = new JButton("SKINS");
 			skinbutton.setFocusable(false);
 			skinbutton.setBackground(Color.BLACK);
-			skinbutton.setForeground(Color.GREEN);
+			skinbutton.setForeground(Color.WHITE);
 			skinbutton.setFont(fontBotones);
 			
 			skinbutton.addActionListener(new ActionListener() {
@@ -104,10 +104,10 @@ public class menuAhorcado extends JFrame{
 			JButton volverbutton = new JButton("VOLVER");
 			volverbutton.setFocusable(false);
 			volverbutton.setBackground(Color.BLACK);
-			volverbutton.setForeground(Color.GREEN);
+			volverbutton.setForeground(Color.WHITE);
 			volverbutton.setFont(fontBotones);
-			
 			volverbutton.addActionListener(new ActionListener() {
+				
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
