@@ -25,15 +25,15 @@ public class MainMenuGUI extends JFrame{
 	public MainMenuGUI(){
 		
 		setTitle("MAIN MENU");
-		setSize(400, 400);
+		setSize(600, 500);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 1));
 		setResizable(false);
 		
-		JButton botonAhorcado = new JButton("AHORCADO");
-		JButton botonPong = new JButton("PONG");
-		JButton botonSnake = new JButton("SNAKE");
+		JButton botonAhorcado = new JButton();
+		JButton botonPong = new JButton();
+		JButton botonSnake = new JButton();
 		
 		botonAhorcado.setFocusable(false);
 		botonPong.setFocusable(false);
@@ -54,17 +54,15 @@ public class MainMenuGUI extends JFrame{
 		
 		
 		
-		ImageIcon portadaAhorcado = new ImageIcon("resources/images/portadaAhorcado.png");
+
+		ImageIcon portadaAhorcado = new ImageIcon(new ImageIcon("resources/images/portadaHangman.png").getImage().getScaledInstance(600, 155, java.awt.Image.SCALE_SMOOTH));
 		botonAhorcado.setIcon(portadaAhorcado);
 		
-		
-		ImageIcon portadaPong = new ImageIcon("resources/images/portadaPong.png");
+		ImageIcon portadaPong = new ImageIcon(new ImageIcon("resources/images/portadaPongClasico.png").getImage().getScaledInstance(500, 100, java.awt.Image.SCALE_SMOOTH));
 		botonPong.setIcon(portadaPong);
 		
-		ImageIcon portadaSnake = new ImageIcon("resources/images/snake.png");
+		ImageIcon portadaSnake = new ImageIcon(new ImageIcon("resources/images/portadaSnakeVerde.png").getImage().getScaledInstance(650, 150, java.awt.Image.SCALE_SMOOTH));
 		botonSnake.setIcon(portadaSnake);
-		
-		
 		
 		add(botonAhorcado);
 		add(botonPong);
