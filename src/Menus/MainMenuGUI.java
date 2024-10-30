@@ -54,14 +54,14 @@ public class MainMenuGUI extends JFrame{
 		
 		
 		
-		ImageIcon portadaAhorcado = new ImageIcon("/resources/images/portadaAhorcado.png");
+		ImageIcon portadaAhorcado = new ImageIcon("resources/images/portadaAhorcado.png");
 		botonAhorcado.setIcon(portadaAhorcado);
 		
 		
-		ImageIcon portadaPong = new ImageIcon("/resources/images/portadaPong.png");
+		ImageIcon portadaPong = new ImageIcon("resources/images/portadaPong.png");
 		botonPong.setIcon(portadaPong);
 		
-		ImageIcon portadaSnake = new ImageIcon("/resources/images/portadaSnake.png");
+		ImageIcon portadaSnake = new ImageIcon("resources/images/snake.png");
 		botonSnake.setIcon(portadaSnake);
 		
 		

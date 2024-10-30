@@ -52,12 +52,17 @@ public class AhorcadoGUI extends JFrame {
         }
 
         // Panel superior para mostrar la palabra
+        
+        
+        
         JPanel panelSuperior = new JPanel();
         panelSuperior.setBackground(Color.BLACK);
         labelPalabra = new JLabel(String.valueOf(palabraAdivinada));
         labelPalabra.setForeground(Color.GREEN);
         panelSuperior.add(labelPalabra);
         add(panelSuperior, BorderLayout.NORTH);
+        JLabel puntuacion = new JLabel("0");
+        
 
         // Panel central para el dibujo del ahorcado
         panelAhorcado = new DibujoAhorcado();
