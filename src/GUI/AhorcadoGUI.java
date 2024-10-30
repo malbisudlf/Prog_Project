@@ -79,7 +79,7 @@ public class AhorcadoGUI extends JFrame {
         panelSuperior.add(labelPalabra);
         add(panelSuperior, BorderLayout.NORTH);
         
-        JButton volverbutton = new JButton("Volver");
+        JButton volverbutton = new JButton("Finalizar Partida");
         volverbutton.setBackground(Color.BLACK);
         volverbutton.setForeground(Color.WHITE);
         volverbutton.setFocusable(false);
@@ -89,10 +89,21 @@ public class AhorcadoGUI extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new menuAhorcado();
-				dispose();
-				
+				int salida = JOptionPane.showConfirmDialog(null, "Seguro que quieres acabar la partida?", "ATENCION", JOptionPane.YES_NO_OPTION );
+				if(salida == JOptionPane.YES_OPTION) {
+					String nombre = JOptionPane.showInputDialog("Si quieres guarar tu puntuación, ingresa tu nombre");
+					if (nombre != null && !nombre.trim().isEmpty()) {
+		               
+		                
+		            } else {
+		                
+		            }
+					new menuAhorcado();
+					dispose();
 			}
+				
+					
+				}
         	
         });
         
