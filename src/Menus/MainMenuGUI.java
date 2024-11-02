@@ -65,6 +65,13 @@ public class MainMenuGUI extends JFrame{
 		botonSnake.setIcon(portadaSnake);
 		
 		
+		//IAG (herramienta: ChatGPT)
+		//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea de chatgpt
+		//y la trasladamos con algun cambio para que se adapte a nuestra idea.
+		
+		
+		//Nuestra idea, que la imagen fuera del tamaño del boton, incluso cambiando el tamaño.
+		
 		// Agregar un ComponentListener para detectar cambios de tamaño
         botonAhorcado.addComponentListener(new ComponentAdapter() {
             @Override
@@ -74,11 +81,13 @@ public class MainMenuGUI extends JFrame{
                 int altoBoton = botonAhorcado.getHeight();
 
                 // Redimensionar la imagen para ajustarse al tamaño del botón
-                Image imagenEscalada = portadaAhorcado.getImage().getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH);
+                Image imagenEscalada = portadaAhorcado.getImage().getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH); //ChatGPT
                 botonAhorcado.setIcon(new ImageIcon(imagenEscalada));
             }
         });
         
+        
+        //IAG, lo mismo que antes
         botonPong.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
@@ -92,6 +101,7 @@ public class MainMenuGUI extends JFrame{
             }
         });
         
+      //IAG, lo mismo que antes
         botonSnake.addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {

@@ -1,6 +1,5 @@
 package Main;
 
-import GUI.*;
 import Menus.MainMenuGUI;
 
 public class Main {

@@ -25,16 +25,14 @@ public class SnakeGUI extends JFrame {
         setBackground(Color.BLACK);
         setResizable(false);
 
-        
-
         Font font = new Font("Arial", Font.BOLD, 20);
         
-        // Panel Superior (panelArriba) para Título y Botón "VOLVER"
+        // Panel Superior (panelArriba) para Score y Botón "PAUSA"
         JPanel panelArriba = new JPanel();
         panelArriba.setBackground(Color.BLACK);
         panelArriba.setLayout(new BorderLayout());
 
-        // Botón "PAUSA" (Derecha del panel inferior)
+        // Botón "PAUSA" (West del panel superior)
         JButton botonPausa = new JButton("PAUSA");
         botonPausa.setFont(font);
         botonPausa.setFocusable(false);
@@ -46,7 +44,7 @@ public class SnakeGUI extends JFrame {
             new menuPausaSnake();
         });
 
-        // Marcador de Puntaje (Centro del panel inferior)
+        // Marcador de Puntaje (EAST del panel Superior)
         JLabel labelScore = new JLabel("Score: 0", SwingConstants.CENTER);
         labelScore.setFont(new Font("Arial", Font.BOLD, 25));
         labelScore.setForeground(Color.GREEN);
@@ -62,14 +60,14 @@ public class SnakeGUI extends JFrame {
         areaJuego.setPreferredSize(new Dimension(400, 300));
         add(areaJuego, BorderLayout.CENTER);
         
-        // Panel Inferior (panelAbajo) para Botón "PAUSA" y marcador de puntaje
+        // Panel Inferior (panelAbajo) para Botón "VOLVER"
         JPanel panelAbajo = new JPanel();
         panelAbajo.setBackground(Color.BLACK);
         panelAbajo.setLayout(new BorderLayout());
 
         
 
-        // Botón "VOLVER" (Izquierda del panel superior)
+        // Botón "VOLVER" (WEST del panel inferior)
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setFont(font);
         botonVolver.setFocusable(false);
@@ -81,9 +79,6 @@ public class SnakeGUI extends JFrame {
             new menuSnake();
             dispose();
         });
-
-        
-        
         
         // Añadir el panel inferior al JFrame (SUR)
         add(panelAbajo, BorderLayout.SOUTH);    
