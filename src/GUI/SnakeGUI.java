@@ -12,6 +12,9 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import Menus.*;
+import Menus.snake.menuPausaSnake;
+import Menus.snake.menuSnake;
+import Menus.snake.seleccionUsuarioSnake;
 
 public class SnakeGUI extends JFrame {
 
@@ -76,7 +79,7 @@ public class SnakeGUI extends JFrame {
         panelAbajo.add(botonVolver, BorderLayout.WEST);
 
         botonVolver.addActionListener(e -> {
-            new menuSnake();
+            new seleccionUsuarioSnake();
             dispose();
         });
         

@@ -1,4 +1,4 @@
-package Menus;
+package Menus.snake;
 
 import javax.swing.*;
 

@@ -1,8 +1,9 @@
-package Menus;
+package Menus.snake;
 
 import javax.swing.*;
 
 import GUI.*;
+import Menus.MainMenuGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -10,8 +11,11 @@ import java.awt.event.ActionListener;
 
 public class menuSnake extends JFrame{
 	
-	public menuSnake() {
+	private String userName;
+	
+	public menuSnake(String userName) {
 		
+		this.userName = userName; 
 		
 		setTitle("SNAKE MENU");
 		setSize(600, 500);
@@ -26,8 +30,8 @@ public class menuSnake extends JFrame{
 		mainPanel.setLayout(new BorderLayout());
 		mainPanel.setBackground(Color.BLACK);
 		
-		JLabel titulo = new JLabel("SNAKE", SwingConstants.CENTER);
-		titulo.setFont(new Font("Arial", Font.BOLD, 50));
+		JLabel titulo = new JLabel("			SNAKE    Usuario: " + userName, SwingConstants.CENTER);
+		titulo.setFont(new Font("Arial", Font.BOLD, 30));
         mainPanel.add(titulo, BorderLayout.NORTH);
         titulo.setBackground(Color.BLACK);
         titulo.setForeground(Color.WHITE);

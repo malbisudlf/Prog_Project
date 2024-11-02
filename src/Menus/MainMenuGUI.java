@@ -19,6 +19,8 @@ import javax.swing.SwingConstants;
 import GUI.AhorcadoGUI;
 import GUI.PongGUI;
 import GUI.SnakeGUI;
+import Menus.snake.menuSnake;
+import Menus.snake.seleccionUsuarioSnake;
 
 public class MainMenuGUI extends JFrame{
 
@@ -145,7 +147,7 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new menuSnake();
+				 new seleccionUsuarioSnake();
 				 dispose();
 			}
 		});
