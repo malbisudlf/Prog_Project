@@ -60,6 +60,9 @@ public class usuarioExistenteSnake extends JFrame{
         setVisible(true);
     }
 
+    //IAG 
+    //MODIFICADO
+    //Hecho tanto con IA tanto con el filtro que hicimos en clase en su dia
     private void filtrarUserList() {
         String searchTerm = searchField.getText().trim().toLowerCase();
         listModel.clear();

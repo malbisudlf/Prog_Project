@@ -48,9 +48,9 @@ public class usuarioNuevoSnake extends JFrame {
     }
 
     private boolean isUniqueUserName(String userName) {
-        // Implementar lógica para verificar si el nombre de usuario ya existe en la base de datos
-        // Aquí, simulado como un usuario único (debería estar en tu base de datos)
-        return !userName.equalsIgnoreCase("Juan");  // Ejemplo de usuario ya existente
+        // Luego implementarlo para la base de datos
+        // De momento simulo con un ejemplo
+        return !userName.equalsIgnoreCase("Messillas");
     }
 
     private void saveNewUser(String userName) {
