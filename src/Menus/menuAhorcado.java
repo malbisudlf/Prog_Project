@@ -78,8 +78,8 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new AhorcadoLeaderboard();
-					dispose();
+					AhorcadoLeaderboard();
+					
 				}
 				
 			
@@ -130,6 +130,9 @@ public class menuAhorcado extends JFrame{
 		
 		
 		private void AhorcadoSkin() {
+			JOptionPane.showMessageDialog(this, "Aun sin implementar");
+		}
+		private void AhorcadoLeaderboard() {
 			JOptionPane.showMessageDialog(this, "Aun sin implementar");
 		}
 			

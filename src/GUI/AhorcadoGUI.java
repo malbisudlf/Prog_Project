@@ -10,6 +10,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.FileWriter;
+import java.io.IOException;
 
 
 
@@ -23,6 +25,8 @@ public class AhorcadoGUI extends JFrame {
     private char[] palabraAdivinada;  
     private int intentosRestantes = 6;  
     private int score = 0;
+    public int scores;
+    public String nombres;
     private JLabel labelPalabra;  
     private JLabel labelIntentos; 
     private JLabel palabrasMal;
@@ -31,13 +35,13 @@ public class AhorcadoGUI extends JFrame {
     private DibujoAhorcado panelAhorcado;  
 
     public AhorcadoGUI() {
-    	// Lista de palabras para el juego
+    	
     	this.setVisible(true);
     	
     	Random random = new Random();
     	palabra = palabras[random.nextInt(palabras.length)];
 
-        // Inicializa el J-Frame
+        
         setTitle("Juego del Ahorcado");
         setSize(600, 500);
         setLocationRelativeTo(null);
@@ -47,7 +51,8 @@ public class AhorcadoGUI extends JFrame {
         
         getContentPane().setBackground(Color.BLACK);
 
-        // Inicializa el array de la palabra a adivinar
+        // IAG (Chat GPT)
+        // Sin cambios. Le explicamos nuestro proyecto y situación, y nos devolvió el código para pasar de la palabra a las _
         palabraAdivinada = new char[palabra.length()];
         for (int i = 0; i < palabra.length(); i++) {
         	if (i % 2 == 0) {
@@ -56,9 +61,9 @@ public class AhorcadoGUI extends JFrame {
         		palabraAdivinada[i] = ' ';
         	}
         }
-        
+        //La ayuda de la IAG es hasta aquí
        
-        // Panel superior para mostrar la palabra
+        
         JPanel panelDerecha = new JPanel();
         panelDerecha.setBackground(Color.BLACK);
         palabrasMal = new JLabel();
@@ -93,9 +98,12 @@ public class AhorcadoGUI extends JFrame {
 				if(salida == JOptionPane.YES_OPTION) {
 					String nombre = JOptionPane.showInputDialog("Si quieres guarar tu puntuación, ingresa tu nombre");
 					if (nombre != null && !nombre.trim().isEmpty()) {
-		               
+						saveScoreToFile(nombre, score);
 		                
 		            } else {
+		            	
+		            	
+		            	
 		                
 		            }
 					new menuAhorcado();
@@ -104,6 +112,8 @@ public class AhorcadoGUI extends JFrame {
 				
 					
 				}
+			
+			
         	
         });
         
@@ -115,12 +125,12 @@ public class AhorcadoGUI extends JFrame {
         add(panelIzquierda, BorderLayout.WEST);
         panelIzquierda.add(puntuacion, BorderLayout.NORTH);
 
-        // Panel central para el dibujo del ahorcado
+        
         panelAhorcado = new DibujoAhorcado();
         add(panelAhorcado, BorderLayout.CENTER);
         
 
-        // Panel inferior para los controles
+        
         JPanel panelInferior = new JPanel();
         panelInferior.setBackground(Color.BLACK);
         panelInferior.setLayout(new FlowLayout());
@@ -151,7 +161,7 @@ public class AhorcadoGUI extends JFrame {
             @Override
             public void actionPerformed(ActionEvent e) {
                 verificarLetra(inputLetra.getText().toUpperCase());
-                inputLetra.setText("");  // Limpia el campo de texto
+                inputLetra.setText("");  
             }
         };
         botonVerificar.addActionListener(verificarAction);
@@ -205,10 +215,10 @@ public class AhorcadoGUI extends JFrame {
         labelIntentos.setText("Intentos restantes: " + intentosRestantes);
         labelScore.setText("Score: " + score);
         
-        // Actualiza el dibujo del ahorcado
+        
         panelAhorcado.repaint();
 
-        // Comprueba si ha ganado o perdido
+        
         if (String.valueOf(palabraAdivinada).equals(palabra)) {
             JOptionPane.showMessageDialog(this, "¡Has ganado!");
             reiniciarJuego();
@@ -218,8 +228,16 @@ public class AhorcadoGUI extends JFrame {
         }
     }
 
+	private void saveScoreToFile(String nombre, int score) {
+	    try (FileWriter writer = new FileWriter("leaderboard.txt", true)) {
+	        writer.write(nombre + " " + score + "\n");
+	    } catch (IOException e) {
+	        e.printStackTrace();
+	    }
+	}
+
     private void reiniciarJuego() {
-        // Reinicia el juego
+        
     	Random random = new Random();
     	palabra = palabras[random.nextInt(palabras.length)];
     	
@@ -240,7 +258,8 @@ public class AhorcadoGUI extends JFrame {
         panelAhorcado.repaint();
     }
 
-    // Clase para el panel donde se dibujará el ahorcado
+    //IAG (Chat GPT)
+    //Adaptado a nuestro proyecto. Lo obtenido por la IAG fue las coordenadas de dibujado, el resto fue nuestra adaptación
     private class DibujoAhorcado extends JPanel {
     	
         /**
@@ -256,30 +275,30 @@ public class AhorcadoGUI extends JFrame {
             
             g.setColor(Color.WHITE);
 
-            // Dibuja la estructura del ahorcado
-            g.drawLine(50, 250, 150, 250);  // Base
-            g.drawLine(100, 250, 100, 50);  // Poste vertical
-            g.drawLine(100, 50, 200, 50);   // Poste horizontal
-            g.drawLine(200, 50, 200, 100);  // Cuerda
+            
+            g.drawLine(50, 250, 150, 250);  
+            g.drawLine(100, 250, 100, 50);  
+            g.drawLine(100, 50, 200, 50);   
+            g.drawLine(200, 50, 200, 100);  
 
-            // Dibuja partes del cuerpo según los intentos restantes
+            
             if (intentosRestantes <= 5) {
-                g.drawOval(175, 100, 50, 50);  // Cabeza
+                g.drawOval(175, 100, 50, 50);  
             }
             if (intentosRestantes <= 4) {
-                g.drawLine(200, 150, 200, 200);  // Cuerpo
+                g.drawLine(200, 150, 200, 200);  
             }
             if (intentosRestantes <= 3) {
-                g.drawLine(200, 160, 170, 180);  // Brazo izquierdo
+                g.drawLine(200, 160, 170, 180);  
             }
             if (intentosRestantes <= 2) {
-                g.drawLine(200, 160, 230, 180);  // Brazo derecho
+                g.drawLine(200, 160, 230, 180);  
             }
             if (intentosRestantes <= 1) {
-                g.drawLine(200, 200, 170, 230);  // Pierna izquierda
+                g.drawLine(200, 200, 170, 230);  
             }
             if (intentosRestantes <= 0) {
-                g.drawLine(200, 200, 230, 230);  // Pierna derecha
+                g.drawLine(200, 200, 230, 230);  
             }
         }
        }
