@@ -5,6 +5,7 @@ import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
 
+
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -79,7 +80,7 @@ public class SnakeGUI extends JFrame {
         panelAbajo.add(botonVolver, BorderLayout.WEST);
 
         botonVolver.addActionListener(e -> {
-            new seleccionUsuarioSnake();
+            new menuSnake(menuSnake.userName);
             dispose();
         });
         

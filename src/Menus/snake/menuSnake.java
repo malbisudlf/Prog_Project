@@ -11,11 +11,16 @@ import java.awt.event.ActionListener;
 
 public class menuSnake extends JFrame{
 	
-	private String userName;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	
+	public static String userName;
 	
 	public menuSnake(String userName) {
 		
-		this.userName = userName; 
+		menuSnake.userName = userName;
 		
 		setTitle("SNAKE MENU");
 		setSize(600, 500);
@@ -37,19 +42,12 @@ public class menuSnake extends JFrame{
         titulo.setForeground(Color.WHITE);
 		
 		JPanel botones = new JPanel();
-		botones.setLayout(new GridLayout(2, 2)); //JUGAR, LEADERBOARD, SKINS, VOLVER
+		botones.setLayout(new GridLayout(2, 2, 10, 10)); //JUGAR, LEADERBOARD, SKINS, VOLVER
 		botones.setBackground(Color.BLACK);
-		
-		Font fontBotones = new Font("MV BOLI", Font.BOLD, 30);
 		
 		//Boton para empezar a jugar
 		
-		JButton botonJugar = new JButton("JUGAR");
-		
-		botonJugar.setFocusable(false);
-		botonJugar.setBackground(Color.BLACK);
-		botonJugar.setForeground(Color.WHITE);
-		botonJugar.setFont(fontBotones);
+		JButton botonJugar = buttonWithIcon("resources/images/row-1-column-1.png", "JUGAR");
 		
 		botonJugar.addActionListener(new ActionListener() {
 			
@@ -64,12 +62,7 @@ public class menuSnake extends JFrame{
 		
 		//Boton para consultar leaderboard
 		
-		JButton botonLeaderboard = new JButton("LEADERBOARD");
-		
-		botonLeaderboard.setFocusable(false);
-		botonLeaderboard.setBackground(Color.BLACK);
-		botonLeaderboard.setForeground(Color.WHITE);
-		botonLeaderboard.setFont(fontBotones);
+		JButton botonLeaderboard = buttonWithIcon("resources/images/row-1-column-2.png", "LEADERBOARD");
 		
 		botonLeaderboard.addActionListener(new ActionListener() {
 			
@@ -84,13 +77,8 @@ public class menuSnake extends JFrame{
 		
 		//Boton para tienda de skins
 		
-		JButton botonSkins = new JButton("SKINS");
-		
-		botonSkins.setFocusable(false);
-		botonSkins.setBackground(Color.BLACK);
-		botonSkins.setForeground(Color.WHITE);
-		botonSkins.setFont(fontBotones);
-		
+		JButton botonSkins = buttonWithIcon("resources/images/row-2-column-1.png", "SKINS");
+
 		botonSkins.addActionListener(new ActionListener() {
 
 			@Override
@@ -104,14 +92,7 @@ public class menuSnake extends JFrame{
 		
 		//Boton para volver al MainMenuGUI
 		
-		JButton botonVolverMenu = new JButton("VOLVER");
-		
-		botonVolverMenu.setFocusable(false);
-		botonVolverMenu.setBackground(Color.BLACK);
-		botonVolverMenu.setForeground(Color.WHITE);
-		botonVolverMenu.setFont(fontBotones);
-
-
+		JButton botonVolverMenu = buttonWithIcon("resources/images/row-2-column-2.png", "VOLVER");
 		
 		botonVolverMenu.addActionListener(new ActionListener() {
 			
@@ -156,5 +137,16 @@ public class menuSnake extends JFrame{
 	private void showSkins() {
         JOptionPane.showMessageDialog(this, "Skins aún no implementado");
     }
-
+	
+	private JButton buttonWithIcon(String imagePath, String text) {
+        JButton button = new JButton(text);
+        button.setIcon(new ImageIcon(imagePath)); // Asigna el ícono de la imagen
+        button.setHorizontalTextPosition(SwingConstants.CENTER); // Centra el texto horizontalmente sobre el icono
+        button.setVerticalTextPosition(SwingConstants.CENTER); // Centra el texto verticalmente sobre el icono
+        button.setFont(new Font("MV BOLI", Font.BOLD, 30));
+        button.setForeground(Color.WHITE);
+        button.setFocusable(false);
+        button.setBorderPainted(true); // Elimina el borde para una apariencia más limpia
+        return button;
+	}
 }

@@ -38,7 +38,22 @@ public class usuarioNuevoSnake extends JFrame {
         });
 
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Nombre del nuevo usuario:"), BorderLayout.NORTH);
+        
+        JPanel panelArriba = new JPanel(new BorderLayout());
+        JButton botonVolver = new JButton("VOLVER");
+        botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new seleccionUsuarioSnake();
+				dispose();
+			}
+		});
+        panelArriba.add(botonVolver, BorderLayout.EAST);
+        panelArriba.add(new JLabel("Nombre usuario nuevo:"), BorderLayout.WEST);
+        
+        panel.add(panelArriba, BorderLayout.NORTH);
         panel.add(campoNombre, BorderLayout.CENTER);
         panel.add(botonCrearUsuario, BorderLayout.SOUTH);
 

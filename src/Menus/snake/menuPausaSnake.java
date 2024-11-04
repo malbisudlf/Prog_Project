@@ -2,7 +2,7 @@ package Menus.snake;
 
 import javax.swing.*;
 
-import GUI.SnakeGUI;
+import Menus.MainMenuGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,7 +14,12 @@ public class menuPausaSnake extends JFrame{
     //BOTON REINICIAR (JButton)
     //BOTON VOLVER (JButton)
     
-    public menuPausaSnake(){
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public menuPausaSnake(){
 
         setTitle("SNAKE MENU PAUSA");
 		setSize(300, 400);
@@ -22,28 +27,34 @@ public class menuPausaSnake extends JFrame{
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-        setLayout(new GridLayout(2, 1, 2, 2));
+        setLayout(new GridLayout(3, 1, 2, 2));
 
         //BOTON REANUDAR (JButton)
         JButton botonReanudar = new JButton("REANUDAR");
         JButton botonReiniciar = new JButton("REINICIAR");
+        //JButton botonVolver = new JButton("VOLVER");
 
         botonReanudar.setFocusable(false);
 		botonReiniciar.setFocusable(false);
+		//botonVolver.setFocusable(false);
 
         botonReanudar.setBackground(Color.BLACK);
         botonReiniciar.setBackground(Color.BLACK);
+        //botonVolver.setBackground(Color.BLACK);
 
         botonReanudar.setForeground(Color.WHITE);
         botonReiniciar.setForeground(Color.WHITE);
+        //botonVolver.setForeground(Color.WHITE);
 
         Font font = new Font("ARIAL", Font.BOLD, 25);
 
         botonReanudar.setFont(font);
         botonReiniciar.setFont(font);
+        //botonVolver.setFont(font);
 
         add(botonReanudar);
         add(botonReiniciar);
+        //add(botonVolver);
 
         botonReanudar.addActionListener(new ActionListener() {
 
@@ -65,6 +76,19 @@ public class menuPausaSnake extends JFrame{
             }
             
         });
+        
+        /*
+        botonVolver.addActionListener(new ActionListener() {
+
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // TODO Auto-generated method stub
+                new MainMenuGUI();
+                dispose();
+            }
+            
+        });
+        */
 
         setVisible(true);
     }

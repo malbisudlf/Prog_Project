@@ -4,6 +4,8 @@ import javax.swing.*;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -51,7 +53,22 @@ public class usuarioExistenteSnake extends JFrame{
         selectButton.addActionListener(e -> selectUser());
 
         JPanel panel = new JPanel(new BorderLayout());
-        panel.add(new JLabel("Buscar Usuario:"), BorderLayout.NORTH);
+        
+        JPanel panelArriba = new JPanel(new BorderLayout());
+        JButton botonVolver = new JButton("VOLVER");
+        botonVolver.addActionListener(new ActionListener() {
+			
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new seleccionUsuarioSnake();
+				dispose();
+			}
+		});
+        panelArriba.add(botonVolver, BorderLayout.EAST);
+        panelArriba.add(new JLabel("Buscar usuario:"), BorderLayout.WEST);
+        
+        panel.add(panelArriba , BorderLayout.NORTH);
         panel.add(searchField, BorderLayout.CENTER);
         panel.add(new JScrollPane(userList), BorderLayout.SOUTH);
         panel.add(selectButton, BorderLayout.EAST);
@@ -97,6 +114,9 @@ public class usuarioExistenteSnake extends JFrame{
         users.add("Cesarin");
         users.add("Aimi");
         users.add("Trueba");
+        users.add("Tej");
+        users.add("Raoul");
+        users.add("Roberto");
         return users;
     }
 }

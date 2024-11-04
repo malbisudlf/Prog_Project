@@ -1,6 +1,9 @@
 package Menus.snake;
 
 import javax.swing.*;
+
+import Menus.MainMenuGUI;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -46,18 +49,28 @@ public class seleccionUsuarioSnake extends JFrame{
         add(label, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);
         
+        JButton botonVolver = new JButton("VOLVER");
+        botonVolver.addActionListener(new ActionListener() {
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				// TODO Auto-generated method stub
+				new MainMenuGUI();
+				dispose();
+			}
+		});
+        
+        add(botonVolver, BorderLayout.SOUTH);
+        
         setVisible(true);
 
     }
     
     private void pantallaUsuarioExistente() {
-    	JOptionPane.showMessageDialog(this, "Abriendo pantalla de Usuario Existente...");
     	new usuarioExistenteSnake();
     	dispose();
     }
     
     private void pantallaUsuarioNuevo() {
-    	JOptionPane.showMessageDialog(this, "Abriendo pantalla de Nuevo Usuario...");
     	new usuarioNuevoSnake();
     	dispose();
     }
