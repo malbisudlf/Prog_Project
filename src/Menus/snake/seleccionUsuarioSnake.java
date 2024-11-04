@@ -10,9 +10,7 @@ import java.awt.event.ActionListener;
 
 public class seleccionUsuarioSnake extends JFrame{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JButton usuarioExistente;
     private JButton usuarioNuevo;

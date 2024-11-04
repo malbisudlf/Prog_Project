@@ -2,7 +2,7 @@ package Menus.snake;
 
 import javax.swing.*;
 
-
+import GUI.SnakeGUI;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -14,13 +14,15 @@ public class menuPausaSnake extends JFrame{
     //BOTON REINICIAR (JButton)
     //BOTON VOLVER (JButton)
     
-    /**
-	 * 
-	 */
+    
 	private static final long serialVersionUID = 1L;
+	
+	 public static SnakeGUI snakeGUI;
 
-	public menuPausaSnake(){
+	public menuPausaSnake(SnakeGUI snakeGUI){
 
+		menuPausaSnake.snakeGUI = snakeGUI;
+		
         setTitle("SNAKE MENU PAUSA");
 		setSize(300, 400);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -50,17 +52,17 @@ public class menuPausaSnake extends JFrame{
 
         botonReanudar.setFont(font);
         botonReiniciar.setFont(font);
-        //botonVolver.setFont(font);
 
         add(botonReanudar);
         add(botonReiniciar);
-        //add(botonVolver);
+
 
         botonReanudar.addActionListener(new ActionListener() {
 
             @Override
             public void actionPerformed(ActionEvent e) {
                 // TODO Auto-generated method stub
+            	snakeGUI.enableButtons();
                 dispose();
             }
             
@@ -76,19 +78,6 @@ public class menuPausaSnake extends JFrame{
             }
             
         });
-        
-        /*
-        botonVolver.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
-                new MainMenuGUI();
-                dispose();
-            }
-            
-        });
-        */
 
         setVisible(true);
     }
@@ -96,4 +85,5 @@ public class menuPausaSnake extends JFrame{
     private void reiniciarJuego() {
     	JOptionPane.showMessageDialog(this, "Metodo reiniciarJuego() aun sin implementar");
     }
+    
 }

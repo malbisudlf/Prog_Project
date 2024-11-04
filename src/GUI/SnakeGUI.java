@@ -18,10 +18,9 @@ import Menus.snake.menuSnake;
 
 public class SnakeGUI extends JFrame {
 
-    /**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
+	
+	private JButton botonPausa;
 
 	public SnakeGUI() {
         
@@ -41,16 +40,14 @@ public class SnakeGUI extends JFrame {
         panelArriba.setLayout(new BorderLayout());
 
         // Botón "PAUSA" (West del panel superior)
-        JButton botonPausa = new JButton("PAUSA");
+        botonPausa = new JButton("PAUSA");
         botonPausa.setFont(font);
         botonPausa.setFocusable(false);
         botonPausa.setForeground(Color.GREEN);
         botonPausa.setBackground(Color.BLACK);
         panelArriba.add(botonPausa, BorderLayout.WEST);
 
-        botonPausa.addActionListener(e -> {
-            new menuPausaSnake();
-        });
+        
 
         // Marcador de Puntaje (EAST del panel Superior)
         JLabel labelScore = new JLabel("Score: 0", SwingConstants.CENTER);
@@ -82,6 +79,12 @@ public class SnakeGUI extends JFrame {
         botonVolver.setForeground(Color.GREEN);
         botonVolver.setBackground(Color.BLACK);
         panelAbajo.add(botonVolver, BorderLayout.WEST);
+        
+        botonPausa.addActionListener(e -> {
+        	botonVolver.setEnabled(false);
+        	botonPausa.setEnabled(false);
+            new menuPausaSnake(this);
+        });
 
         botonVolver.addActionListener(e -> {
             new menuSnake(menuSnake.userName);
@@ -92,5 +95,12 @@ public class SnakeGUI extends JFrame {
         add(panelAbajo, BorderLayout.SOUTH);    
         
         setVisible(true);
+    }
+	//IAG (Herramienta: ChatGPT)
+	//SIN MODIFICAR
+	public void enableButtons() {
+        JButton botonVolver = (JButton) ((JPanel) getContentPane().getComponent(2)).getComponent(0);
+        botonVolver.setEnabled(true);
+        botonPausa.setEnabled(true);
     }
 }

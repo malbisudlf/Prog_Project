@@ -12,9 +12,7 @@ import java.util.stream.Collectors;
 
 public class usuarioExistenteSnake extends JFrame{
 	
-	/**
-	 * 
-	 */
+	
 	private static final long serialVersionUID = 1L;
 	private JTextField searchField;
     private JList<String> userList;
