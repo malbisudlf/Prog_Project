@@ -12,7 +12,6 @@ public class menuPausaSnake extends JFrame{
 
     //BOTON REANUDAR (JButton)
     //BOTON REINICIAR (JButton)
-    //BOTON VOLVER (JButton)
     
     
 	private static final long serialVersionUID = 1L;
@@ -34,19 +33,17 @@ public class menuPausaSnake extends JFrame{
         //BOTON REANUDAR (JButton)
         JButton botonReanudar = new JButton("REANUDAR");
         JButton botonReiniciar = new JButton("REINICIAR");
-        //JButton botonVolver = new JButton("VOLVER");
+       
 
         botonReanudar.setFocusable(false);
 		botonReiniciar.setFocusable(false);
-		//botonVolver.setFocusable(false);
+		
 
         botonReanudar.setBackground(Color.BLACK);
         botonReiniciar.setBackground(Color.BLACK);
-        //botonVolver.setBackground(Color.BLACK);
 
         botonReanudar.setForeground(Color.WHITE);
         botonReiniciar.setForeground(Color.WHITE);
-        //botonVolver.setForeground(Color.WHITE);
 
         Font font = new Font("ARIAL", Font.BOLD, 25);
 
