@@ -9,7 +9,7 @@ public class AhorcadoLeaderboard extends JFrame {
 private static final long serialVersionUID = 1L;
 private DefaultTableModel modeloLeaderboard;
 private JTable tablaleader;
-private static final String FILE_PATH = "src/Menus/leaderboard.txt";
+private static final String FILE_PATH = "leaderboard.txt";
 
 public AhorcadoLeaderboard() {
     setTitle("Leaderboard");
