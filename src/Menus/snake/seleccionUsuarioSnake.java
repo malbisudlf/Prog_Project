@@ -56,6 +56,7 @@ public class seleccionUsuarioSnake extends JFrame{
         add(panelBotones, BorderLayout.CENTER);
         
         JButton botonVolver = new JButton("VOLVER");
+        botonVolver.setFocusable(false);
         botonVolver.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
