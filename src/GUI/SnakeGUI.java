@@ -26,7 +26,7 @@ public class SnakeGUI extends JFrame {
         
         setTitle("SNAKE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(600, 500);
+        setSize(600, 700);
         setLocationRelativeTo(null);
         setLayout(new BorderLayout());
         setBackground(Color.BLACK);
@@ -60,10 +60,10 @@ public class SnakeGUI extends JFrame {
         add(panelArriba, BorderLayout.NORTH);
         
         // Área de Juego (panel central)
-        JPanel areaJuego = new JPanel();
-        areaJuego.setBackground(Color.BLACK);
-        areaJuego.setPreferredSize(new Dimension(400, 300));
-        add(areaJuego, BorderLayout.CENTER);
+        
+        panelSnake snakeGame = new panelSnake(600, 600);
+        snakeGame.setPreferredSize(new Dimension(600, 600));
+        add(snakeGame, BorderLayout.CENTER);
         
         // Panel Inferior (panelAbajo) para Botón "VOLVER"
         JPanel panelAbajo = new JPanel();
@@ -94,7 +94,9 @@ public class SnakeGUI extends JFrame {
         // Añadir el panel inferior al JFrame (SUR)
         add(panelAbajo, BorderLayout.SOUTH);    
         
+        pack();
         setVisible(true);
+        snakeGame.requestFocus();
     }
 	//IAG (Herramienta: ChatGPT)
 	//SIN MODIFICAR

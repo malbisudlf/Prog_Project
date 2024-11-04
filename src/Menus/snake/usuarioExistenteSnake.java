@@ -99,7 +99,6 @@ public class usuarioExistenteSnake extends JFrame{
     private void selectUser() {
         String selectedUser = userList.getSelectedValue();
         if (selectedUser != null) {
-            JOptionPane.showMessageDialog(this, "Has seleccionado: " + selectedUser);
             // Aquí, podrías pasar el nombre del usuario a la pantalla principal o a la sesión del juego
             new menuSnake(selectedUser);
             dispose();
