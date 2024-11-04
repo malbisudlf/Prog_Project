@@ -257,7 +257,7 @@ public class AhorcadoGUI extends JFrame {
         }
         return palabras;
     }
-
+    //Fin del uso de IAG
 
 private void saveScoreToFile(String nombre, int score) {
     try (FileWriter writer = new FileWriter("leaderboard.txt", true)) {
