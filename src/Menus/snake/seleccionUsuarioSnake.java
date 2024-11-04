@@ -10,6 +10,10 @@ import java.awt.event.ActionListener;
 
 public class seleccionUsuarioSnake extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JButton usuarioExistente;
     private JButton usuarioNuevo;
     
@@ -22,6 +26,8 @@ public class seleccionUsuarioSnake extends JFrame{
         // Crear botones
         usuarioExistente = new JButton("Usuario Existente");
         usuarioNuevo = new JButton("Nuevo Usuario");
+        usuarioExistente.setFocusable(false);
+        usuarioNuevo.setFocusable(false);
         
         usuarioExistente.addActionListener(new ActionListener() {
             @Override

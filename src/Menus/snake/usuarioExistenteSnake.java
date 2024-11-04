@@ -12,6 +12,10 @@ import java.util.stream.Collectors;
 
 public class usuarioExistenteSnake extends JFrame{
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
 	private JTextField searchField;
     private JList<String> userList;
     private DefaultListModel<String> listModel;
@@ -50,12 +54,15 @@ public class usuarioExistenteSnake extends JFrame{
         });
         
         JButton selectButton = new JButton("Seleccionar");
+        selectButton.setFocusable(false);
         selectButton.addActionListener(e -> selectUser());
+        
 
         JPanel panel = new JPanel(new BorderLayout());
         
         JPanel panelArriba = new JPanel(new BorderLayout());
         JButton botonVolver = new JButton("VOLVER");
+        botonVolver.setFocusable(false);
         botonVolver.addActionListener(new ActionListener() {
 			
 			@Override

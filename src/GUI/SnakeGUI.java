@@ -12,14 +12,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
-import Menus.*;
 import Menus.snake.menuPausaSnake;
 import Menus.snake.menuSnake;
-import Menus.snake.seleccionUsuarioSnake;
+
 
 public class SnakeGUI extends JFrame {
 
-    public SnakeGUI() {
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+
+	public SnakeGUI() {
         
         setTitle("SNAKE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);

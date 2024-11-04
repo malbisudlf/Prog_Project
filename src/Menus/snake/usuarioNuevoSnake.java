@@ -6,10 +6,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class usuarioNuevoSnake extends JFrame {
-    private JTextField campoNombre;
+    /**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private JTextField campoNombre;
     private JButton botonCrearUsuario;
 
     public usuarioNuevoSnake() {
+    	
+    	
         setTitle("Crear Nuevo Usuario");
         setSize(300, 150);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -41,6 +47,7 @@ public class usuarioNuevoSnake extends JFrame {
         
         JPanel panelArriba = new JPanel(new BorderLayout());
         JButton botonVolver = new JButton("VOLVER");
+        botonVolver.setFocusable(false);
         botonVolver.addActionListener(new ActionListener() {
 			
 			@Override
@@ -50,8 +57,10 @@ public class usuarioNuevoSnake extends JFrame {
 				dispose();
 			}
 		});
+       
         panelArriba.add(botonVolver, BorderLayout.EAST);
         panelArriba.add(new JLabel("Nombre usuario nuevo:"), BorderLayout.WEST);
+        campoNombre.setFocusable(true);
         
         panel.add(panelArriba, BorderLayout.NORTH);
         panel.add(campoNombre, BorderLayout.CENTER);

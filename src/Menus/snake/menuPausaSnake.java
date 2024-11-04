@@ -2,7 +2,7 @@ package Menus.snake;
 
 import javax.swing.*;
 
-import Menus.MainMenuGUI;
+
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -27,7 +27,7 @@ public class menuPausaSnake extends JFrame{
 		setLocationRelativeTo(null);
 		setResizable(false);
 
-        setLayout(new GridLayout(3, 1, 2, 2));
+        setLayout(new GridLayout(2, 1, 2, 2));
 
         //BOTON REANUDAR (JButton)
         JButton botonReanudar = new JButton("REANUDAR");
