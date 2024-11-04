@@ -1,6 +1,6 @@
 package Menus;
 
-import java.awt.BorderLayout;
+
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
@@ -13,13 +13,11 @@ import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.SwingConstants;
 
-import GUI.AhorcadoGUI;
+
+
 import GUI.PongGUI;
-import GUI.SnakeGUI;
-import Menus.snake.menuSnake;
+
 import Menus.snake.seleccionUsuarioSnake;
 
 public class MainMenuGUI extends JFrame{
