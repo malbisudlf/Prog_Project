@@ -267,72 +267,72 @@ private void saveScoreToFile(String nombre, int score) {
     }
 }
 
-    private void reiniciarJuego() {
-        
-    	Random random = new Random();
-    	palabra = palabras.get(random.nextInt(palabras.size()));
-    	
-    	palabraAdivinada = new char[palabra.length()];
-    	
-        intentosRestantes = 6;
-        for (int i = 0; i < palabra.length(); i++) {
-        	if (i % 2 == 0) {
-            palabraAdivinada[i] = '_';
-        	} else {
-        		palabraAdivinada[i] = ' ';
-        	}
-        }
-        labelPalabra.setText(String.valueOf(palabraAdivinada));
-        palabrasMal.setText(null);
-        labelIntentos.setText("Intentos restantes: " + intentosRestantes);
-        
-        panelAhorcado.repaint();
-    }
-
-    //IAG (Chat GPT)
-    //Adaptado a nuestro proyecto. Lo obtenido por la IAG fue las coordenadas de dibujado, el resto fue nuestra adaptación
-    private class DibujoAhorcado extends JPanel {
-    	
-        /**
-		 * 
-		 */
-		private static final long serialVersionUID = 1L;
-
-		@Override
-        protected void paintComponent(Graphics g) {
-            super.paintComponent(g);
-            
-            setBackground(Color.BLACK);
-            
-            g.setColor(Color.WHITE);
-
-            
-            g.drawLine(50, 250, 150, 250);  
-            g.drawLine(100, 250, 100, 50);  
-            g.drawLine(100, 50, 200, 50);   
-            g.drawLine(200, 50, 200, 100);  
-
-            
-            if (intentosRestantes <= 5) {
-                g.drawOval(175, 100, 50, 50);  
-            }
-            if (intentosRestantes <= 4) {
-                g.drawLine(200, 150, 200, 200);  
-            }
-            if (intentosRestantes <= 3) {
-                g.drawLine(200, 160, 170, 180);  
-            }
-            if (intentosRestantes <= 2) {
-                g.drawLine(200, 160, 230, 180);  
-            }
-            if (intentosRestantes <= 1) {
-                g.drawLine(200, 200, 170, 230);  
-            }
-            if (intentosRestantes <= 0) {
-                g.drawLine(200, 200, 230, 230);  
-            }
-        }
-       }
-    }
-    
+	    private void reiniciarJuego() {
+	        
+	    	Random random = new Random();
+	    	palabra = palabras.get(random.nextInt(palabras.size()));
+	    	
+	    	palabraAdivinada = new char[palabra.length()];
+	    	
+	        intentosRestantes = 6;
+	        for (int i = 0; i < palabra.length(); i++) {
+	        	if (i % 2 == 0) {
+	            palabraAdivinada[i] = '_';
+	        	} else {
+	        		palabraAdivinada[i] = ' ';
+	        	}
+	        }
+	        labelPalabra.setText(String.valueOf(palabraAdivinada));
+	        palabrasMal.setText(null);
+	        labelIntentos.setText("Intentos restantes: " + intentosRestantes);
+	        
+	        panelAhorcado.repaint();
+	    }
+	
+	    //IAG (Chat GPT)
+	    //Adaptado a nuestro proyecto. Lo obtenido por la IAG fue las coordenadas de dibujado, el resto fue nuestra adaptación
+	    private class DibujoAhorcado extends JPanel {
+	    	
+	        /**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+	
+			@Override
+	        protected void paintComponent(Graphics g) {
+	            super.paintComponent(g);
+	            
+	            setBackground(Color.BLACK);
+	            
+	            g.setColor(Color.WHITE);
+	
+	            
+	            g.drawLine(50, 250, 150, 250);  
+	            g.drawLine(100, 250, 100, 50);  
+	            g.drawLine(100, 50, 200, 50);   
+	            g.drawLine(200, 50, 200, 100);  
+	
+	            
+	            if (intentosRestantes <= 5) {
+	                g.drawOval(175, 100, 50, 50);  
+	            }
+	            if (intentosRestantes <= 4) {
+	                g.drawLine(200, 150, 200, 200);  
+	            }
+	            if (intentosRestantes <= 3) {
+	                g.drawLine(200, 160, 170, 180);  
+	            }
+	            if (intentosRestantes <= 2) {
+	                g.drawLine(200, 160, 230, 180);  
+	            }
+	            if (intentosRestantes <= 1) {
+	                g.drawLine(200, 200, 170, 230);  
+	            }
+	            if (intentosRestantes <= 0) {
+	                g.drawLine(200, 200, 230, 230);  
+	            }
+	        }
+	       }
+	    }
+	    
 
