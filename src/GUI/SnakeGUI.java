@@ -24,7 +24,7 @@ public class SnakeGUI extends JFrame {
         setBackground(Color.BLACK);
         setResizable(false);
 
-        Font font = new Font("Arial", Font.BOLD, 20);
+        Font font = new Font("Arial", Font.BOLD, 25);
         
         // Panel Superior (panelArriba) para Score y Botón "PAUSA"
         JPanel panelArriba = new JPanel();
@@ -40,8 +40,13 @@ public class SnakeGUI extends JFrame {
         panelArriba.add(botonPausa, BorderLayout.WEST);
         
         // USUARIO
-        JLabel user = new JLabel("Usuario: " + userName);
-        user.setForeground(Color.WHITE);
+        JLabel user = new JLabel();
+        
+        user.setText("Usuario: " + userName);
+        user.setFont(font);
+        user.setForeground(Color.GREEN);
+        
+        
         panelArriba.add(user, BorderLayout.EAST);
         
         // Añadir el panel superior al JFrame (NORTE)

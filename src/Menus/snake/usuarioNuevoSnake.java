@@ -20,7 +20,13 @@ public class usuarioNuevoSnake extends JFrame {
         setLocationRelativeTo(null);
 
         campoNombre = new JTextField(20);
+        campoNombre.setBackground(Color.BLACK);
+        campoNombre.setForeground(Color.WHITE);
+        campoNombre.setCaretColor(Color.WHITE);
+        
         botonCrearUsuario = new JButton("Crear Usuario");
+        botonCrearUsuario.setBackground(Color.BLACK);
+        botonCrearUsuario.setForeground(Color.WHITE);
 
         botonCrearUsuario.addActionListener(new ActionListener() {
             @Override
@@ -29,7 +35,6 @@ public class usuarioNuevoSnake extends JFrame {
                 if (!userName.isEmpty()) {
                     if (isUniqueUserName(userName)) {
                         saveNewUser(userName);
-                        JOptionPane.showMessageDialog(usuarioNuevoSnake.this, "Usuario creado: " + userName);
                         new menuSnake(userName);
                         dispose();
                     } else {
@@ -44,7 +49,13 @@ public class usuarioNuevoSnake extends JFrame {
         JPanel panel = new JPanel(new BorderLayout());
         
         JPanel panelArriba = new JPanel(new BorderLayout());
+        panelArriba.setBackground(Color.BLACK);
+        panelArriba.setForeground(Color.WHITE);
+        
+        
         JButton botonVolver = new JButton("VOLVER");
+        botonVolver.setBackground(Color.BLACK);
+        botonVolver.setForeground(Color.WHITE);
         botonVolver.setFocusable(false);
         botonVolver.addActionListener(new ActionListener() {
 			
@@ -57,7 +68,17 @@ public class usuarioNuevoSnake extends JFrame {
 		});
        
         panelArriba.add(botonVolver, BorderLayout.EAST);
-        panelArriba.add(new JLabel("Nombre usuario nuevo:"), BorderLayout.WEST);
+        
+        JPanel panelLabel = new JPanel();
+        panelLabel.setBackground(Color.BLACK);
+        
+        JLabel label = new JLabel("Nombre usuario nuevo:");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setForeground(Color.WHITE);
+        
+        panelLabel.add(label);
+        
+        panelArriba.add(panelLabel, BorderLayout.WEST);
         campoNombre.setFocusable(true);
         
         panel.add(panelArriba, BorderLayout.NORTH);

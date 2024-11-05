@@ -31,7 +31,17 @@ public class usuarioExistenteSnake extends JFrame{
         allUsers.forEach(listModel::addElement);
 
         userList = new JList<>(listModel);
+        userList.setBackground(Color.BLACK);
+        userList.setForeground(Color.WHITE);
+        userList.setSelectionBackground(Color.DARK_GRAY);
+        userList.setSelectionForeground(Color.WHITE);
+        
+        
         searchField = new JTextField(20);
+        
+        searchField.setBackground(Color.BLACK);
+        searchField.setForeground(Color.WHITE);
+        searchField.setCaretColor(Color.WHITE);
         
      // Filtro en tiempo real
         searchField.getDocument().addDocumentListener(new DocumentListener() {
@@ -53,13 +63,20 @@ public class usuarioExistenteSnake extends JFrame{
         
         JButton selectButton = new JButton("Seleccionar");
         selectButton.setFocusable(false);
+        selectButton.setBackground(Color.BLACK);
+        selectButton.setForeground(Color.WHITE);
         selectButton.addActionListener(e -> selectUser());
         
 
         JPanel panel = new JPanel(new BorderLayout());
+        panel.setBackground(Color.BLACK);
         
         JPanel panelArriba = new JPanel(new BorderLayout());
+        panelArriba.setBackground(Color.BLACK);
+        
         JButton botonVolver = new JButton("VOLVER");
+        botonVolver.setBackground(Color.BLACK);
+        botonVolver.setForeground(Color.WHITE);
         botonVolver.setFocusable(false);
         botonVolver.addActionListener(new ActionListener() {
 			
@@ -71,7 +88,17 @@ public class usuarioExistenteSnake extends JFrame{
 			}
 		});
         panelArriba.add(botonVolver, BorderLayout.EAST);
-        panelArriba.add(new JLabel("Buscar usuario:"), BorderLayout.WEST);
+        
+        JPanel panelLabel = new JPanel();
+        panelLabel.setBackground(Color.BLACK);
+        
+        JLabel label = new JLabel("Buscar usuario:");
+        label.setHorizontalAlignment(JLabel.CENTER);
+        label.setForeground(Color.WHITE);
+        
+        panelLabel.add(label);
+        
+        panelArriba.add(panelLabel, BorderLayout.WEST);
         
         panel.add(panelArriba , BorderLayout.NORTH);
         panel.add(searchField, BorderLayout.CENTER);

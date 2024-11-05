@@ -58,7 +58,8 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
 
         velocidadX = 0;
         velocidadY = 0;
-        bucleJuego = new Timer(100, this);
+        Timer timerOrigen = new Timer(100, this); //MODIFICAR ESTO PARA AUMENTAR O DISMINUIR LA DIFICULTAD //PARA MODOS MAS DIFICILES EN EL FUTURO
+        bucleJuego = timerOrigen; 
         bucleJuego.start();
     }
 
