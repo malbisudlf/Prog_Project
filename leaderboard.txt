@@ -1,9 +1,1 @@
-Mikel -1
-Mikel 10
-Mikel 10
-Mikel -1
-MESSILLAS,0
-Julen,24
-66,0
-Jon,67
-ouij,0
+

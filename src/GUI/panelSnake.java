@@ -42,6 +42,8 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 	int velocidadX;
 	int velocidadY;
 	
+	boolean gameOver = false;
+	
 	panelSnake(int anchoPanel, int altoPanel) {
 		this.anchoPanel = anchoPanel;
 		this.altoPanel = altoPanel;
@@ -54,7 +56,6 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 		snakeBody = new ArrayList<Tile>();
 		
 		food = new Tile(23, 5);
-		
 		random = new Random();
 		placeFood();
 		
@@ -79,17 +80,27 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 		
 		//FOOD
 		g.setColor(Color.RED);
-		g.fillRect(food.x*tileSize, food.y*tileSize, tileSize, tileSize);
+		g.fill3DRect(food.x*tileSize, food.y*tileSize, tileSize, tileSize, true);
 		
 		//SNAKE HEAD
 		g.setColor(Color.BLUE);
-		g.fillRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize);
+		g.fill3DRect(snakeHead.x * tileSize, snakeHead.y * tileSize, tileSize, tileSize, true);
 		
 		//SNAKE BODY
 		for (int i = 0; i < snakeBody.size(); i++) {
 			Tile snakePart = snakeBody.get(i);
-			g.fillRect(snakePart.x * tileSize, snakePart.y*tileSize, tileSize, tileSize);
+			g.fill3DRect(snakePart.x * tileSize, snakePart.y*tileSize, tileSize, tileSize, true);
 		}
+		
+		//SCORE
+		g.setFont(new Font("Arial", Font.PLAIN, 16));
+        if (gameOver) {
+            g.setColor(Color.red);
+            g.drawString("Game Over: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+        }
+        else {
+            g.drawString("Score: " + String.valueOf(snakeBody.size()), tileSize - 16, tileSize);
+        }
 	}
 	
 	public void placeFood() {
@@ -124,6 +135,20 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 		//CABEZA SNAKE
 		snakeHead.x += velocidadX;
 		snakeHead.y += velocidadY;
+		
+		for (int i = 0; i < snakeBody.size(); i++) {
+            Tile snakePart = snakeBody.get(i);
+
+            //collide with snake head
+            if (collision(snakeHead, snakePart)) {
+                gameOver = true;
+            }
+		}
+		
+		if (snakeHead.x*tileSize < 0 || snakeHead.x*tileSize > anchoPanel - 25 || //passed left border or right border
+	            snakeHead.y*tileSize < 0 || snakeHead.y*tileSize > altoPanel - 25 ) { //passed top border or bottom border
+	            gameOver = true;
+	        }
 	}
 	
 	@Override
@@ -131,6 +156,9 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 		// TODO Auto-generated method stub
 		move();
 		repaint();
+		if (gameOver) {
+			bucleJuego.stop();
+        }
 	}
 	
 	@Override
@@ -148,7 +176,7 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT && velocidadX != 1) {
 			velocidadX = -1;
 			velocidadY = 0;
-		}
+		} 
 	}
 
 	

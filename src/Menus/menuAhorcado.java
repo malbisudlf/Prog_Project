@@ -7,6 +7,7 @@ import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -78,7 +79,8 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					AhorcadoLeaderboard();
+					new AhorcadoLeaderboard();
+					dispose();
 					
 				}
 				
@@ -106,6 +108,8 @@ public class menuAhorcado extends JFrame{
 			volverbutton.setBackground(Color.BLACK);
 			volverbutton.setForeground(Color.WHITE);
 			volverbutton.setFont(fontBotones);
+			ImageIcon volverfoto = new ImageIcon("resources/images/R.png");
+			volverbutton.setIcon(volverfoto);
 			volverbutton.addActionListener(new ActionListener() {
 				
 
