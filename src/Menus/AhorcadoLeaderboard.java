@@ -16,7 +16,7 @@ public class AhorcadoLeaderboard extends JFrame {
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
     private static final String FILE_PATH = "leaderboard.txt";
-
+//EN UN FUTURO, AÑADIR FLECHA PARA FILTRAR POR PUNTUACION
     public AhorcadoLeaderboard() {
         setTitle("Leaderboard");
         setSize(600, 500);
@@ -39,7 +39,7 @@ public class AhorcadoLeaderboard extends JFrame {
         tablaleader.setGridColor(Color.GRAY);
         tablaleader.setFillsViewportHeight(true);
 
-        // Simplified cell renderer to avoid recursion
+        
         TableCellRenderer cellRenderer = new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
