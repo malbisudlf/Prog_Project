@@ -145,8 +145,8 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
             }
 		}
 		
-		if (snakeHead.x*tileSize < 0 || snakeHead.x*tileSize > anchoPanel || //passed left border or right border
-	            snakeHead.y*tileSize < 0 || snakeHead.y*tileSize > altoPanel ) { //passed top border or bottom border
+		if (snakeHead.x*tileSize < 0 || snakeHead.x*tileSize > anchoPanel - 25 || //passed left border or right border
+	            snakeHead.y*tileSize < 0 || snakeHead.y*tileSize > altoPanel - 25 ) { //passed top border or bottom border
 	            gameOver = true;
 	        }
 	}
@@ -176,7 +176,7 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener{
 		} else if (e.getKeyCode() == KeyEvent.VK_LEFT && velocidadX != 1) {
 			velocidadX = -1;
 			velocidadY = 0;
-		}
+		} 
 	}
 
 	
