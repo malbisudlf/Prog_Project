@@ -89,6 +89,8 @@ public class SnakeGUI extends JFrame {
         snakeGame.requestFocus();
     }
 
+    //IAG (Herramienta: ChatGPT)
+    //Para poder volver a pulsar los botones al reanudar la pausa
     public void enableButtons() {
         JButton botonVolver = (JButton) ((JPanel) getContentPane().getComponent(2)).getComponent(0);
         botonVolver.setEnabled(true);

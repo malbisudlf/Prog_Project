@@ -25,25 +25,26 @@ public class usuarioExistenteSnake extends JFrame{
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
-        // Inicializa la lista de usuarios (deberías obtener esta lista desde la base de datos)
+        // Inicializa la lista de usuarios (CON BD SE OBTENDRA DE AHI) //DE MOMENTA DE UNA LISTA
         allUsers = getUsersBd();
         listModel = new DefaultListModel<>();
         allUsers.forEach(listModel::addElement);
 
+        //LISTA CON LOS USUARIOS
         userList = new JList<>(listModel);
         userList.setBackground(Color.BLACK);
         userList.setForeground(Color.WHITE);
         userList.setSelectionBackground(Color.DARK_GRAY);
         userList.setSelectionForeground(Color.WHITE);
-        
-        
+
+        //AREA DE BUSQUEDA (JTextField)
         searchField = new JTextField(20);
         
         searchField.setBackground(Color.BLACK);
         searchField.setForeground(Color.WHITE);
         searchField.setCaretColor(Color.WHITE);
         
-     // Filtro en tiempo real
+     // Filtro en tiempo real //(MIRAR EL HECHO EN CLASE!!)
         searchField.getDocument().addDocumentListener(new DocumentListener() {
             @Override
             public void insertUpdate(DocumentEvent e) {
@@ -61,6 +62,7 @@ public class usuarioExistenteSnake extends JFrame{
             }
         });
         
+        //BOTON SELECCIONAR (JButton)
         JButton selectButton = new JButton("Seleccionar");
         selectButton.setFocusable(false);
         selectButton.setBackground(Color.BLACK);
@@ -68,12 +70,15 @@ public class usuarioExistenteSnake extends JFrame{
         selectButton.addActionListener(e -> selectUser());
         
 
+        //PANEL PRINCIPAL
         JPanel panel = new JPanel(new BorderLayout());
         panel.setBackground(Color.BLACK);
         
+        //PANEL DE ARRIBA
         JPanel panelArriba = new JPanel(new BorderLayout());
         panelArriba.setBackground(Color.BLACK);
         
+        //BOTON VOLVER
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setBackground(Color.BLACK);
         botonVolver.setForeground(Color.WHITE);
@@ -126,7 +131,6 @@ public class usuarioExistenteSnake extends JFrame{
     private void selectUser() {
         String selectedUser = userList.getSelectedValue();
         if (selectedUser != null) {
-            // Aquí, podrías pasar el nombre del usuario a la pantalla principal o a la sesión del juego
             new menuSnake(selectedUser);
             dispose();
         } else {
@@ -136,18 +140,23 @@ public class usuarioExistenteSnake extends JFrame{
 
     private List<String> getUsersBd() {
     	
-    	//HABRIA QUE HACERLO CON LA BASES DE DATOS
-    	//AÑADO ESTA LISTA DE PRUEBA TEMPORAL
+    	//UNA VEZ IMPLEMENTADA, HABRIA QUE HACERLO CON LA BASES DE DATOS
+    	//AÑADO ESTA LISTA DE USUARIOS TEMPORAL
+    	
         List<String> users = new ArrayList<>();
+        
         users.add("Messillas");
         users.add("Guiri");
         users.add("MalbisuDLF");
         users.add("Cesarin");
         users.add("Aimi");
         users.add("Trueba");
+        
         users.add("Tej");
         users.add("Raoul");
+        
         users.add("Roberto");
+        
         return users;
     }
 }

@@ -11,19 +11,20 @@ public class usuarioNuevoSnake extends JFrame {
 	private JTextField campoNombre;
     private JButton botonCrearUsuario;
 
-    public usuarioNuevoSnake() {
-    	
+    public usuarioNuevoSnake() {  	
     	
         setTitle("Crear Nuevo Usuario");
         setSize(300, 150);
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
         setLocationRelativeTo(null);
 
+        //TEXTFIELD DONDE ESCRIBIR USUARIO NUEVO
         campoNombre = new JTextField(20);
         campoNombre.setBackground(Color.BLACK);
         campoNombre.setForeground(Color.WHITE);
         campoNombre.setCaretColor(Color.WHITE);
         
+        //BOTON PARA CREAR EL USUARIO
         botonCrearUsuario = new JButton("Crear Usuario");
         botonCrearUsuario.setBackground(Color.BLACK);
         botonCrearUsuario.setForeground(Color.WHITE);
@@ -37,22 +38,24 @@ public class usuarioNuevoSnake extends JFrame {
                         saveNewUser(userName);
                         new menuSnake(userName);
                         dispose();
-                    } else {
+                    } else { //SI YA EXISTE EN LA LISTA, SALTA AVISO
                         JOptionPane.showMessageDialog(usuarioNuevoSnake.this, "El nombre de usuario ya existe.");
                     }
-                } else {
+                } else { //SI NO ESCRIBES NADA, SALTA AVISO
                     JOptionPane.showMessageDialog(usuarioNuevoSnake.this, "Por favor, ingresa un nombre.");
                 }
             }
         });
 
+        //PANEL PRINCIPAL
         JPanel panel = new JPanel(new BorderLayout());
         
+        //PANEL DE ARRIBA
         JPanel panelArriba = new JPanel(new BorderLayout());
         panelArriba.setBackground(Color.BLACK);
         panelArriba.setForeground(Color.WHITE);
         
-        
+        //BOTON DE VOLVER
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setBackground(Color.BLACK);
         botonVolver.setForeground(Color.WHITE);
@@ -97,7 +100,7 @@ public class usuarioNuevoSnake extends JFrame {
     }
 
     private void saveNewUser(String userName) {
-        // Implementa aquí el guardado del nuevo usuario en la base de datos
+        // Para cuando tengamos base de datos y poder guardar usuarios
     }
 }
 

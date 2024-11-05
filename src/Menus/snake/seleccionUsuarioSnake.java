@@ -57,7 +57,9 @@ public class seleccionUsuarioSnake extends JFrame{
         ImageIcon userIcon = new ImageIcon("resources/images/usuarioSnakelogin.png");
         
      // Escalar la imagen
-        Image img = userIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Escala a 50x50 píxeles
+        
+        //IAG (Herramienta: ChatGPT)
+        Image img = userIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Escala a 100x100 píxeles
         userIcon = new ImageIcon(img);
         
         JLabel userIconLabel = new JLabel(userIcon);
@@ -66,21 +68,20 @@ public class seleccionUsuarioSnake extends JFrame{
         panelBotones.add(usuarioExistente);
         panelBotones.add(usuarioNuevo);
         
-        // Añadir una etiqueta para dar instrucciones al usuario
+        // Añadir un panel con un label para dar instrucciones al usuario
         JPanel labelPanel = new JPanel();
-        labelPanel.setBackground(Color.BLACK);
-        
-        
+        labelPanel.setBackground(Color.BLACK);        
         
         JLabel label = new JLabel("Selecciona tu tipo de usuario:");
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setForeground(Color.WHITE);
         
-        labelPanel.add(label); // Añadir el JLabel al panel
+        labelPanel.add(label); // Añadir el JLabel al JPanel
         
         add(labelPanel, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);
         
+        //BOTON VOLVER
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setFocusable(false);
         botonVolver.setBackground(Color.BLACK);

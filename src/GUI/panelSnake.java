@@ -11,6 +11,9 @@ import java.util.Random;
 
 public class panelSnake extends JPanel implements ActionListener, KeyListener {
 
+	//CODIGO BASE DEL JUEGO DE KIP YIP CODING
+	//MODIFICADA EN ALGUNA PARTE PARA ADAPTARSE A NUESTRO PROYECTO
+	
     private static final long serialVersionUID = 1L;
 
     private class Tile {

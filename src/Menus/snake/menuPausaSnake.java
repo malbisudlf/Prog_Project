@@ -32,6 +32,7 @@ public class menuPausaSnake extends JFrame{
 
         //BOTON REANUDAR (JButton)
         JButton botonReanudar = new JButton("REANUDAR");
+        //BOTON REINICIAR (JButton)
         JButton botonReiniciar = new JButton("REINICIAR");
        
 
