@@ -122,22 +122,21 @@ public class menuSnake extends JFrame{
 	
 	//Metodo para crear un bootn con una imagen de fondo
 	
-	//IAG (Herramienta: ChatGPT)
-	//Hecho por mi parte y añadido algun detalle con IA
+	
 	private JButton buttonWithIcon(String imagePath, String text) {
 		
         JButton button = new JButton(text);
         
         button.setIcon(new ImageIcon(imagePath));
         
-        button.setHorizontalTextPosition(SwingConstants.CENTER); //IA
-        button.setVerticalTextPosition(SwingConstants.CENTER); //IA
+        button.setHorizontalTextPosition(SwingConstants.CENTER);
+        button.setVerticalTextPosition(SwingConstants.CENTER);
         
         button.setFont(new Font("MV BOLI", Font.BOLD, 30));
         button.setForeground(Color.WHITE);
         
         button.setFocusable(false);
-        button.setBorderPainted(true); //IA
+        button.setBorderPainted(true);
         return button;
 	}
 }
