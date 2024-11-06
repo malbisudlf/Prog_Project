@@ -24,20 +24,21 @@ public class PongGUI extends JFrame implements ActionListener{
     private int bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
     private int bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
     private float bolaVel = 3f;
-    private float bolaAcel = 0.75f;
+    private float bolaAcel = 1f;
     private float bolaXDir = bolaVel;
     private float bolaYDir = 0f;
 
     private Timer timer;
-    private boolean isPaused = false; // Track pause state
-    private MenuPausa menuPausa;      // Pause menu overlay
+    private boolean isPaused = false;
+    private MenuPausaPong menuPausa;
 
     private GamePanel gamePanel;
 
     public PongGUI() {
         setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(ANCHO, ALTO);
+        setSize(ANCHO, ALTO + 65);
+		setLocationRelativeTo(null);
         setResizable(false);
 
         gamePanel = new GamePanel();
@@ -46,19 +47,20 @@ public class PongGUI extends JFrame implements ActionListener{
         add(gamePanel, BorderLayout.CENTER);
 
         JButton botonPausa = new JButton("Pause");
+        botonPausa.setFocusable(false);
         botonPausa.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 togglePause();
             }
         });
-        add(botonPausa, BorderLayout.SOUTH);
+        add(botonPausa, BorderLayout.NORTH);
 
         addKeyListener(new KeyHandler());
         timer = new Timer(10, this);
         timer.start();
         
-        menuPausa = new menuPausa(this);
+        menuPausa = new MenuPausaPong();
         setVisible(true);
     }
 
@@ -93,8 +95,8 @@ public class PongGUI extends JFrame implements ActionListener{
         	bolaY = 0;
             bolaYDir = -bolaYDir;
         }
-        if (bolaY >= ALTO - (2 * BOLA_TAMAÑO)) {
-        	bolaY = ALTO - (2 * BOLA_TAMAÑO);
+        if (bolaY >= ALTO - BOLA_TAMAÑO) {
+        	bolaY = ALTO - BOLA_TAMAÑO;
         	bolaYDir = -bolaYDir;
         }
 
@@ -111,7 +113,7 @@ public class PongGUI extends JFrame implements ActionListener{
         }
 
         // Resetear la bola si se sale de los lados
-        if (bolaX < 0 || bolaX > ANCHO) {
+        if (bolaX < 0 || bolaX > (ANCHO - BOLA_TAMAÑO)) {
             bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
             bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
             bolaXDir = -bolaXDir;

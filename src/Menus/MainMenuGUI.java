@@ -16,7 +16,7 @@ import javax.swing.JFrame;
 
 
 
-import GUI.PongGUI;
+import Menus.pong.MenuPong;
 
 import Menus.snake.seleccionUsuarioSnake;
 
@@ -135,7 +135,7 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new PongGUI();
+				 new MenuPong();
 				 dispose();
 			}
 		});
