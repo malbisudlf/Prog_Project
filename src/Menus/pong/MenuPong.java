@@ -40,6 +40,18 @@ public class MenuPong extends JFrame {
 		
 		JButton PvP = new JButton();
 		ImageIcon portadaPvP = new ImageIcon("resources/images/PvP.png");
+		PvP.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Obtener el tamaño actual del botón
+                int anchoBoton = PvP.getWidth();
+                int altoBoton = PvP.getHeight();
+
+                // Redimensionar la imagen para ajustarse al tamaño del botón
+                Image imagenEscalada = portadaPvP.getImage().getScaledInstance(anchoBoton , altoBoton , Image.SCALE_SMOOTH); //ChatGPT
+                PvP.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
 		PvP.setIcon(portadaPvP);
 		PvP.setFocusable(false);
 		PvP.setBackground(Color.BLACK);
@@ -57,6 +69,18 @@ public class MenuPong extends JFrame {
 		
 		JButton PvC = new JButton();
 		ImageIcon portadaPvC = new ImageIcon("resources/images/PvC.png");
+		PvC.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Obtener el tamaño actual del botón
+                int anchoBoton = PvC.getWidth();
+                int altoBoton = PvC.getHeight();
+
+                // Redimensionar la imagen para ajustarse al tamaño del botón
+                Image imagenEscalada = portadaPvC.getImage().getScaledInstance(anchoBoton , altoBoton , Image.SCALE_SMOOTH); //ChatGPT
+                PvC.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
 		PvC.setIcon(portadaPvC);
 		PvC.setFocusable(false);
 		PvC.setBackground(Color.BLACK);
@@ -95,7 +119,7 @@ public class MenuPong extends JFrame {
                 int altoBoton = Volver.getHeight();
 
                 // Redimensionar la imagen para ajustarse al tamaño del botón
-                Image imagenEscalada = portadaVolver.getImage().getScaledInstance(anchoBoton -25, altoBoton -5, Image.SCALE_SMOOTH); //ChatGPT
+                Image imagenEscalada = portadaVolver.getImage().getScaledInstance(anchoBoton , altoBoton , Image.SCALE_SMOOTH); //ChatGPT
                 Volver.setIcon(new ImageIcon(imagenEscalada));
             }
         });
