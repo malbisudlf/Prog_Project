@@ -1,5 +1,6 @@
 package GUI;
 
+import Menus.pong.*;
 import java.awt.*;
 import java.awt.event.*;
 import javax.swing.*;
@@ -28,32 +29,57 @@ public class PongGUI extends JFrame implements ActionListener{
     private float bolaYDir = 0f;
 
     private Timer timer;
-    
+    private boolean isPaused = false; // Track pause state
+    private MenuPausa menuPausa;      // Pause menu overlay
+
     private GamePanel gamePanel;
 
     public PongGUI() {
-    	setTitle("PONG");
+        setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(ANCHO, ALTO);
         setResizable(false);
-        
+
         gamePanel = new GamePanel();
         gamePanel.setBackground(Color.BLACK);
         setLayout(new BorderLayout());
         add(gamePanel, BorderLayout.CENTER);
-        
+
+        JButton botonPausa = new JButton("Pause");
+        botonPausa.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                togglePause();
+            }
+        });
+        add(botonPausa, BorderLayout.SOUTH);
+
         addKeyListener(new KeyHandler());
         timer = new Timer(10, this);
         timer.start();
         
+        menuPausa = new menuPausa(this);
         setVisible(true);
+    }
+
+    private void togglePause() {
+        isPaused = !isPaused;
+        if (isPaused) {
+            menuPausa.setVisible(true);
+            timer.stop();
+        } else {
+            menuPausa.setVisible(false); 
+            timer.start();              
+        }
     }
 
     @Override
     public void actionPerformed(ActionEvent e) {
-        moverBola();
-        checkColisiones();
-        repaint();
+        if (!isPaused) {
+            moverBola();
+            checkColisiones();
+            repaint();
+        }
     }
 
     private void moverBola() {
