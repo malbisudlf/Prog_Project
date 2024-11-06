@@ -107,7 +107,7 @@ public class menuAhorcado extends JFrame{
 				
 			});
 			
-			JButton volverbutton = new JButton("VOLVER");
+			JButton volverbutton = new JButton();
 			volverbutton.setFocusable(false);
 			volverbutton.setBackground(Color.BLACK);
 			volverbutton.setForeground(Color.WHITE);
