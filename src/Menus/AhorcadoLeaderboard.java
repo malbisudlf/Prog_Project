@@ -5,6 +5,8 @@ import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -25,11 +27,39 @@ public class AhorcadoLeaderboard extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.BLACK);
         setFocusable(false);
+        
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        add(mainPanel);
+        
+        
+        JPanel panelbotton = new JPanel();
+        mainPanel.add(panelbotton, BorderLayout.SOUTH);
+        panelbotton.setBackground(Color.BLACK);
+        
+        JButton volver = new JButton("VOLVER");
+        volver.setFocusable(false);
+        volver.setBackground(Color.BLACK);
+        volver.setForeground(Color.WHITE);
+        panelbotton.add(volver, BorderLayout.WEST);
+        
+        volver.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new menuAhorcado();
+				dispose();
+				
+			}
+        	
+        });
+        
 
         JScrollPane scrollboard = new JScrollPane();
         scrollboard.setBackground(Color.BLACK);
         this.getContentPane().setLayout(new GridLayout(1, 2));
         this.getContentPane().add(scrollboard);
+        mainPanel.add(scrollboard, BorderLayout.CENTER);
 
         Vector<String> cabeceraLeaderboard = new Vector<>(Arrays.asList("Nombre", "Puntuación"));
         this.modeloLeaderboard = new DefaultTableModel(new Vector<>(), cabeceraLeaderboard);
