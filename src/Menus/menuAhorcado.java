@@ -4,8 +4,11 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import java.awt.GridLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -108,8 +111,23 @@ public class menuAhorcado extends JFrame{
 			volverbutton.setBackground(Color.BLACK);
 			volverbutton.setForeground(Color.WHITE);
 			volverbutton.setFont(fontBotones);
+			/*
 			ImageIcon volverfoto = new ImageIcon("resources/images/R.png");
+			
+			volverbutton.addComponentListener(new ComponentAdapter() {
+	            @Override
+	            public void componentResized(ComponentEvent e) {
+	                // Obtener el tamaño actual del botón
+	                int anchoBoton = volverbutton.getWidth();
+	                int altoBoton = volverbutton.getHeight();
+
+	                // Redimensionar la imagen para ajustarse al tamaño del botón
+	                Image imagenEscalada = volverfoto.getImage().getScaledInstance(anchoBoton, altoBoton, Image.SCALE_SMOOTH); //ChatGPT
+	                volverbutton.setIcon(new ImageIcon(imagenEscalada));
+	            }
+	        });
 			volverbutton.setIcon(volverfoto);
+			*/
 			volverbutton.addActionListener(new ActionListener() {
 				
 
