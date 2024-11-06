@@ -215,6 +215,7 @@ public class AhorcadoGUI extends JFrame {
                 score += 10;
             } 
         }
+        //a
 
         if (!acierto) {
             intentosRestantes--;
