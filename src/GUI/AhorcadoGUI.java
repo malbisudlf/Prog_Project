@@ -110,22 +110,14 @@ public class AhorcadoGUI extends JFrame {
 					String nombre = JOptionPane.showInputDialog("Si quieres guarar tu puntuación, ingresa tu nombre");
 					if (nombre != null && !nombre.trim().isEmpty()) {
 						saveScoreToFile(nombre, score);
-		                
 		            } else {
 		            	
-		            	
-		            	
-		                
 		            }
 					new menuAhorcado();
 					dispose();
 			}
-				
 					
-				}
-			
-			
-        	
+				}	
         });
         
         
@@ -215,6 +207,7 @@ public class AhorcadoGUI extends JFrame {
                 score += 10;
             } 
         }
+        
 
         if (!acierto) {
             intentosRestantes--;
@@ -259,14 +252,15 @@ public class AhorcadoGUI extends JFrame {
     }
     //Fin del uso de IAG
 
+
 private void saveScoreToFile(String nombre, int score) {
+    
     try (FileWriter writer = new FileWriter("leaderboard.txt", true)) {
         writer.write(nombre + "," + score + "\n");
     } catch (IOException e) {
         e.printStackTrace();
     }
 }
-
 	    private void reiniciarJuego() {
 	        
 	    	Random random = new Random();
