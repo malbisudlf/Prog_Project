@@ -113,6 +113,8 @@ public class MainMenuGUI extends JFrame{
                 botonSnake.setIcon(new ImageIcon(imagenEscalada));
             }
         });
+        
+        
 
 		
 		add(botonAhorcado);
