@@ -1,12 +1,14 @@
+
 package Menus;
 
 import javax.swing.*;
-import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -18,7 +20,7 @@ public class AhorcadoLeaderboard extends JFrame {
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
     private static final String FILE_PATH = "leaderboard.txt";
-//EN UN FUTURO, AÑADIR FLECHA PARA FILTRAR POR PUNTUACION
+
     public AhorcadoLeaderboard() {
         setTitle("Leaderboard");
         setSize(600, 500);
@@ -27,33 +29,28 @@ public class AhorcadoLeaderboard extends JFrame {
         setResizable(false);
         getContentPane().setBackground(Color.BLACK);
         setFocusable(false);
-        
+
         JPanel mainPanel = new JPanel();
         mainPanel.setLayout(new BorderLayout());
         add(mainPanel);
-        
-        
+
         JPanel panelbotton = new JPanel();
         mainPanel.add(panelbotton, BorderLayout.SOUTH);
         panelbotton.setBackground(Color.BLACK);
-        
+
         JButton volver = new JButton("VOLVER");
         volver.setFocusable(false);
         volver.setBackground(Color.BLACK);
         volver.setForeground(Color.WHITE);
         panelbotton.add(volver, BorderLayout.WEST);
-        
-        volver.addActionListener(new ActionListener() {
 
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				new menuAhorcado();
-				dispose();
-				
-			}
-        	
+        volver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new menuAhorcado();
+                dispose();
+            }
         });
-        
 
         JScrollPane scrollboard = new JScrollPane();
         scrollboard.setBackground(Color.BLACK);
@@ -69,7 +66,6 @@ public class AhorcadoLeaderboard extends JFrame {
         tablaleader.setGridColor(Color.GRAY);
         tablaleader.setFillsViewportHeight(true);
 
-        
         TableCellRenderer cellRenderer = new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -86,6 +82,25 @@ public class AhorcadoLeaderboard extends JFrame {
 
         scrollboard.setViewportView(tablaleader);
 
+        JPopupMenu sortMenu = new JPopupMenu();
+        JMenuItem sortByScore = new JMenuItem("De mayor a menor");
+        JMenuItem sortByTime = new JMenuItem("Por antigüedad");
+        sortMenu.add(sortByScore);
+        sortMenu.add(sortByTime);
+
+        sortByScore.addActionListener(e -> sortLeaderboardByScore());
+        sortByTime.addActionListener(e -> displayLeaderboardInOrder());
+
+        tablaleader.getTableHeader().addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                int col = tablaleader.columnAtPoint(e.getPoint());
+                if (col == 1) { // Assuming "Puntuación" is the second column
+                    sortMenu.show(tablaleader.getTableHeader(), e.getX(), e.getY());
+                }
+            }
+        });
+
         loadScoresFromFile();
 
         setVisible(true);
@@ -96,11 +111,13 @@ public class AhorcadoLeaderboard extends JFrame {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 2) {
+                if (parts.length == 3) { // Assuming the file has a third column for time in seconds
                     String nombre = parts[0];
-                    long puntuacion = Long.parseLong(parts[1].trim()); // Use long to avoid integer overflow
+                    long puntuacion = Long.parseLong(parts[1].trim());
                     Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacion));
                     modeloLeaderboard.addRow(row);
+                } else {
+                    System.err.println("Invalid line format: " + line);
                 }
             }
         } catch (IOException e) {
@@ -108,6 +125,18 @@ public class AhorcadoLeaderboard extends JFrame {
         } catch (NumberFormatException e) {
             System.err.println("Invalid score format in leaderboard.txt.");
         }
+    }
+
+    private void displayLeaderboardInOrder() {
+        modeloLeaderboard.setRowCount(0); // Clear the table
+        loadScoresFromFile(); // Reload the scores in the original order
+    }
+
+    @SuppressWarnings("unchecked")
+    private void sortLeaderboardByScore() {
+        Vector<Vector<Object>> data = (Vector<Vector<Object>>) (Vector<?>) modeloLeaderboard.getDataVector();
+        data.sort((row1, row2) -> Long.compare((Long) row2.get(1), (Long) row1.get(1)));
+        modeloLeaderboard.fireTableDataChanged();
     }
 
     public static void main(String[] args) {
