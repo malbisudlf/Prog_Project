@@ -1,4 +1,3 @@
-
 package Menus.Ahorcado;
 
 import javax.swing.*;
@@ -59,14 +58,22 @@ public class AhorcadoLeaderboard extends JFrame {
         mainPanel.add(scrollboard, BorderLayout.CENTER);
 
         Vector<String> cabeceraLeaderboard = new Vector<>(Arrays.asList("Nombre", "Puntuación"));
-        this.modeloLeaderboard = new DefaultTableModel(new Vector<>(), cabeceraLeaderboard);
+        
+        //IAG: ChatGPT
+        //Sin cambios
+        this.modeloLeaderboard = new DefaultTableModel(new Vector<>(), cabeceraLeaderboard) {
+			private static final long serialVersionUID = 1L;
+			@Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
         this.tablaleader = new JTable(this.modeloLeaderboard);
         tablaleader.setBackground(Color.BLACK);
         tablaleader.setForeground(Color.WHITE);
         tablaleader.setGridColor(Color.GRAY);
         tablaleader.setFillsViewportHeight(true);
-        //IAG: ChatGPT
-        //Sin cambios
+
         TableCellRenderer cellRenderer = new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -80,8 +87,8 @@ public class AhorcadoLeaderboard extends JFrame {
             }
         };
         //hasta aqui ayuda de IAG
+        
         tablaleader.setDefaultRenderer(Object.class, cellRenderer);
-
         scrollboard.setViewportView(tablaleader);
 
         JPopupMenu sortMenu = new JPopupMenu();
@@ -92,6 +99,7 @@ public class AhorcadoLeaderboard extends JFrame {
 
         sortByScore.addActionListener(e -> sortLeaderboardByScore());
         sortByTime.addActionListener(e -> displayLeaderboardInOrder());
+        
         //IAG: ChatGPT
         //Sin cambios
         tablaleader.getTableHeader().addMouseListener(new MouseAdapter() {
@@ -106,12 +114,11 @@ public class AhorcadoLeaderboard extends JFrame {
         //Hasta aqui ayuda de IAG
 
         loadScoresFromFile();
-
         setVisible(true);
     }
+
     //IAG: ChatGPT
     //Adaptado
-
     private void loadScoresFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
@@ -138,9 +145,9 @@ public class AhorcadoLeaderboard extends JFrame {
         modeloLeaderboard.setRowCount(0); 
         loadScoresFromFile(); 
     }
+    
     //IAG: ChatGPT
     //Adaptado
-
     @SuppressWarnings("unchecked")
     private void sortLeaderboardByScore() {
         Vector<Vector<Object>> data = (Vector<Vector<Object>>) (Vector<?>) modeloLeaderboard.getDataVector();

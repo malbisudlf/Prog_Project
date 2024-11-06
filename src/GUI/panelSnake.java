@@ -93,6 +93,7 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
     }
 
     public void placeFood() {
+    	
         food.x = random.nextInt(anchoPanel / tileSize);
         food.y = random.nextInt(altoPanel / tileSize);
     }
