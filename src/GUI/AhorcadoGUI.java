@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.*;
 
-import Menus.menuAhorcado;
+import Menus.Ahorcado.menuAhorcado;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -108,7 +108,10 @@ public class AhorcadoGUI extends JFrame {
 				int salida = JOptionPane.showConfirmDialog(null, "Seguro que quieres acabar la partida?", "ATENCION", JOptionPane.YES_NO_OPTION );
 				if(salida == JOptionPane.YES_OPTION) {
 					String nombre = JOptionPane.showInputDialog("Si quieres guarar tu puntuación, ingresa tu nombre");
+					//IAG: CHatGPT
+					//No adaptado
 					if (nombre != null && !nombre.trim().isEmpty()) {
+						//Hasta aqui la IAG
 						saveScoreToFile(nombre, score);
 		            } else {
 		            	

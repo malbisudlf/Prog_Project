@@ -1,4 +1,4 @@
-package Menus;
+package Menus.Ahorcado;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
@@ -19,6 +19,7 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import GUI.AhorcadoGUI;
+import Menus.MainMenuGUI;
 
 public class menuAhorcado extends JFrame{
 		/**
@@ -65,7 +66,7 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
+					
 					new AhorcadoGUI();
 					dispose();
 				}
@@ -117,12 +118,14 @@ public class menuAhorcado extends JFrame{
 			volverbutton.addComponentListener(new ComponentAdapter() {
 	            @Override
 	            public void componentResized(ComponentEvent e) {
-	                // Obtener el tamaño actual del botón
+	                
 	                int anchoBoton = volverbutton.getWidth();
 	                int altoBoton = volverbutton.getHeight();
 
-	                // Redimensionar la imagen para ajustarse al tamaño del botón
-	                Image imagenEscalada = volverfoto.getImage().getScaledInstance(anchoBoton -25, altoBoton -5, Image.SCALE_SMOOTH); //ChatGPT
+	                // IAG ChatGPT
+	                //Adaptado
+	                Image imagenEscalada = volverfoto.getImage().getScaledInstance(anchoBoton -25, altoBoton -5, Image.SCALE_SMOOTH); 
+	                //HAsta aqui uso de chatGPT
 	                volverbutton.setIcon(new ImageIcon(imagenEscalada));
 	            }
 	        });
@@ -154,8 +157,6 @@ public class menuAhorcado extends JFrame{
 		private void AhorcadoSkin() {
 			JOptionPane.showMessageDialog(this, "Aun sin implementar");
 		}
-		private void AhorcadoLeaderboard() {
-			JOptionPane.showMessageDialog(this, "Aun sin implementar");
-		}
+		
 			
 }

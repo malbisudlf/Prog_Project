@@ -59,7 +59,7 @@ public class menuPausaSnake extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
+                
             	snakeGUI.enableButtons();
                 dispose();
             }
@@ -70,7 +70,7 @@ public class menuPausaSnake extends JFrame{
 
             @Override
             public void actionPerformed(ActionEvent e) {
-                // TODO Auto-generated method stub
+                
                 reiniciarJuego();
             	//Cuando el juego este creado modificar el metodo reiniciarJuego() que sirva para reiniciar la serpiente, contadores, etc.
             }

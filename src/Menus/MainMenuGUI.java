@@ -14,8 +14,7 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 
-
-
+import Menus.Ahorcado.menuAhorcado;
 import Menus.pong.MenuPong;
 
 import Menus.snake.seleccionUsuarioSnake;

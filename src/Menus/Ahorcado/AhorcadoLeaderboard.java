@@ -1,5 +1,5 @@
 
-package Menus;
+package Menus.Ahorcado;
 
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
