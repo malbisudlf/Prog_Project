@@ -65,7 +65,8 @@ public class AhorcadoLeaderboard extends JFrame {
         tablaleader.setForeground(Color.WHITE);
         tablaleader.setGridColor(Color.GRAY);
         tablaleader.setFillsViewportHeight(true);
-
+        //IAG: ChatGPT
+        //Sin cambios
         TableCellRenderer cellRenderer = new TableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
@@ -78,6 +79,7 @@ public class AhorcadoLeaderboard extends JFrame {
                 return label;
             }
         };
+        //hasta aqui ayuda de IAG
         tablaleader.setDefaultRenderer(Object.class, cellRenderer);
 
         scrollboard.setViewportView(tablaleader);
@@ -90,28 +92,32 @@ public class AhorcadoLeaderboard extends JFrame {
 
         sortByScore.addActionListener(e -> sortLeaderboardByScore());
         sortByTime.addActionListener(e -> displayLeaderboardInOrder());
-
+        //IAG: ChatGPT
+        //Sin cambios
         tablaleader.getTableHeader().addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
                 int col = tablaleader.columnAtPoint(e.getPoint());
-                if (col == 1) { // Assuming "Puntuación" is the second column
+                if (col == 1) { 
                     sortMenu.show(tablaleader.getTableHeader(), e.getX(), e.getY());
                 }
             }
         });
+        //Hasta aqui ayuda de IAG
 
         loadScoresFromFile();
 
         setVisible(true);
     }
+    //IAG: ChatGPT
+    //Adaptado
 
     private void loadScoresFromFile() {
         try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
             String line;
             while ((line = reader.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length == 3) { // Assuming the file has a third column for time in seconds
+                if (parts.length == 2) { 
                     String nombre = parts[0];
                     long puntuacion = Long.parseLong(parts[1].trim());
                     Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacion));
@@ -126,11 +132,14 @@ public class AhorcadoLeaderboard extends JFrame {
             System.err.println("Invalid score format in leaderboard.txt.");
         }
     }
+    //hasta aqui ayuda de IAG
 
     private void displayLeaderboardInOrder() {
-        modeloLeaderboard.setRowCount(0); // Clear the table
-        loadScoresFromFile(); // Reload the scores in the original order
+        modeloLeaderboard.setRowCount(0); 
+        loadScoresFromFile(); 
     }
+    //IAG: ChatGPT
+    //Adaptado
 
     @SuppressWarnings("unchecked")
     private void sortLeaderboardByScore() {

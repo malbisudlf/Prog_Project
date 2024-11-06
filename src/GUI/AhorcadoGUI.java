@@ -254,9 +254,9 @@ public class AhorcadoGUI extends JFrame {
 
 
 private void saveScoreToFile(String nombre, int score) {
-    long timeInSeconds = System.currentTimeMillis() / 1000;
+    
     try (FileWriter writer = new FileWriter("leaderboard.txt", true)) {
-        writer.write(nombre + "," + score + "," + timeInSeconds + "\n");
+        writer.write(nombre + "," + score + "\n");
     } catch (IOException e) {
         e.printStackTrace();
     }
