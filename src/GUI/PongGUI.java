@@ -10,18 +10,22 @@ public class PongGUI extends JFrame implements ActionListener{
 	
 	private static final int ANCHO = 1080;
     private static final int ALTO = 540;
+    private static final int PALA_DESP_I = 20;
+    private static final int PALA_DESP_D = PALA_DESP_I + 20;
     private static final int PALA_ANCHO = 10;
     private static final int PALA_ALTO = 150;
     private static final int BOLA_TAMAÑO = 20;
     private static final int PALA_VELOCIDAD = 10;
-    private static final int BOLA_VELOCIDAD = 5;
-
+    
+    
     private int pala1Y = ALTO / 2 - PALA_ALTO / 2;
     private int pala2Y = ALTO / 2 - PALA_ALTO / 2;
     private int bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
     private int bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
-    private int bolaXDir = BOLA_VELOCIDAD;
-    private int bolaYDir = BOLA_VELOCIDAD;
+    private float bolaVel = 3f;
+    private float bolaAcel = 0.75f;
+    private float bolaXDir = bolaVel;
+    private float bolaYDir = 0f;
 
     private Timer timer;
     
@@ -58,16 +62,26 @@ public class PongGUI extends JFrame implements ActionListener{
     }
 
     private void checkColisiones() {
-        if (bolaY <= 0 || bolaY >= ALTO - BOLA_TAMAÑO) {
+    	// Colision con tejado o suelo
+        if (bolaY <= 0) {
+        	bolaY = 0;
             bolaYDir = -bolaYDir;
+        }
+        if (bolaY >= ALTO - (2 * BOLA_TAMAÑO)) {
+        	bolaY = ALTO - (2 * BOLA_TAMAÑO);
+        	bolaYDir = -bolaYDir;
         }
 
         // Colision con palas
-        if (bolaX <= 30 && bolaY >= pala1Y && bolaY <= pala1Y + PALA_ALTO) {
-            bolaXDir = -bolaXDir;
+        if (bolaX <= (PALA_DESP_I + PALA_ANCHO) && bolaY >= pala1Y && bolaY <= pala1Y + PALA_ALTO) {
+            bolaXDir = -bolaXDir + bolaAcel;
+            float a = ((float)((pala1Y + (PALA_ALTO/2)) - bolaY) / (PALA_ALTO/2));
+            bolaYDir = -bolaXDir * a;
         }
-        if (bolaX >= ANCHO - 50 && bolaY >= pala2Y && bolaY <= pala2Y + PALA_ALTO) {
-            bolaXDir = -bolaXDir;
+        if (bolaX >= ANCHO - (PALA_DESP_D + BOLA_TAMAÑO) && bolaY >= pala2Y && bolaY <= pala2Y + PALA_ALTO) {
+            bolaXDir = -bolaXDir - bolaAcel;
+            float a = ((float)((pala2Y + (PALA_ALTO/2)) - bolaY) / (PALA_ALTO/2));
+            bolaYDir = bolaXDir * a;
         }
 
         // Resetear la bola si se sale de los lados
@@ -75,6 +89,8 @@ public class PongGUI extends JFrame implements ActionListener{
             bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
             bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
             bolaXDir = -bolaXDir;
+            bolaXDir = bolaVel;
+            bolaYDir = bolaVel;
         }
     }
     
@@ -83,12 +99,12 @@ public class PongGUI extends JFrame implements ActionListener{
 		private static final long serialVersionUID = 1L;
 
 		@Override
-        protected void paintComponent(Graphics g) {
+        public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
             
-            g.fillRect(20, pala1Y, PALA_ANCHO, PALA_ALTO);
-            g.fillRect(ANCHO - 30, pala2Y, PALA_ANCHO, PALA_ALTO);
+            g.fillRect(PALA_DESP_I, pala1Y, PALA_ANCHO, PALA_ALTO);
+            g.fillRect(ANCHO - PALA_DESP_D, pala2Y, PALA_ANCHO, PALA_ALTO);
             g.fillOval(bolaX, bolaY, BOLA_TAMAÑO, BOLA_TAMAÑO);
         }
     }
