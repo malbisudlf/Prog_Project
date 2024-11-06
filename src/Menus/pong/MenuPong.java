@@ -3,6 +3,8 @@ package Menus.pong;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
@@ -83,7 +85,21 @@ public class MenuPong extends JFrame {
 			}
 		});
 		
-		JButton Volver = new JButton("Volver");
+		JButton Volver = new JButton();
+		ImageIcon portadaVolver = new ImageIcon("resources/images/volver.png");
+		Volver.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                // Obtener el tamaño actual del botón
+                int anchoBoton = Volver.getWidth();
+                int altoBoton = Volver.getHeight();
+
+                // Redimensionar la imagen para ajustarse al tamaño del botón
+                Image imagenEscalada = portadaVolver.getImage().getScaledInstance(anchoBoton -25, altoBoton -5, Image.SCALE_SMOOTH); //ChatGPT
+                Volver.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
+		Volver.setIcon(portadaVolver);
 		Volver.setFocusable(false);
 		Volver.setBackground(Color.BLACK);
 		Volver.setForeground(Color.WHITE);

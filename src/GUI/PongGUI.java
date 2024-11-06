@@ -27,7 +27,10 @@ public class PongGUI extends JFrame implements ActionListener{
     private float bolaAcel = 1f;
     private float bolaXDir = bolaVel;
     private float bolaYDir = 0f;
-
+    
+    //IAG (herramienta: ChatGPT)
+	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del Timer de chatgpt
+	//y la trasladamos con algun cambio para que se adapte a nuestra idea.
     private Timer timer;
     private boolean isPaused = false;
     private MenuPausaPong menuPausa;
@@ -46,7 +49,7 @@ public class PongGUI extends JFrame implements ActionListener{
         setLayout(new BorderLayout());
         add(gamePanel, BorderLayout.CENTER);
 
-        JButton botonPausa = new JButton("Pause");
+        JButton botonPausa = new JButton("Pausar/Reanudar");
         botonPausa.setFocusable(false);
         botonPausa.addActionListener(new ActionListener() {
             @Override
