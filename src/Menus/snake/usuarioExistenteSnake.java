@@ -18,6 +18,8 @@ public class usuarioExistenteSnake extends JFrame{
     private JList<String> userList;
     private DefaultListModel<String> listModel;
     private List<String> allUsers;
+    //private final GestorBDSnake gestorBD = new GestorBDSnake();
+
     
     public usuarioExistenteSnake() {
         setTitle("Seleccionar Usuario Existente");

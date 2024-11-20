@@ -1,6 +1,9 @@
 package Menus.snake;
 
 import javax.swing.*;
+
+import BD.GestorBDSnake;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -10,6 +13,8 @@ public class usuarioNuevoSnake extends JFrame {
 	private static final long serialVersionUID = 1L;
 	private JTextField campoNombre;
     private JButton botonCrearUsuario;
+    //private final GestorBDSnake gestorBD = new GestorBDSnake();
+
 
     public usuarioNuevoSnake() {  	
     	
@@ -94,13 +99,16 @@ public class usuarioNuevoSnake extends JFrame {
     }
 
     private boolean isUniqueUserName(String userName) {
-        // Luego implementarlo para la base de datos
-        // De momento simulo con un ejemplo
-        return !userName.equalsIgnoreCase("Messillas");
+		return true;
+        //return !gestorBD.isUserExists(userName); // Verifica si el usuario ya existe
     }
 
+
     private void saveNewUser(String userName) {
-        // Para cuando tengamos base de datos y poder guardar usuarios
+        //if (!gestorBD.addUser(userName)) { // Intenta agregar el usuario
+            //JOptionPane.showMessageDialog(this, "Error al guardar el usuario en la base de datos.");
+        }
     }
-}
+  
+
 
