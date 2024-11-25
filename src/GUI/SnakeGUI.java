@@ -26,12 +26,12 @@ public class SnakeGUI extends JFrame {
 
         Font font = new Font("Arial", Font.BOLD, 25);
         
-        // Panel Superior (panelArriba) para Score y Botón "PAUSA"
+        // PANEL SUPERIOR (panelArriba) PARA SCORE Y BOTÓN "PAUSA"
         JPanel panelArriba = new JPanel();
         panelArriba.setBackground(Color.BLACK);
         panelArriba.setLayout(new BorderLayout());
 
-        // Botón "PAUSA" (West del panel superior)
+        // BOTÓN "PAUSA" (WEST DEL PANEL SUPERIOR)
         botonPausa = new JButton("PAUSA");
         botonPausa.setFont(font);
         botonPausa.setFocusable(false);
@@ -46,23 +46,22 @@ public class SnakeGUI extends JFrame {
         user.setFont(font);
         user.setForeground(Color.GREEN);
         
-        
         panelArriba.add(user, BorderLayout.EAST);
         
-        // Añadir el panel superior al JFrame (NORTE)
+        // AÑADIR EL PANEL SUPERIOR AL JFrame (NORTE)
         add(panelArriba, BorderLayout.NORTH);
         
-        // Área de Juego (panel central)
+        // ÁREA DE JUEGO (PANEL CENTRAL)
         panelSnake snakeGame = new panelSnake(600, 600, this);  // Pasar la referencia
         snakeGame.setPreferredSize(new Dimension(600, 600));
         add(snakeGame, BorderLayout.CENTER);
         
-        // Panel Inferior (panelAbajo) para Botón "VOLVER"
+        // PANEL INFERIOR (panelAbajo) PARA BOTÓN "VOLVER"
         JPanel panelAbajo = new JPanel();
         panelAbajo.setBackground(Color.BLACK);
         panelAbajo.setLayout(new BorderLayout());
 
-        // Botón "VOLVER" (WEST del panel inferior)
+        // BOTÓN "VOLVER" (WEST DEL PANEL INFERIOR)
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setFont(font);
         botonVolver.setFocusable(false);
@@ -81,7 +80,7 @@ public class SnakeGUI extends JFrame {
             dispose();
         });
         
-        // Añadir el panel inferior al JFrame (SUR)
+        // AÑADIR EL PANEL INFERIOR AL JFrame (SUR)
         add(panelAbajo, BorderLayout.SOUTH);    
         
         pack();

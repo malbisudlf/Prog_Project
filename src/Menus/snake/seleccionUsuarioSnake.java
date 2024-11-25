@@ -1,29 +1,26 @@
 package Menus.snake;
 
 import javax.swing.*;
-
 import Menus.MainMenuGUI;
-
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 public class seleccionUsuarioSnake extends JFrame{
-	
-	
-	private static final long serialVersionUID = 1L;
-	private JButton usuarioExistente;
+    
+    private static final long serialVersionUID = 1L;
+    private JButton usuarioExistente;
     private JButton usuarioNuevo;
     
     public seleccionUsuarioSnake() {
+        // CONFIGURACIÓN DE LA VENTANA PRINCIPAL
         setTitle("Seleccionar Usuario");
         setSize(400, 200);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setBackground(Color.BLACK);
         
-        
-        // Crear botones
+        // CREAR BOTONES PARA LA SELECCIÓN DE USUARIO
         usuarioExistente = new JButton("Usuario Existente");
         usuarioExistente.setBackground(Color.BLACK);
         usuarioExistente.setForeground(Color.WHITE);
@@ -32,9 +29,11 @@ public class seleccionUsuarioSnake extends JFrame{
         usuarioNuevo.setBackground(Color.BLACK);
         usuarioNuevo.setForeground(Color.WHITE);
         
+        // EVITAR QUE LOS BOTONES SE PUEDAN FOCUSAR
         usuarioExistente.setFocusable(false);
         usuarioNuevo.setFocusable(false);
         
+        // ACCIÓN AL HACER CLIC EN EL BOTÓN DE USUARIO EXISTENTE
         usuarioExistente.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -42,6 +41,7 @@ public class seleccionUsuarioSnake extends JFrame{
             }
         });
         
+        // ACCIÓN AL HACER CLIC EN EL BOTÓN DE NUEVO USUARIO
         usuarioNuevo.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -49,66 +49,74 @@ public class seleccionUsuarioSnake extends JFrame{
             }
         });
         
+        // CONFIGURACIÓN DEL LAYOUT PRINCIPAL
         setLayout(new BorderLayout());
         
+        // PANEL DE LOS BOTONES
         JPanel panelBotones = new JPanel();
         panelBotones.setBackground(Color.BLACK);
         
+        // CARGAR Y ESCALAR EL ÍCONO DE USUARIO
         ImageIcon userIcon = new ImageIcon("resources/images/usuarioSnakelogin.png");
-        
-     // Escalar la imagen
-        
-        //IAG (Herramienta: ChatGPT)
+        // ESCALAR LA IMAGEN A UN TAMAÑO DE 100x100
         Image img = userIcon.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH); // Escala a 100x100 píxeles
         userIcon = new ImageIcon(img);
         
         JLabel userIconLabel = new JLabel(userIcon);
-
+        
+        // AÑADIR EL ÍCONO Y LOS BOTONES AL PANEL
         panelBotones.add(userIconLabel);
         panelBotones.add(usuarioExistente);
         panelBotones.add(usuarioNuevo);
         
-        // Añadir un panel con un label para dar instrucciones al usuario
+        // PANEL PARA EL LABEL DE INSTRUCCIONES
         JPanel labelPanel = new JPanel();
         labelPanel.setBackground(Color.BLACK);        
         
+        // LABEL CON LA INSTRUCCIÓN PARA EL USUARIO
         JLabel label = new JLabel("Selecciona tu tipo de usuario:");
         label.setHorizontalAlignment(JLabel.CENTER);
         label.setForeground(Color.WHITE);
         
+        // AÑADIR EL LABEL AL PANEL
         labelPanel.add(label); // Añadir el JLabel al JPanel
         
+        // AÑADIR LOS COMPONENTES AL FRAME
         add(labelPanel, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);
         
-        //BOTON VOLVER
+        // CREAR Y CONFIGURAR EL BOTÓN "VOLVER"
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setFocusable(false);
         botonVolver.setBackground(Color.BLACK);
         botonVolver.setForeground(Color.WHITE);
         
+        // ACCIÓN DEL BOTÓN "VOLVER"
         botonVolver.addActionListener(new ActionListener() {
-			@Override
-			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				new MainMenuGUI();
-				dispose();
-			}
-		});
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                // VOLVER AL MENÚ PRINCIPAL
+                new MainMenuGUI();
+                dispose();
+            }
+        });
         
+        // AÑADIR EL BOTÓN "VOLVER" AL FRAME
         add(botonVolver, BorderLayout.SOUTH);
         
+        // HACER VISIBLE EL FRAME
         setVisible(true);
-
     }
     
+    // ACCIÓN AL SELECCIONAR UN USUARIO EXISTENTE
     private void pantallaUsuarioExistente() {
-    	new usuarioExistenteSnake();
-    	dispose();
+        new usuarioExistenteSnake();
+        dispose();
     }
     
+    // ACCIÓN AL CREAR UN NUEVO USUARIO
     private void pantallaUsuarioNuevo() {
-    	new usuarioNuevoSnake();
-    	dispose();
+        new usuarioNuevoSnake();
+        dispose();
     }
 }

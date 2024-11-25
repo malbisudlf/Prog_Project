@@ -11,7 +11,7 @@ public class Main {
         System.out.println("Base de datos inicializada correctamente.");
 
         // (Opcional) Verificar que los datos están cargados
-        System.out.println("Usuarios registrados en la base de datos:");
+        System.out.println("Usuarios registrados en la base de datos de SNAKE:");
         for (UsuarioSnake usuario : gestorBD.getAllUsers()) {
             System.out.println(usuario);
         }

@@ -7,10 +7,13 @@ import java.util.List;
 
 import usuario.UsuarioSnake;
 
+	//LA MAYORIA COGIDA DE JDBC-P1 Y JDBC-P2
+	//LO HECHO CON IAG COMENTADO EN SU SITIO
+	
 public class GestorBDSnake {
 
     private static final String DB_URL = "jdbc:sqlite:snake_game.db";
-    private static final String CSV_FILE = "resources/data/usuarios.csv";
+    //private static final String CSV_FILE = "resources/data/usuarios.csv";  // Comentado porque se está usando una base de datos SQLite
 
     private static final String CREATE_USERS_TABLE = """
         CREATE TABLE IF NOT EXISTS usuarios (
@@ -27,7 +30,7 @@ public class GestorBDSnake {
             // Crear tabla si no existe
             stmt.execute(CREATE_USERS_TABLE);
 
-            // Cargar datos desde el fichero CSV
+            // Cargar datos desde el fichero CSV (actualizado a base de datos)
             loadFromCSV();
         } catch (SQLException e) {
             e.printStackTrace();
@@ -35,6 +38,9 @@ public class GestorBDSnake {
     }
 
     // Obtener un usuario por su nombre
+    
+    //IAG(Herramienta: ChatGPT)
+    //Modificado
     public UsuarioSnake getUserByName(String userName) {
         String sql = "SELECT * FROM usuarios WHERE nombre = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -69,6 +75,7 @@ public class GestorBDSnake {
         return false;
     }
 
+    
     // Verificar si un usuario existe por su nombre
     public boolean isUserExists(String nombre) {
         String sql = "SELECT 1 FROM usuarios WHERE nombre = ?";
@@ -84,6 +91,8 @@ public class GestorBDSnake {
     }
 
     // Actualizar puntuación máxima y puntos totales de un usuario
+    //IAG(Herramienta: ChatGPT)
+    //IA solamrnte para la variable String sql.
     public boolean updateScores(String nombre, int nuevaPuntuacion) {
         String sql = """
             UPDATE usuarios
@@ -98,7 +107,7 @@ public class GestorBDSnake {
             pstmt.setInt(3, nuevaPuntuacion);
             pstmt.setString(4, nombre);
             pstmt.executeUpdate();
-            saveToCSV(); // Actualizar el CSV
+            saveToCSV(); // Actualizar el CSV con la nueva puntuación
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
@@ -139,9 +148,9 @@ public class GestorBDSnake {
     // Registrar una nueva puntuación para un usuario
     public boolean addNewScore(String nombre, int puntuacion) {
         if (!isUserExists(nombre)) {
-            addUser(nombre); // Si no existe, se crea
+            addUser(nombre); // Si no existe, se crea el usuario
         }
-        return updateScores(nombre, puntuacion);
+        return updateScores(nombre, puntuacion);  // Actualiza la puntuación del usuario
     }
 
     // Obtener el jugador con la mejor puntuación máxima
@@ -156,10 +165,11 @@ public class GestorBDSnake {
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return null;
+        return null;  // Si no hay jugadores, retorna null
     }
 
     // Cargar datos desde el fichero CSV
+    //DE OTRAS PRACT
     private void loadFromCSV() {
         try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/usuarios.csv")));
              Connection conn = DriverManager.getConnection(DB_URL)) {
@@ -167,7 +177,7 @@ public class GestorBDSnake {
             String line;
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length != 4) continue;
+                if (parts.length != 4) continue;  // Asegurarse de que los datos estén completos
 
                 int id = Integer.parseInt(parts[0].trim());
                 String nombre = parts[1].trim();
@@ -193,9 +203,10 @@ public class GestorBDSnake {
     }
 
     // Guardar datos en el fichero CSV
+    //DE OTRAS PRACT
     public void saveToCSV() {
         String sql = "SELECT id, nombre, puntuacion_maxima, puntos_totales FROM usuarios";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter(CSV_FILE));  // Cambié InputStreamReader por FileWriter
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/usuarios.csv", true));
              Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
