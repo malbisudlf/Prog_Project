@@ -1,0 +1,28 @@
+Mikel,191
+Jon, 23
+Paco, 32
+Marco, 65
+David Trueba, 1
+Alvaro Franco, 40
+Cesar Llata, -2
+Aimar Arriaga, -56
+Cailean Goyoaga, 52
+Alejandro, 145
+Lucía, -12
+Carlos Romero, 37
+Marta, 89
+Sandra Muñoz, 14
+Juan Pérez, 105
+Miguel Ángel, -34
+Patricia López, 47
+Diego Torres, 78
+Laura Martín, 3
+Sofía Hernández, -20
+Rubén Fernández, 66
+Raquel Jiménez, 58
+Héctor, -42
+Clara, 95
+Rubén, 82
+Raquel, 54
+Héctor, 78
+Clara, 23
