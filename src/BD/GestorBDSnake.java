@@ -12,7 +12,7 @@ public class GestorBDSnake {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL UNIQUE
         );
-    """;
+   """;
 
     private static final String CREATE_LEADERBOARD_TABLE = """
         CREATE TABLE IF NOT EXISTS leaderboard (
