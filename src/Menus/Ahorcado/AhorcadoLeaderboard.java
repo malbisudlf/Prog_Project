@@ -154,8 +154,4 @@ public class AhorcadoLeaderboard extends JFrame {
         data.sort((row1, row2) -> Long.compare((Long) row2.get(1), (Long) row1.get(1)));
         modeloLeaderboard.fireTableDataChanged();
     }
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(AhorcadoLeaderboard::new);
-    }
 }

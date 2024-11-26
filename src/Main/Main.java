@@ -1,6 +1,6 @@
 package Main;
 
-import BD.GestorBDSnake; // Asegúrate de importar correctamente la clase de gestión de la BD
+import BD.GestorBDSnake;
 import Menus.MainMenuGUI;
 import usuario.UsuarioSnake;
 
@@ -17,7 +17,7 @@ public class Main {
         
         System.out.println("Base de datos inicializada correctamente.");
 		
-        // (Opcional) Verificar que los datos están cargados
+        //VERIFICAMOS DATOS BD SNAKE
         System.out.println("Usuarios registrados en la base de datos de SNAKE:");
         for (UsuarioSnake usuario : gestorBD.getAllUsers()) {
             System.out.println(usuario);

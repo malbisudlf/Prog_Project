@@ -8,6 +8,7 @@ import usuario.UsuarioSnake;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.nio.channels.NonReadableChannelException;
 
 public class menuSnake extends JFrame{
 
@@ -107,7 +108,8 @@ public class menuSnake extends JFrame{
     
     // MÉTODO PARA MOSTRAR EL LEADERBOARD (AUN NO IMPLEMENTADO)
     private void showLeaderboard() {
-        JOptionPane.showMessageDialog(this, "NO IMPLEMENTADO AUN");
+        new SnakeLeaderboard(usuario);
+        dispose();
     }
     
     // MÉTODO PARA MOSTRAR LA TIENDA DE SKINS (AUN NO IMPLEMENTADO)

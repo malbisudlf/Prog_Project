@@ -1,7 +1,7 @@
 package GUI;
 
 import javax.swing.*;
-import Menus.snake.menuPausaSnake;
+//import Menus.snake.menuPausaSnake;
 import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
 

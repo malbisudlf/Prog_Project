@@ -231,6 +231,9 @@ public class GestorBDSnake {
     }
     
  // Método para borrar la tabla de usuarios y recrearla
+    //IAG(Herramienta: ChatGPT)
+    //SIN MODIFICAR
+    //IMPLEMENTADO SIMPLEMENTE PARA PODER RESETEAR LA BASE DE DATOS QUE LLENE DE USUARIOS RANDOM
     public void resetDatabase() {
         String dropTableSQL = "DROP TABLE IF EXISTS usuarios";
         try (Connection conn = DriverManager.getConnection(DB_URL);
