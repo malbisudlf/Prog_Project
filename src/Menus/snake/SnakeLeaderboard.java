@@ -56,7 +56,7 @@ public class SnakeLeaderboard extends JFrame{
 		leaderboardTable = new JTable(model);
 		
 		
-		leaderboardTable.setRowHeight(25);
+		leaderboardTable.setRowHeight(20);
 		//RENDERER PARA LOS HEADERS
 		
 		leaderboardTable.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
@@ -137,7 +137,7 @@ public class SnakeLeaderboard extends JFrame{
         
         labelArriba.setHorizontalAlignment(SwingConstants.CENTER);
         
-        labelArriba.setFont(new Font("MV BOLI", Font.BOLD, 16));
+        labelArriba.setFont(new Font("MV BOLI", Font.BOLD, 25));
         labelArriba.setForeground(Color.GREEN);
         
         labelArriba.setBackground(Color.BLACK);
