@@ -1,6 +1,9 @@
 package GUI;
 
 import javax.swing.*;
+
+import BD.GestorBDSnake;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -160,7 +163,18 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
     }
 
     private void showGameOverScreen() {
-        // Muestra un cuadro de diálogo con las opciones de reiniciar o volver al menú
+        // Actualizar puntos del usuario
+        SnakeGUI.usuario.agregarPuntosTotales(score);
+
+        // Guardar cambios en la base de datos
+        GestorBDSnake gestorBD = new GestorBDSnake();
+        if (gestorBD.updateScores(SnakeGUI.usuario.getNombre(), highScore, score)) {
+            JOptionPane.showMessageDialog(this, "Puntuaciones actualizadas en la base de datos.");
+        } else {
+            JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
+        }
+
+        // Mostrar opciones de reinicio o volver al menú
         int choice = JOptionPane.showOptionDialog(
                 this,
                 "Game Over! Your score: " + score + "\nHigh Score: " + highScore,
@@ -173,11 +187,12 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
         );
 
         if (choice == JOptionPane.YES_OPTION) {
-            restartGame();  // Reinicia el juego
+            restartGame(); // Reinicia el juego
         } else {
-            parentGUI.goToMenu();  // Vuelve al menú principal
+            parentGUI.goToMenu(); // Vuelve al menú principal
         }
     }
+
 
     private void restartGame() {
         // Reinicia el estado del juego

@@ -93,7 +93,8 @@ public class GestorBDSnake {
     // Actualizar puntuación máxima y puntos totales de un usuario
     //IAG(Herramienta: ChatGPT)
     //IA solamrnte para la variable String sql.
-    public boolean updateScores(String nombre, int nuevaPuntuacion) {
+ // Actualizar puntuación máxima y puntos totales de un usuario
+    public boolean updateScores(String nombre, int nuevaPuntuacion, int puntosPartida) {
         String sql = """
             UPDATE usuarios
             SET puntuacion_maxima = CASE WHEN ? > puntuacion_maxima THEN ? ELSE puntuacion_maxima END,
@@ -102,10 +103,10 @@ public class GestorBDSnake {
         """;
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setInt(1, nuevaPuntuacion);
-            pstmt.setInt(2, nuevaPuntuacion);
-            pstmt.setInt(3, nuevaPuntuacion);
-            pstmt.setString(4, nombre);
+            pstmt.setInt(1, nuevaPuntuacion);   // Compara con puntuacion_maxima
+            pstmt.setInt(2, nuevaPuntuacion);   // Actualiza si es mayor
+            pstmt.setInt(3, puntosPartida);     // Suma los puntos totales ganados en la partida
+            pstmt.setString(4, nombre);         // Nombre del jugador
             pstmt.executeUpdate();
             saveToCSV(); // Actualizar el CSV con la nueva puntuación
             return true;
@@ -114,6 +115,7 @@ public class GestorBDSnake {
             return false;
         }
     }
+
 
     // Obtener todos los usuarios
     public List<UsuarioSnake> getAllUsers() {
@@ -146,11 +148,11 @@ public class GestorBDSnake {
     }
 
     // Registrar una nueva puntuación para un usuario
-    public boolean addNewScore(String nombre, int puntuacion) {
+    public boolean addNewScore(String nombre, int puntuacion, int puntuacionAlta) {
         if (!isUserExists(nombre)) {
             addUser(nombre); // Si no existe, se crea el usuario
         }
-        return updateScores(nombre, puntuacion);  // Actualiza la puntuación del usuario
+        return updateScores(nombre, puntuacion, puntuacionAlta);  // Actualiza la puntuación del usuario
     }
 
     // Obtener el jugador con la mejor puntuación máxima
@@ -227,5 +229,23 @@ public class GestorBDSnake {
             e.printStackTrace();
         }
     }
+    
+ // Método para borrar la tabla de usuarios y recrearla
+    public void resetDatabase() {
+        String dropTableSQL = "DROP TABLE IF EXISTS usuarios";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             Statement stmt = conn.createStatement()) {
+            // Eliminar la tabla
+            stmt.execute(dropTableSQL);
+
+            // Volver a crear la tabla
+            stmt.execute(CREATE_USERS_TABLE);
+            System.out.println("La base de datos se ha reiniciado correctamente.");
+        } catch (SQLException e) {
+            e.printStackTrace();
+            System.out.println("Error al reiniciar la base de datos: " + e.getMessage());
+        }
+    }
+
 
 }

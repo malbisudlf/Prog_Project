@@ -137,10 +137,17 @@ public class usuarioExistenteSnake extends JFrame {
     // ACCIÓN AL SELECCIONAR UN USUARIO
     private void selectUser() {
         String selectedUser = userList.getSelectedValue();
+        List<UsuarioSnake> listaUsuarios = gestorBD.getAllUsers();
         if (selectedUser != null) {
             // CREAMOS EL MENÚ PARA EL USUARIO SELECCIONADO
-            new menuSnake(selectedUser);
-            dispose();
+        	for (UsuarioSnake usuario : listaUsuarios) {
+                if (usuario.getNombre().equals(selectedUser)) {
+                	new menuSnake(usuario);
+                	dispose();
+                }
+            }
+            
+            
         } else {
             // SI NO SE SELECCIONÓ UN USUARIO, MOSTRAMOS UN MENSAJE
             JOptionPane.showMessageDialog(this, "Por favor, selecciona un usuario.");

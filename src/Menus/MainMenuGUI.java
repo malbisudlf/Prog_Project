@@ -28,7 +28,8 @@ public class MainMenuGUI extends JFrame{
 		setTitle("MAIN MENU");
 		setSize(600, 600);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		setLocationRelativeTo(null);
+		setLocation(500, 10);
+		//setLocationRelativeTo(null);
 		setLayout(new GridLayout(3, 1));
 		//setResizable(false);
 		

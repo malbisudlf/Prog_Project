@@ -3,6 +3,8 @@ package GUI;
 import javax.swing.*;
 import Menus.snake.menuPausaSnake;
 import Menus.snake.menuSnake;
+import usuario.UsuarioSnake;
+
 import java.awt.*;
 
 public class SnakeGUI extends JFrame {
@@ -10,11 +12,11 @@ public class SnakeGUI extends JFrame {
     private static final long serialVersionUID = 1L;
     
     private JButton botonPausa;
-    public static String userName;
+    public static UsuarioSnake usuario;
 
-    public SnakeGUI(String userName) {
+    public SnakeGUI(UsuarioSnake usuario) {
         
-        SnakeGUI.userName = userName;
+        SnakeGUI.usuario = usuario;
         
         setTitle("SNAKE");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -32,17 +34,19 @@ public class SnakeGUI extends JFrame {
         panelArriba.setLayout(new BorderLayout());
 
         // BOTÓN "PAUSA" (WEST DEL PANEL SUPERIOR)
+        /*
         botonPausa = new JButton("PAUSA");
         botonPausa.setFont(font);
         botonPausa.setFocusable(false);
         botonPausa.setForeground(Color.GREEN);
         botonPausa.setBackground(Color.BLACK);
         panelArriba.add(botonPausa, BorderLayout.WEST);
+        */
         
         // USUARIO
         JLabel user = new JLabel();
         
-        user.setText("Usuario: " + userName);
+        user.setText("Usuario: " + usuario.getNombre());
         user.setFont(font);
         user.setForeground(Color.GREEN);
         
@@ -57,18 +61,23 @@ public class SnakeGUI extends JFrame {
         add(snakeGame, BorderLayout.CENTER);
         
         // PANEL INFERIOR (panelAbajo) PARA BOTÓN "VOLVER"
+        /*
         JPanel panelAbajo = new JPanel();
         panelAbajo.setBackground(Color.BLACK);
         panelAbajo.setLayout(new BorderLayout());
+        */
 
         // BOTÓN "VOLVER" (WEST DEL PANEL INFERIOR)
+        /*
         JButton botonVolver = new JButton("VOLVER");
         botonVolver.setFont(font);
         botonVolver.setFocusable(false);
         botonVolver.setForeground(Color.GREEN);
         botonVolver.setBackground(Color.BLACK);
         panelAbajo.add(botonVolver, BorderLayout.WEST);
+        */
         
+        /*
         botonPausa.addActionListener(e -> {
             botonVolver.setEnabled(false);
             botonPausa.setEnabled(false);
@@ -76,12 +85,13 @@ public class SnakeGUI extends JFrame {
         });
 
         botonVolver.addActionListener(e -> {
-            new menuSnake(menuSnake.userName);
+            new menuSnake(menuSnake.usuario);
             dispose();
         });
+        */
         
         // AÑADIR EL PANEL INFERIOR AL JFrame (SUR)
-        add(panelAbajo, BorderLayout.SOUTH);    
+        //add(panelAbajo, BorderLayout.SOUTH);    
         
         pack();
         setVisible(true);
@@ -97,7 +107,7 @@ public class SnakeGUI extends JFrame {
     }
     
     public void goToMenu() {
-        new menuSnake(SnakeGUI.userName);
+        new menuSnake(SnakeGUI.usuario);
         dispose();
     }
 }

@@ -62,6 +62,6 @@ public class UsuarioSnake {
     // Método toString para imprimir de forma legible
     @Override
     public String toString() {
-        return "Usuario{id=" + id + ", nombre='" + nombre + "', puntuacionAlta=" + puntuacionAlta + ", puntosTotales=" + puntosTotales + "}";
+        return "Usuario{id=" + id + ", nombre='" + nombre + "', puntuacionAlta=" + puntuacionAlta + ", monedas=" + puntosTotales + "}";
     }
 }

@@ -3,6 +3,8 @@ package Menus.snake;
 import javax.swing.*;
 import GUI.*;
 import Menus.MainMenuGUI;
+import usuario.UsuarioSnake;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,17 +13,18 @@ public class menuSnake extends JFrame{
 
     private static final long serialVersionUID = 1L;
     
-    public static String userName;
+    public static UsuarioSnake usuario;
     
-    public menuSnake(String userName) {
+    public menuSnake(UsuarioSnake usuario) {
         
-        menuSnake.userName = userName;
+        menuSnake.usuario = usuario;
         
         // CONFIGURACIÓN DE LA VENTANA PRINCIPAL
         setTitle("SNAKE MENU");
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setLocationRelativeTo(null);
+        setLocation(500, 100);
+		//setLocationRelativeTo(null);
         setResizable(false);
         setBackground(Color.BLACK);
         
@@ -31,7 +34,7 @@ public class menuSnake extends JFrame{
         mainPanel.setBackground(Color.BLACK);
         
         // LABEL CON EL TÍTULO Y NOMBRE DE USUARIO
-        JLabel titulo = new JLabel("			SNAKE    Usuario: " + userName, SwingConstants.CENTER);
+        JLabel titulo = new JLabel("			SNAKE    Usuario: " + usuario.getNombre(), SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 30));
         titulo.setBackground(Color.BLACK);
         titulo.setForeground(Color.WHITE);
@@ -51,7 +54,7 @@ public class menuSnake extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // REDIRIGE A LA VENTANA DE JUEGO
-                new SnakeGUI(userName);
+                new SnakeGUI(usuario);
                 dispose();
             }
         });

@@ -2,6 +2,8 @@ package Menus.snake;
 
 import javax.swing.*;
 import BD.GestorBDSnake;
+import usuario.UsuarioSnake;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -42,8 +44,13 @@ public class usuarioNuevoSnake extends JFrame {
                 if (!userName.isEmpty()) {
                     // VERIFICAMOS SI EL NOMBRE DE USUARIO ES UNICO
                     if (isUniqueUserName(userName)) {
+                    	
                         saveNewUser(userName);  // GUARDAMOS EL NUEVO USUARIO
-                        new menuSnake(userName); // CREAMOS EL JUEGO PARA ESTE USUARIO
+                        
+                        // OBTENEMOS EL USUARIO CREADO DESDE LA BASE DE DATOS
+                        UsuarioSnake nuevoUsuario = gestorBD.getUserByName(userName);
+                        
+                        new menuSnake(nuevoUsuario); // CREAMOS EL JUEGO PARA ESTE USUARIO
                         dispose(); // CERRAMOS LA VENTANA ACTUAL
                     } else { 
                         // SI EL NOMBRE YA EXISTE, MOSTRAMOS UN MENSAJE DE ERROR
