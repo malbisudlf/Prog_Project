@@ -184,7 +184,7 @@ public class GestorBDSnake {
                 int puntosTotales = Integer.parseInt(parts[3].trim());
 
                 if (!isUserExists(nombre)) {
-                	String sql = "INSERT INTO usuarios(nombre, puntuacion_maxima, puntos_totales) VALUES (?, ?, ?)";
+                	String sql = "INSERT INTO usuarios(nombre, puntuacion_maxima, puntos_totales) VALUES (?, ?, ?)"; //SQL
 ;
                     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                        // pstmt.setInt(1, id);
