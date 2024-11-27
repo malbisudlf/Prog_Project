@@ -9,7 +9,7 @@ public class Main {
         // Inicializar la base de datos y cargar datos del CSV
         GestorBDSnake gestorBD = new GestorBDSnake();
         
-        //DESCOMENTAR ESTO SI QUEREMOS RESETEAR LA BASE DE DATOSa
+        //DESCOMENTAR ESTO SI QUEREMOS RESETEAR LA BASE DE DATOS
         /*
         gestorBD.resetDatabase();
         System.out.println("BASE DE DATOS RESETEADA");
