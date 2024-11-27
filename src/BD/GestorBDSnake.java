@@ -170,7 +170,7 @@ public class GestorBDSnake {
     // Cargar datos desde el fichero CSV
     //DE OTRAS PRACT
     private void loadFromCSV() {
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/usuarios.csv")));
+        try (BufferedReader br = new BufferedReader(new FileReader("resources/usuarios.csv"));
              Connection conn = DriverManager.getConnection(DB_URL)) {
 
             String line;
