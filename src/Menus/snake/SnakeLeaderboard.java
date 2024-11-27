@@ -52,13 +52,21 @@ public class SnakeLeaderboard extends JFrame{
 		
 		String[] nombresColumnas = {"NOMBRE", "PUNTUACION MAXIMA", "MONEDAS"};
 		
-		DefaultTableModel model = new DefaultTableModel(data, nombresColumnas);
+		DefaultTableModel model = new DefaultTableModel(data, nombresColumnas) {
+			
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public boolean isCellEditable(int row, int column) {
+				return false;
+			}
+		};
+		
 		leaderboardTable = new JTable(model);
 		
-		
 		leaderboardTable.setRowHeight(20);
-		//RENDERER PARA LOS HEADERS
 		
+		//RENDERER PARA LOS HEADERS
 		leaderboardTable.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
 
 			@Override
@@ -68,13 +76,14 @@ public class SnakeLeaderboard extends JFrame{
 				JLabel headerLabel = new JLabel(value.toString());
 				
 				headerLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
-				headerLabel.setForeground(Color.WHITE);
+				headerLabel.setForeground(new Color(255, 204, 229)); //ROSA PASTEL CLARO
 				headerLabel.setBackground(Color.DARK_GRAY);
 				
 				headerLabel.setHorizontalAlignment(JLabel.CENTER);
 				
 				headerLabel.setOpaque(true);
 				
+								
 				return headerLabel;
 				
 			}
@@ -94,25 +103,26 @@ public class SnakeLeaderboard extends JFrame{
 			celdaLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
 			celdaLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			
+			
 			if (row % 2 == 0) { //SI LA FILA ES PAR
 				
 				if (column == 0) { //COLUMNA NOMBRE
-					celdaLabel.setBackground(Color.CYAN);
+					celdaLabel.setBackground(new Color(204, 229, 255)); //AZUL PASTEL
 				} else if (column == 1) {
-					celdaLabel.setBackground(Color.GREEN);
+					celdaLabel.setBackground(new Color(204, 255, 204)); //VERDE PASTEL
 				} else if (column == 2) {
-					celdaLabel.setBackground(Color.YELLOW);
+					celdaLabel.setBackground(new Color(255, 253, 208)); //AMARILLO PASTEL
 				}
 
 				
 			} else {
 				
 				if (column == 0) { //COLUMNA NOMBRE
-					celdaLabel.setBackground(Color.CYAN);
+					celdaLabel.setBackground(new Color(229, 243, 255)); //AZUL CLARO PASTEL
 				} else if (column == 1) {
-					celdaLabel.setBackground(Color.GREEN);
+					celdaLabel.setBackground(new Color(229, 255, 229)); //VERDE CLARO PASTEL
 				} else if (column == 2) {
-					celdaLabel.setBackground(Color.YELLOW);
+					celdaLabel.setBackground(new Color(255, 255, 235)); //AMARILLO CLARO PASTEL
 				}
 				
 			}
@@ -138,20 +148,21 @@ public class SnakeLeaderboard extends JFrame{
         labelArriba.setHorizontalAlignment(SwingConstants.CENTER);
         
         labelArriba.setFont(new Font("MV BOLI", Font.BOLD, 25));
-        labelArriba.setForeground(Color.GREEN);
-        
-        labelArriba.setBackground(Color.BLACK);
+        labelArriba.setBackground(new Color(230, 230, 230)); //MORADO SUAVE PASTEL
+        labelArriba.setForeground(new Color(102, 51, 153)); // MORADO OSCURO PASTEL
+
         
         labelArriba.setOpaque(true);
         
         JPanel panelAbajo = new JPanel();
         
-        panelAbajo.setBackground(Color.BLACK);
+        panelAbajo.setBackground(new Color(230, 230, 230)); //GRIS PASTEL SUAVE
         
         JButton botonVolver = new JButton("VOLVER");
         
-        botonVolver.setBackground(Color.DARK_GRAY);
-        botonVolver.setForeground(Color.WHITE);
+        botonVolver.setBackground(new Color(153, 204, 255)); //AZUL PASTEL SUAVE
+        botonVolver.setForeground(new Color(255, 255, 255)); //BLANCO PURO
+
         botonVolver.setFocusable(false);
         
         botonVolver.addActionListener(e -> {
