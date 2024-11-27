@@ -14,11 +14,4 @@
 	<natures>
 		<nature>org.eclipse.jdt.core.javanature</nature>
 	</natures>
-	<linkedResources>
-		<link>
-			<name>resources/usuarios.csv</name>
-			<type>1</type>
-			<location>C:/Users/mikel.albisudela/OneDrive - Universidad de Deusto/Cursos/2024-25/1º Semestre/Programacion III/Eclipse/Program_project/resources/usuarios.csv</location>
-		</link>
-	</linkedResources>
 </projectDescription>

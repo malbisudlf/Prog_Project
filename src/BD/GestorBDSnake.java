@@ -184,7 +184,7 @@ public class GestorBDSnake {
                 int puntosTotales = Integer.parseInt(parts[3].trim());
 
                 if (!isUserExists(nombre)) {
-                	String sql = "INSERT INTO usuarios(nombre, puntuacion_maxima, puntos_totales) VALUES (?, ?, ?)"; //SQL
+                	String sql = "INSERT INTO usuarios(nombre, puntuacion_maxima, puntos_totales) VALUES (?, ?, ?)"; 
 ;
                     try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                        // pstmt.setInt(1, id);
@@ -206,7 +206,7 @@ public class GestorBDSnake {
     //DE OTRAS PRACT
     public void saveToCSV() {
         String sql = "SELECT id, nombre, puntuacion_maxima, puntos_totales FROM usuarios";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/usuarios.csv", true));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/usuarios.csv", false));
              Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {
