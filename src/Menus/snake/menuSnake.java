@@ -36,7 +36,7 @@ public class menuSnake extends JFrame{
         mainPanel.setBackground(Color.BLACK);
         
         // LABEL CON EL TÍTULO Y NOMBRE DE USUARIO
-        JLabel titulo = new JLabel("Usuario: " + usuario.getNombre(), SwingConstants.CENTER);
+        JLabel titulo = new JLabel("			SNAKE    Usuario: " + usuario.getNombre(), SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 30));
         titulo.setBackground(Color.BLACK);
         titulo.setForeground(Color.WHITE);
