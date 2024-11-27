@@ -16,14 +16,9 @@
 	</natures>
 	<linkedResources>
 		<link>
-			<name>lib/sqlite-jdbc-3.47.0.0.jar</name>
-			<type>1</type>
-			<location>C:/Users/alvaro.franco/OneDrive - Universidad de Deusto/Escritorio/PROGRAMACION III/jdbc-p2/lib/sqlite-jdbc-3.47.0.0.jar</location>
-		</link>
-		<link>
 			<name>resources/usuarios.csv</name>
 			<type>1</type>
-			<location>C:/Users/alvaro.franco/Downloads/usuarios.csv</location>
+			<location>C:/Users/mikel.albisudela/OneDrive - Universidad de Deusto/Cursos/2024-25/1º Semestre/Programacion III/Eclipse/Program_project/resources/usuarios.csv</location>
 		</link>
 	</linkedResources>
 </projectDescription>
