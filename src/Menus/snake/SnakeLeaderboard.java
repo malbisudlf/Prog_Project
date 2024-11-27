@@ -160,8 +160,8 @@ public class SnakeLeaderboard extends JFrame{
         
         JButton botonVolver = new JButton("VOLVER");
         
-        botonVolver.setBackground(new Color(153, 204, 255)); //AZUL PASTEL SUAVE
-        botonVolver.setForeground(new Color(255, 255, 255)); //BLANCO PURO
+        botonVolver.setBackground(Color.DARK_GRAY);
+        botonVolver.setForeground(new Color(255, 204, 229));
 
         botonVolver.setFocusable(false);
         
