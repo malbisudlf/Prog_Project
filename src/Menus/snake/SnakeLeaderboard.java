@@ -31,7 +31,7 @@ public class SnakeLeaderboard extends JFrame{
 		SnakeLeaderboard.usuarioSnake = usuarioSnake;
 		
 		setTitle("SNAKE LEADERBOARD");
-		setSize(600, 400);
+		setSize(1000, 600);
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
@@ -39,18 +39,18 @@ public class SnakeLeaderboard extends JFrame{
 		
 		List<UsuarioSnake> usuarios = gestorBDSnake.getAllUsers();
 		
-		String[][] data = new String[usuarios.size()][3]; //TANTAS FILAS COMO USUARIOS Y COLUMNAS PARA NOMBRE, PUNTUACION MAXIMA Y MONEDAS
+		String[][] data = new String[usuarios.size()][4]; //TANTAS FILAS COMO USUARIOS Y COLUMNAS PARA NOMBRE, PUNTUACION MAXIMA Y MONEDAS
 		for (int i = 0; i < usuarios.size(); i++) {
 			
 			UsuarioSnake usuario = usuarios.get(i);
-			
-			data[i][0] = usuario.getNombre(); //NOMBRE
-			data[i][1] = String.valueOf(usuario.getPuntuacionAlta()); //PUNTUACION MAS ALTA
-			data[i][2] = String.valueOf(usuario.getPuntosTotales()); //MONEDAS
+			data[i][0] = String.valueOf(i+1);
+			data[i][1] = usuario.getNombre(); //NOMBRE
+			data[i][2] = String.valueOf(usuario.getPuntuacionAlta()); //PUNTUACION MAS ALTA
+			data[i][3] = String.valueOf(usuario.getPuntosTotales()); //MONEDAS
 				
 		}
 		
-		String[] nombresColumnas = {"NOMBRE", "PUNTUACION MAXIMA", "MONEDAS"};
+		String[] nombresColumnas = {"POS", "NOMBRE", "HIGH SCORE", "MONEDAS"};
 		
 		DefaultTableModel model = new DefaultTableModel(data, nombresColumnas) {
 			
@@ -92,56 +92,70 @@ public class SnakeLeaderboard extends JFrame{
 		//RENDERER PARA LAS CELDAS
 		
 		leaderboardTable.setDefaultRenderer(Object.class, new TableCellRenderer() {
-			
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-					int row, int column) {
+		    @Override
+		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
+		                                                   int row, int column) {
 
-			JLabel celdaLabel = new JLabel(value.toString());
-			
-			celdaLabel.setForeground(Color.BLACK);
-			celdaLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
-			celdaLabel.setHorizontalAlignment(SwingConstants.CENTER);
-			
-			//IAG(Herramienta: ChatGPT)
-			//Sin modificar
-			//Usada solamente para la condicion del if
-			if (data[row][0].equals(usuarioSnake.getNombre())) { //SI EL NOMBRE DEL USUARIO ES EL MISMO QUE EL DE LA FILA
-				
-	            celdaLabel.setBackground(new Color(255, 239, 213)); //PONEMOS OTRO COLOR PARA DIFERENCIAR LA FILA DEL USUARIO
-				
-			} else if (row % 2 == 0) { //SI LA FILA ES PAR
-				
-				if (column == 0) { //COLUMNA NOMBRE
-					celdaLabel.setBackground(new Color(204, 229, 255)); //AZUL PASTEL
-				} else if (column == 1) {
-					celdaLabel.setBackground(new Color(204, 255, 204)); //VERDE PASTEL
-				} else if (column == 2) {
-					celdaLabel.setBackground(new Color(255, 253, 208)); //AMARILLO PASTEL
-				}
+		        JLabel celdaLabel = new JLabel(value.toString());
+		        celdaLabel.setForeground(Color.BLACK);
+		        celdaLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
+		        celdaLabel.setHorizontalAlignment(SwingConstants.CENTER);
 
-				
-			} else {
-				
-				if (column == 0) { //COLUMNA NOMBRE
-					celdaLabel.setBackground(new Color(229, 243, 255)); //AZUL CLARO PASTEL
-				} else if (column == 1) {
-					celdaLabel.setBackground(new Color(229, 255, 229)); //VERDE CLARO PASTEL
-				} else if (column == 2) {
-					celdaLabel.setBackground(new Color(255, 255, 235)); //AMARILLO CLARO PASTEL
-				}
-				
-			}
-			
-			if (isSelected) {
-                celdaLabel.setBackground(Color.GRAY);
-            }
-			
-			celdaLabel.setOpaque(true);
-			
-			return celdaLabel;
-			}
+		        // Destacar la fila del usuario actual
+		        if (data[row][1].equals(usuarioSnake.getNombre())) { // Comparar el nombre del usuario
+		        	if(row == 0) {
+		        		celdaLabel.setBackground(new Color(255, 215, 0)); //DORADO
+		        	} else if (row == 1) {
+		        		celdaLabel.setBackground(new Color(192, 192, 192)); 
+		        	} else if (row == 2) {
+		        		celdaLabel.setBackground(new Color(205, 127, 50)); // Bronce
+		        	} else {
+		            celdaLabel.setBackground(new Color(255, 178, 102)); // DIFERENCIA USUARIO
+		        	}
+		        } 
+		        // Premios especiales (oro, plata, bronce para el Top 3 en columna 0)
+		        else if (row == 0 && column == 0) {
+		            celdaLabel.setBackground(new Color(255, 215, 0)); // Dorado
+		        } else if (row == 1 && column == 0) {
+		            celdaLabel.setBackground(new Color(192, 192, 192)); // Plata
+		        } else if (row == 2 && column == 0) {
+		            celdaLabel.setBackground(new Color(205, 127, 50)); // Bronce
+		        } 
+		        // Fila par
+		        else if (row % 2 == 0) {
+		            if (column == 0) { // Columna Nombre
+		                celdaLabel.setBackground(new Color(255, 200, 220)); // Rosa pastel
+		            } else if (column == 1) {
+		                celdaLabel.setBackground(new Color(204, 229, 255)); // Azul pastel
+		            } else if (column == 2) {
+		                celdaLabel.setBackground(new Color(204, 255, 204)); // Verde pastel
+		            } else if (column == 3) {
+		                celdaLabel.setBackground(new Color(255, 253, 208)); // Amarillo pastel
+		            }
+		        } 
+		        // Fila impar
+		        else {
+		            if (column == 0) { // Columna Nombre
+		                celdaLabel.setBackground(new Color(255, 228, 225)); // Rosa claro pastel
+		            } else if (column == 1) {
+		                celdaLabel.setBackground(new Color(229, 243, 255)); // Azul claro pastel
+		            } else if (column == 2) {
+		                celdaLabel.setBackground(new Color(229, 255, 229)); // Verde claro pastel
+		            } else if (column == 3) {
+		                celdaLabel.setBackground(new Color(255, 255, 235)); // Amarillo claro pastel
+		            }
+		        }
+
+		        // Fila seleccionada
+		        if (isSelected) {
+		            celdaLabel.setBackground(Color.GRAY);
+		        }
+
+		        celdaLabel.setOpaque(true); // Asegura que el color de fondo se aplique
+		        return celdaLabel;
+		    }
 		});
+
 	
 		JScrollPane scrollPane = new JScrollPane(leaderboardTable);
         add(scrollPane, BorderLayout.CENTER);
