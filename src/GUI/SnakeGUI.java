@@ -11,7 +11,6 @@ public class SnakeGUI extends JFrame {
 
     private static final long serialVersionUID = 1L;
     
-    private JButton botonPausa;
     public static UsuarioSnake usuario;
 
     public SnakeGUI(UsuarioSnake usuario) {
@@ -33,15 +32,6 @@ public class SnakeGUI extends JFrame {
         panelArriba.setBackground(Color.BLACK);
         panelArriba.setLayout(new BorderLayout());
 
-        // BOTÓN "PAUSA" (WEST DEL PANEL SUPERIOR)
-        /*
-        botonPausa = new JButton("PAUSA");
-        botonPausa.setFont(font);
-        botonPausa.setFocusable(false);
-        botonPausa.setForeground(Color.GREEN);
-        botonPausa.setBackground(Color.BLACK);
-        panelArriba.add(botonPausa, BorderLayout.WEST);
-        */
         
         // USUARIO
         JLabel user = new JLabel();
@@ -58,52 +48,11 @@ public class SnakeGUI extends JFrame {
         // ÁREA DE JUEGO (PANEL CENTRAL)
         panelSnake snakeGame = new panelSnake(600, 600, this, usuario);  // Pasar la referencia
         snakeGame.setPreferredSize(new Dimension(600, 600));
-        add(snakeGame, BorderLayout.CENTER);
-        
-        // PANEL INFERIOR (panelAbajo) PARA BOTÓN "VOLVER"
-        /*
-        JPanel panelAbajo = new JPanel();
-        panelAbajo.setBackground(Color.BLACK);
-        panelAbajo.setLayout(new BorderLayout());
-        */
-
-        // BOTÓN "VOLVER" (WEST DEL PANEL INFERIOR)
-        /*
-        JButton botonVolver = new JButton("VOLVER");
-        botonVolver.setFont(font);
-        botonVolver.setFocusable(false);
-        botonVolver.setForeground(Color.GREEN);
-        botonVolver.setBackground(Color.BLACK);
-        panelAbajo.add(botonVolver, BorderLayout.WEST);
-        */
-        
-        /*
-        botonPausa.addActionListener(e -> {
-            botonVolver.setEnabled(false);
-            botonPausa.setEnabled(false);
-            new menuPausaSnake(this);
-        });
-
-        botonVolver.addActionListener(e -> {
-            new menuSnake(menuSnake.usuario);
-            dispose();
-        });
-        */
-        
-        // AÑADIR EL PANEL INFERIOR AL JFrame (SUR)
-        //add(panelAbajo, BorderLayout.SOUTH);    
+        add(snakeGame, BorderLayout.CENTER);   
         
         pack();
         setVisible(true);
         snakeGame.requestFocus();
-    }
-
-    //IAG (Herramienta: ChatGPT)
-    //Para poder volver a pulsar los botones al reanudar la pausa
-    public void enableButtons() {
-        JButton botonVolver = (JButton) ((JPanel) getContentPane().getComponent(2)).getComponent(0);
-        botonVolver.setEnabled(true);
-        botonPausa.setEnabled(true);
     }
     
     public void goToMenu() {

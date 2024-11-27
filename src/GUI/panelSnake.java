@@ -174,9 +174,13 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
 
         // Guardar cambios en la base de datos
         GestorBDSnake gestorBD = new GestorBDSnake();
+        
         if (gestorBD.updateScores(SnakeGUI.usuario.getNombre(), highScore, score)) {
-            JOptionPane.showMessageDialog(this, "Puntuaciones actualizadas en la base de datos.");
+        	
+        	SnakeGUI.usuario.setPuntuacionAlta(highScore); //SE GUARDA LA NUEVA PUNTUACION MAS ALTA
+        	
         } else {
+        	
             JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
         }
 

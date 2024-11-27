@@ -1,6 +1,8 @@
 package Menus.snake;
 
 import javax.swing.*;
+
+import BD.GestorBDSnake;
 import GUI.*;
 import Menus.MainMenuGUI;
 import usuario.UsuarioSnake;
@@ -8,7 +10,6 @@ import usuario.UsuarioSnake;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.nio.channels.NonReadableChannelException;
 
 public class menuSnake extends JFrame{
 
@@ -35,7 +36,7 @@ public class menuSnake extends JFrame{
         mainPanel.setBackground(Color.BLACK);
         
         // LABEL CON EL TÍTULO Y NOMBRE DE USUARIO
-        JLabel titulo = new JLabel("			SNAKE    Usuario: " + usuario.getNombre(), SwingConstants.CENTER);
+        JLabel titulo = new JLabel("Usuario: " + usuario.getNombre(), SwingConstants.CENTER);
         titulo.setFont(new Font("Arial", Font.BOLD, 30));
         titulo.setBackground(Color.BLACK);
         titulo.setForeground(Color.WHITE);
@@ -51,14 +52,21 @@ public class menuSnake extends JFrame{
         JButton botonJugar = buttonWithIcon("resources/images/row-1-column-1.png", "JUGAR");
         
         botonJugar.addActionListener(new ActionListener() {
-            
             @Override
             public void actionPerformed(ActionEvent e) {
-                // REDIRIGE A LA VENTANA DE JUEGO
-                new SnakeGUI(usuario);
-                dispose();
+                GestorBDSnake gestorBD = new GestorBDSnake();
+                UsuarioSnake usuarioActualizado = gestorBD.getUserByName(usuario.getNombre());
+                
+                if (usuarioActualizado != null) {
+                    menuSnake.usuario = usuarioActualizado; // Actualizar usuario
+                    new SnakeGUI(menuSnake.usuario); // Crear nueva partida con el usuario actualizado
+                    dispose(); // Cerrar el menú actual
+                } else {
+                    JOptionPane.showMessageDialog(null, "Error al cargar el usuario actualizado.");
+                }
             }
         });
+
         
         // Botón para consultar el leaderboard
         JButton botonLeaderboard = buttonWithIcon("resources/images/row-1-column-2.png", "LEADERBOARD");

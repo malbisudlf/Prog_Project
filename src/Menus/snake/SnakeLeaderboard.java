@@ -103,9 +103,12 @@ public class SnakeLeaderboard extends JFrame{
 			celdaLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
 			celdaLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			
-			if (data[row][0].equals(usuarioSnake.getNombre())) { // Match by username
+			//IAG(Herramienta: ChatGPT)
+			//Sin modificar
+			//Usada solamente para la condicion del if
+			if (data[row][0].equals(usuarioSnake.getNombre())) { //SI EL NOMBRE DEL USUARIO ES EL MISMO QUE EL DE LA FILA
 				
-	            celdaLabel.setBackground(new Color(255, 239, 213));
+	            celdaLabel.setBackground(new Color(255, 239, 213)); //PONEMOS OTRO COLOR PARA DIFERENCIAR LA FILA DEL USUARIO
 				
 			} else if (row % 2 == 0) { //SI LA FILA ES PAR
 				
