@@ -118,34 +118,31 @@ public class GestorBDSnake {
 
 
     // Obtener todos los usuarios
+ // Obtener todos los usuarios ordenados por puntuacion_maxima de forma descendente
     public List<UsuarioSnake> getAllUsers() {
         List<UsuarioSnake> usuarios = new ArrayList<>();
-        String sql = "SELECT id, nombre, puntuacion_maxima, puntos_totales FROM usuarios";
+        String sql = "SELECT id, nombre, puntuacion_maxima, puntos_totales FROM usuarios ORDER BY puntuacion_maxima DESC";
         
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql);
              ResultSet rs = pstmt.executeQuery()) {
             
-            // Recorremos el ResultSet para obtener los usuarios
             while (rs.next()) {
                 int id = rs.getInt("id");
                 String nombre = rs.getString("nombre");
                 int puntuacionMaxima = rs.getInt("puntuacion_maxima");
                 int puntosTotales = rs.getInt("puntos_totales");
                 
-                // Creamos un objeto Usuario con los datos obtenidos
                 UsuarioSnake usuario = new UsuarioSnake(id, nombre, puntuacionMaxima, puntosTotales);
-                
-                // Agregamos el usuario a la lista
                 usuarios.add(usuario);
             }
         } catch (SQLException e) {
             e.printStackTrace();
-            // Manejo de excepciones en caso de error en la consulta
         }
         
         return usuarios;
     }
+
 
     // Registrar una nueva puntuación para un usuario
     public boolean addNewScore(String nombre, int puntuacion, int puntuacionAlta) {

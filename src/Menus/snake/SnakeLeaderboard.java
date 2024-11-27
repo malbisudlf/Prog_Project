@@ -103,8 +103,11 @@ public class SnakeLeaderboard extends JFrame{
 			celdaLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
 			celdaLabel.setHorizontalAlignment(SwingConstants.CENTER);
 			
-			
-			if (row % 2 == 0) { //SI LA FILA ES PAR
+			if (data[row][0].equals(usuarioSnake.getNombre())) { // Match by username
+				
+	            celdaLabel.setBackground(new Color(255, 239, 213));
+				
+			} else if (row % 2 == 0) { //SI LA FILA ES PAR
 				
 				if (column == 0) { //COLUMNA NOMBRE
 					celdaLabel.setBackground(new Color(204, 229, 255)); //AZUL PASTEL

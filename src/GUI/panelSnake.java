@@ -3,6 +3,7 @@ package GUI;
 import javax.swing.*;
 
 import BD.GestorBDSnake;
+import usuario.UsuarioSnake;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -19,6 +20,8 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
 
     private static final long serialVersionUID = 1L;
 
+    public static UsuarioSnake usuarioSnake;
+    
     private class Tile {
         int x;
         int y;
@@ -43,11 +46,12 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
     int velocidadY;
 
     int score = 0;
-    int highScore = 0;
+    int highScore;
     boolean gameOver = false;
     SnakeGUI parentGUI;  // Referencia a SnakeGUI para poder acceder al menú
 
-    panelSnake(int anchoPanel, int altoPanel, SnakeGUI parentGUI) {
+    panelSnake(int anchoPanel, int altoPanel, SnakeGUI parentGUI, UsuarioSnake usuarioSnake) {
+    	panelSnake.usuarioSnake = usuarioSnake;
         this.anchoPanel = anchoPanel;
         this.altoPanel = altoPanel;
         this.parentGUI = parentGUI;  // Guardar referencia al JFrame principal
@@ -55,6 +59,8 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
         setBackground(Color.GREEN);
         addKeyListener(this);  // Escuchar las teclas para mover la serpiente
         setFocusable(true);
+        
+        highScore = usuarioSnake.getPuntuacionAlta();
 
         snakeHead = new Tile(5, 5);  // Inicializar la cabeza de la serpiente en la posición (5, 5)
         snakeBody = new ArrayList<>();

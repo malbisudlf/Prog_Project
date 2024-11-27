@@ -56,7 +56,7 @@ public class SnakeGUI extends JFrame {
         add(panelArriba, BorderLayout.NORTH);
         
         // ÁREA DE JUEGO (PANEL CENTRAL)
-        panelSnake snakeGame = new panelSnake(600, 600, this);  // Pasar la referencia
+        panelSnake snakeGame = new panelSnake(600, 600, this, usuario);  // Pasar la referencia
         snakeGame.setPreferredSize(new Dimension(600, 600));
         add(snakeGame, BorderLayout.CENTER);
         
