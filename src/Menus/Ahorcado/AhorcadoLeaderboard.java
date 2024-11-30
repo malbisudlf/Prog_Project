@@ -58,7 +58,10 @@ public class AhorcadoLeaderboard extends JFrame {
         ordenarCombo.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
 
         ordenarCombo.setRenderer(new BasicComboBoxRenderer() {
-            @Override
+            
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
                 JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
                 if (isSelected) {
@@ -111,7 +114,7 @@ public class AhorcadoLeaderboard extends JFrame {
             public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
                 JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 cell.setHorizontalAlignment(JLabel.CENTER);
-                cell.setFont(new Font("SansSerif", Font.PLAIN, 14));
+                cell.setFont(new Font("Thoama", Font.BOLD, 16));
                 if (row % 2 == 0) {
                     cell.setBackground(new Color(230, 240, 255));
                 } else {
