@@ -43,7 +43,7 @@ public class SnakeLeaderboard extends JFrame{
 		for (int i = 0; i < usuarios.size(); i++) {
 			
 			UsuarioSnake usuario = usuarios.get(i);
-			data[i][0] = String.valueOf(i+1);
+			data[i][0] = String.valueOf(i+1); //POSICION
 			data[i][1] = usuario.getNombre(); //NOMBRE
 			data[i][2] = String.valueOf(usuario.getPuntuacionAlta()); //PUNTUACION MAS ALTA
 			data[i][3] = String.valueOf(usuario.getPuntosTotales()); //MONEDAS
@@ -106,9 +106,9 @@ public class SnakeLeaderboard extends JFrame{
 		        	if(row == 0) {
 		        		celdaLabel.setBackground(new Color(255, 215, 0)); //DORADO
 		        	} else if (row == 1) {
-		        		celdaLabel.setBackground(new Color(192, 192, 192)); 
+		        		celdaLabel.setBackground(new Color(192, 192, 192)); //PLATEADO
 		        	} else if (row == 2) {
-		        		celdaLabel.setBackground(new Color(205, 127, 50)); // Bronce
+		        		celdaLabel.setBackground(new Color(205, 127, 50)); //BRONCE
 		        	} else {
 		            celdaLabel.setBackground(new Color(255, 178, 102)); // DIFERENCIA USUARIO
 		        	}
