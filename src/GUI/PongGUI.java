@@ -3,6 +3,8 @@ package GUI;
 import Menus.pong.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.util.HashSet;
+
 import javax.swing.*;
 
 public class PongGUI extends JFrame implements ActionListener{
@@ -16,7 +18,7 @@ public class PongGUI extends JFrame implements ActionListener{
     private static final int PALA_ANCHO = 10;
     private static final int PALA_ALTO = 150;
     private static final int BOLA_TAMAÑO = 20;
-    private static final int PALA_VELOCIDAD = 10;
+    private static final int PALA_VELOCIDAD = 6;
     
     
     private int pala1Y = ALTO / 2 - PALA_ALTO / 2;
@@ -24,9 +26,14 @@ public class PongGUI extends JFrame implements ActionListener{
     private int bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
     private int bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
     private float bolaVel = 3f;
-    private float bolaAcel = 1f;
+    private float bolaAcel = 0.75f;
     private float bolaXDir = bolaVel;
     private float bolaYDir = 0f;
+    
+    private final HashSet<Integer> teclasPresionadas = new HashSet<>();
+    
+    private int puntuacion1 = 0;
+    private int puntuacion2 = 0;
     
     //IAG (herramienta: ChatGPT)
 	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del Timer de chatgpt
@@ -38,7 +45,7 @@ public class PongGUI extends JFrame implements ActionListener{
     private GamePanel gamePanel;
 
     public PongGUI() {
-        setTitle("PONG");
+    	setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(ANCHO, ALTO + 65);
 		setLocationRelativeTo(null);
@@ -49,7 +56,7 @@ public class PongGUI extends JFrame implements ActionListener{
         setLayout(new BorderLayout());
         add(gamePanel, BorderLayout.CENTER);
 
-        JButton botonPausa = new JButton("Pausar/Reanudar");
+        JButton botonPausa = new JButton("Pausar");
         botonPausa.setFocusable(false);
         botonPausa.addActionListener(new ActionListener() {
             @Override
@@ -64,6 +71,7 @@ public class PongGUI extends JFrame implements ActionListener{
         timer.start();
         
         menuPausa = new MenuPausaPong();
+        menuPausa.setVisible(false);
         setVisible(true);
     }
 
@@ -82,6 +90,7 @@ public class PongGUI extends JFrame implements ActionListener{
     public void actionPerformed(ActionEvent e) {
         if (!isPaused) {
             moverBola();
+            moverPalas();
             checkColisiones();
             repaint();
         }
@@ -90,6 +99,24 @@ public class PongGUI extends JFrame implements ActionListener{
     private void moverBola() {
         bolaX += bolaXDir;
         bolaY += bolaYDir;
+    }
+    
+    private void moverPalas() {
+    	// Controles jugador 1
+        if (teclasPresionadas.contains(KeyEvent.VK_W) && pala1Y > 0) {
+            pala1Y -= PALA_VELOCIDAD;
+        }
+        if (teclasPresionadas.contains(KeyEvent.VK_S) && pala1Y < ALTO - PALA_ALTO) {
+            pala1Y += PALA_VELOCIDAD;
+        }
+
+        // Controles jugador 2
+        if (teclasPresionadas.contains(KeyEvent.VK_UP) && pala2Y > 0) {
+            pala2Y -= PALA_VELOCIDAD;
+        }
+        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala2Y < ALTO - PALA_ALTO) {
+            pala2Y += PALA_VELOCIDAD;
+        }
     }
 
     private void checkColisiones() {
@@ -115,13 +142,22 @@ public class PongGUI extends JFrame implements ActionListener{
             bolaYDir = bolaXDir * a;
         }
 
-        // Resetear la bola si se sale de los lados
-        if (bolaX < 0 || bolaX > (ANCHO - BOLA_TAMAÑO)) {
+        // Resetear la bola si se sale de los lados y cambiar puntuacion
+        if (bolaX < 0) {
             bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
             bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
             bolaXDir = -bolaXDir;
             bolaXDir = bolaVel;
             bolaYDir = bolaVel;
+            puntuacion2++;
+        }
+        if (bolaX > (ANCHO - BOLA_TAMAÑO)) {
+            bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
+            bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
+            bolaXDir = -bolaXDir;
+            bolaXDir = bolaVel;
+            bolaYDir = bolaVel;
+            puntuacion1++;
         }
     }
     
@@ -137,29 +173,28 @@ public class PongGUI extends JFrame implements ActionListener{
             g.fillRect(PALA_DESP_I, pala1Y, PALA_ANCHO, PALA_ALTO);
             g.fillRect(ANCHO - PALA_DESP_D, pala2Y, PALA_ANCHO, PALA_ALTO);
             g.fillOval(bolaX, bolaY, BOLA_TAMAÑO, BOLA_TAMAÑO);
+           
+            Graphics2D g2d = (Graphics2D) g;
+            g2d.setFont(new Font("Arial", Font.BOLD, 70));
+            g2d.setColor(Color.WHITE);
+            
+            g2d.drawString((puntuacion1 + "  -  " + puntuacion2), ANCHO/2 - 95, 70);
         }
     }
 
     private class KeyHandler extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
-            int key = e.getKeyCode();
-
-            // Controles jugador 1
-            if (key == KeyEvent.VK_W && pala1Y > 0) {
-                pala1Y -= PALA_VELOCIDAD;
-            }
-            if (key == KeyEvent.VK_S && pala1Y < ALTO - PALA_ALTO) {
-                pala1Y += PALA_VELOCIDAD;
-            }
-
-            // Controles jugador 2
-            if (key == KeyEvent.VK_UP && pala2Y > 0) {
-                pala2Y -= PALA_VELOCIDAD;
-            }
-            if (key == KeyEvent.VK_DOWN && pala2Y < ALTO - PALA_ALTO) {
-                pala2Y += PALA_VELOCIDAD;
-            }
+            int tecla = e.getKeyCode();
+            teclasPresionadas.add(tecla);
+            System.out.println("Se ha pulsado la tecla" + tecla);
+        }
+        
+        @Override
+        public void keyReleased(KeyEvent e) {
+            int tecla = e.getKeyCode();
+            teclasPresionadas.remove(tecla);
+            System.out.println("Se ha soltado la tecla" + tecla);
         }
     }
 }
