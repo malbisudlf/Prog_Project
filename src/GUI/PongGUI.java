@@ -44,8 +44,10 @@ public class PongGUI extends JFrame implements ActionListener{
 
     private GamePanel gamePanel;
     private MenuPausa menuPausa;
+	private Dificultad dificultad;
 
     public PongGUI() {
+    	this.dificultad = null;
     	setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(ANCHO, ALTO);
@@ -73,10 +75,11 @@ public class PongGUI extends JFrame implements ActionListener{
 		menuPausa.setBounds(0, 0, ANCHO/3, ALTO_VISUAL);
         layeredPane.setVisible(true);
         setVisible(true);
-        ShowControles();
+        ShowControlesPvP();
     }
     
     public PongGUI(Dificultad dificultad) {
+    	this.dificultad = dificultad;
     	setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(ANCHO, ALTO);
@@ -104,7 +107,7 @@ public class PongGUI extends JFrame implements ActionListener{
 		menuPausa.setBounds(0, 0, ANCHO/3, ALTO_VISUAL);
         layeredPane.setVisible(true);
         setVisible(true);
-        ShowControles();
+        ShowControlesPvC();
     }
 
     private void togglePause() {
@@ -135,13 +138,23 @@ public class PongGUI extends JFrame implements ActionListener{
         if (teclasPresionadas.contains(KeyEvent.VK_S) && pala1Y < ALTO_VISUAL - PALA_ALTO) {
             pala1Y += PALA_VELOCIDAD;
         }
-
-        // Controles jugador 2
-        if (teclasPresionadas.contains(KeyEvent.VK_UP) && pala2Y > 0) {
-            pala2Y -= PALA_VELOCIDAD;
+        
+        if (dificultad == null) {
+	        // Controles jugador 2
+	        if (teclasPresionadas.contains(KeyEvent.VK_UP) && pala2Y > 0) {
+	            pala2Y -= PALA_VELOCIDAD;
+	        }
+	        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	            pala2Y += PALA_VELOCIDAD;
+	        }
         }
-        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
-            pala2Y += PALA_VELOCIDAD;
+        if (dificultad == Dificultad.Dificil) {
+        	if (pala2Y + (PALA_ALTO/2) < bolaY - (BOLA_TAMAÑO/2) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+        		pala2Y += PALA_VELOCIDAD;
+        	}
+        	if (pala2Y + (PALA_ALTO/2) > bolaY - (BOLA_TAMAÑO/2) && pala2Y > 0) {
+        		pala2Y -= PALA_VELOCIDAD;
+        	}
         }
     }
 
@@ -247,7 +260,11 @@ public class PongGUI extends JFrame implements ActionListener{
 	
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					ShowControles();
+					if (dificultad == null) {
+						ShowControlesPvP();
+					} else {
+						ShowControlesPvC();
+					}
 				}
 			});
 			
@@ -313,7 +330,11 @@ public class PongGUI extends JFrame implements ActionListener{
         }
     }
     
-    private void ShowControles() {
+    private void ShowControlesPvP() {
 		JOptionPane.showMessageDialog(this, "Jugador 1 : W,S\nJugador 2 : Flechas\nPausar/Reanudar : Espacio", "Controles", JOptionPane.INFORMATION_MESSAGE);
+	}
+    
+    private void ShowControlesPvC() {
+		JOptionPane.showMessageDialog(this, "Jugador : W,S\nPausar/Reanudar : Espacio", "Controles", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
