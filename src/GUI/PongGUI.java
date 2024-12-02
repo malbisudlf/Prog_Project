@@ -22,7 +22,6 @@ public class PongGUI extends JFrame implements ActionListener{
     private static final int BOLA_TAMAÑO = 20;
     private static final int PALA_VELOCIDAD = 6;
     
-    
     private int pala1Y = ALTO / 2 - PALA_ALTO / 2;
     private int pala2Y = ALTO / 2 - PALA_ALTO / 2;
     private int bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
@@ -151,17 +150,15 @@ public class PongGUI extends JFrame implements ActionListener{
         if (bolaX < 0) {
             bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
             bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
-            bolaXDir = -bolaXDir;
-            bolaXDir = bolaVel;
-            bolaYDir = bolaVel;
+            bolaXDir = -bolaVel;
+            bolaYDir = 0f;
             puntuacion2++;
         }
         if (bolaX > (ANCHO - BOLA_TAMAÑO)) {
             bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
             bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
-            bolaXDir = -bolaXDir;
             bolaXDir = bolaVel;
-            bolaYDir = bolaVel;
+            bolaYDir = 0f;
             puntuacion1++;
         }
     }
@@ -238,6 +235,16 @@ public class PongGUI extends JFrame implements ActionListener{
 	
 				@Override
 				public void actionPerformed(ActionEvent e) {
+					pala1Y = ALTO / 2 - PALA_ALTO / 2;
+				    pala2Y = ALTO / 2 - PALA_ALTO / 2;
+				    bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
+				    bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
+				    bolaXDir = bolaVel;
+				    bolaYDir = 0f;
+				    
+				    puntuacion1 = 0;
+				    puntuacion2 = 0;
+				    togglePause();
 				}
 			});
 			
