@@ -7,14 +7,13 @@ import java.awt.event.*;
 import java.util.HashSet;
 
 import javax.swing.*;
-import javax.xml.stream.events.StartDocument;
 
 public class PongGUI extends JFrame implements ActionListener{
 	
 	static final long serialVersionUID = 1L;
 	
 	private static final int ANCHO = 1080;
-    private static final int ALTO = 540;
+    private static final int ALTO = 630;
     private static final int PALA_DESP_I = 20;
     private static final int PALA_DESP_D = PALA_DESP_I + 20;
     private static final int PALA_ANCHO = 10;
@@ -40,7 +39,7 @@ public class PongGUI extends JFrame implements ActionListener{
 	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del Timer de chatgpt
 	//y la trasladamos con algun cambio para que se adapte a nuestra idea.
     private Timer timer;
-    private boolean isPaused = false;
+    private boolean isPaused = true;
 
     private GamePanel gamePanel;
     private MenuPausa menuPausa;
@@ -48,7 +47,7 @@ public class PongGUI extends JFrame implements ActionListener{
     public PongGUI() {
     	setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
-        setSize(ANCHO, ALTO + 65);
+        setSize(ANCHO, ALTO);
 		setLocationRelativeTo(null);
         setResizable(false);
         
@@ -62,15 +61,36 @@ public class PongGUI extends JFrame implements ActionListener{
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
         gamePanel.setBounds(0, 0, ANCHO, ALTO);
 
-        JButton botonPausa = new JButton("Pausar");
-        botonPausa.setFocusable(false);
-        botonPausa.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                togglePause();
-            }
-        });
-        add(botonPausa, BorderLayout.NORTH);
+        addKeyListener(new KeyHandler());
+        timer = new Timer(10, this);
+        timer.start();
+        
+        menuPausa = new MenuPausa();
+        menuPausa.setBackground(Color.BLACK);
+		layeredPane.add(menuPausa, JLayeredPane.PALETTE_LAYER);
+		menuPausa.setVisible(false);
+		menuPausa.setBounds(0, 0, ANCHO/3, ALTO);
+        layeredPane.setVisible(true);
+        setVisible(true);
+        ShowControles();
+    }
+    
+    public PongGUI(Dificultad dificultad) {
+    	setTitle("PONG");
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setSize(ANCHO, ALTO);
+		setLocationRelativeTo(null);
+        setResizable(false);
+        
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null);
+
+        gamePanel = new GamePanel();
+        gamePanel.setBackground(Color.BLACK);
+        setLayout(new BorderLayout());
+        add(layeredPane, BorderLayout.CENTER);
+        layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
+        gamePanel.setBounds(0, 0, ANCHO, ALTO);
 
         addKeyListener(new KeyHandler());
         timer = new Timer(10, this);
@@ -80,14 +100,15 @@ public class PongGUI extends JFrame implements ActionListener{
         menuPausa.setBackground(Color.BLACK);
 		layeredPane.add(menuPausa, JLayeredPane.PALETTE_LAYER);
 		menuPausa.setVisible(false);
-		menuPausa.setBounds(0, 0, 360, 540);
+		menuPausa.setBounds(0, 0, ANCHO/3, ALTO);
         layeredPane.setVisible(true);
         setVisible(true);
+        ShowControles();
     }
 
     private void togglePause() {
-        menuPausa.setVisible(!menuPausa.isVisible());
     	isPaused = !isPaused;
+    	menuPausa.setVisible(isPaused);
     }
 
     @Override
@@ -185,7 +206,10 @@ public class PongGUI extends JFrame implements ActionListener{
     }
     
     private class MenuPausa extends JPanel {
-    	public MenuPausa() {
+    	
+		private static final long serialVersionUID = 1L;
+
+		public MenuPausa() {
 	        setLayout(new BorderLayout());
 	        setBackground(Color.BLACK);
 			
@@ -257,7 +281,6 @@ public class PongGUI extends JFrame implements ActionListener{
 	
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					// TODO Auto-generated method stub
 					new MainMenuGUI();
 					dispose();
 				}
@@ -276,6 +299,10 @@ public class PongGUI extends JFrame implements ActionListener{
         public void keyPressed(KeyEvent e) {
             int tecla = e.getKeyCode();
             teclasPresionadas.add(tecla);
+            // Pausar
+            if (teclasPresionadas.contains(KeyEvent.VK_SPACE)) {
+                togglePause();
+            }
         }
         
         @Override
@@ -286,6 +313,6 @@ public class PongGUI extends JFrame implements ActionListener{
     }
     
     private void ShowControles() {
-		JOptionPane.showMessageDialog(this, "Jugador 1 : W,S\nJugador 2 : Flechas");
+		JOptionPane.showMessageDialog(this, "Jugador 1 : W,S\nJugador 2 : Flechas\nPausar/Reanudar : Espacio", "Controles", JOptionPane.INFORMATION_MESSAGE);
 	}
 }

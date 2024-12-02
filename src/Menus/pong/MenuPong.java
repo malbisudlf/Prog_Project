@@ -61,7 +61,6 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				new PongGUI();
 				dispose();
 			}
@@ -90,8 +89,8 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
-				PvC();
+				new MenuDificultadPong();
+				dispose();
 			}
 		});
 		
@@ -104,7 +103,6 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				Skins();
 			}
 		});
@@ -132,7 +130,6 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// TODO Auto-generated method stub
 				new MainMenuGUI();
 				dispose();
 			}
@@ -146,14 +143,8 @@ public class MenuPong extends JFrame {
 		add(panel);
 		setVisible(true);
 	}
-	
-	private void PvC() {
-		// TODO Auto-generated method stub
-		JOptionPane.showMessageDialog(this, "Aun sin implementar");
-	}
-	
+
 	private void Skins() {
-		// TODO Auto-generated method stub
 		JOptionPane.showMessageDialog(this, "Aun sin implementar");
 	}
 	
