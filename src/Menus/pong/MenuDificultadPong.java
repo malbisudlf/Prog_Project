@@ -33,7 +33,9 @@ public class MenuDificultadPong extends JFrame{
         setBackground(Color.BLACK);
 		
 		JLabel titulo = new JLabel("DIFICULTAD", SwingConstants.CENTER);
+		titulo.setOpaque(true);
 		titulo.setForeground(Color.WHITE);
+		titulo.setBackground(Color.BLACK);
 		titulo.setFont(new Font("Arial", Font.BOLD, 50));
 		add(titulo, BorderLayout.NORTH);
 		

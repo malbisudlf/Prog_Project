@@ -14,6 +14,7 @@ public class PongGUI extends JFrame implements ActionListener{
 	
 	private static final int ANCHO = 1080;
     private static final int ALTO = 630;
+    private static final int ALTO_VISUAL = ALTO - 37;
     private static final int PALA_DESP_I = 20;
     private static final int PALA_DESP_D = PALA_DESP_I + 20;
     private static final int PALA_ANCHO = 10;
@@ -69,7 +70,7 @@ public class PongGUI extends JFrame implements ActionListener{
         menuPausa.setBackground(Color.BLACK);
 		layeredPane.add(menuPausa, JLayeredPane.PALETTE_LAYER);
 		menuPausa.setVisible(false);
-		menuPausa.setBounds(0, 0, ANCHO/3, ALTO);
+		menuPausa.setBounds(0, 0, ANCHO/3, ALTO_VISUAL);
         layeredPane.setVisible(true);
         setVisible(true);
         ShowControles();
@@ -100,7 +101,7 @@ public class PongGUI extends JFrame implements ActionListener{
         menuPausa.setBackground(Color.BLACK);
 		layeredPane.add(menuPausa, JLayeredPane.PALETTE_LAYER);
 		menuPausa.setVisible(false);
-		menuPausa.setBounds(0, 0, ANCHO/3, ALTO);
+		menuPausa.setBounds(0, 0, ANCHO/3, ALTO_VISUAL);
         layeredPane.setVisible(true);
         setVisible(true);
         ShowControles();
@@ -131,7 +132,7 @@ public class PongGUI extends JFrame implements ActionListener{
         if (teclasPresionadas.contains(KeyEvent.VK_W) && pala1Y > 0) {
             pala1Y -= PALA_VELOCIDAD;
         }
-        if (teclasPresionadas.contains(KeyEvent.VK_S) && pala1Y < ALTO - PALA_ALTO) {
+        if (teclasPresionadas.contains(KeyEvent.VK_S) && pala1Y < ALTO_VISUAL - PALA_ALTO) {
             pala1Y += PALA_VELOCIDAD;
         }
 
@@ -139,7 +140,7 @@ public class PongGUI extends JFrame implements ActionListener{
         if (teclasPresionadas.contains(KeyEvent.VK_UP) && pala2Y > 0) {
             pala2Y -= PALA_VELOCIDAD;
         }
-        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala2Y < ALTO - PALA_ALTO) {
+        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
             pala2Y += PALA_VELOCIDAD;
         }
     }
@@ -150,8 +151,8 @@ public class PongGUI extends JFrame implements ActionListener{
         	bolaY = 0;
             bolaYDir = -bolaYDir;
         }
-        if (bolaY >= ALTO - BOLA_TAMAÑO) {
-        	bolaY = ALTO - BOLA_TAMAÑO;
+        if (bolaY >= ALTO_VISUAL - BOLA_TAMAÑO) {
+        	bolaY = ALTO_VISUAL - BOLA_TAMAÑO;
         	bolaYDir = -bolaYDir;
         }
 
