@@ -1,11 +1,13 @@
 package GUI;
 
+import Menus.MainMenuGUI;
 import Menus.pong.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.util.HashSet;
 
 import javax.swing.*;
+import javax.xml.stream.events.StartDocument;
 
 public class PongGUI extends JFrame implements ActionListener{
 	
@@ -40,9 +42,9 @@ public class PongGUI extends JFrame implements ActionListener{
 	//y la trasladamos con algun cambio para que se adapte a nuestra idea.
     private Timer timer;
     private boolean isPaused = false;
-    private MenuPausaPong menuPausa;
 
     private GamePanel gamePanel;
+    private MenuPausa menuPausa;
 
     public PongGUI() {
     	setTitle("PONG");
@@ -50,11 +52,16 @@ public class PongGUI extends JFrame implements ActionListener{
         setSize(ANCHO, ALTO + 65);
 		setLocationRelativeTo(null);
         setResizable(false);
+        
+        JLayeredPane layeredPane = new JLayeredPane();
+        layeredPane.setLayout(null);
 
         gamePanel = new GamePanel();
         gamePanel.setBackground(Color.BLACK);
         setLayout(new BorderLayout());
-        add(gamePanel, BorderLayout.CENTER);
+        add(layeredPane, BorderLayout.CENTER);
+        layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
+        gamePanel.setBounds(0, 0, ANCHO, ALTO);
 
         JButton botonPausa = new JButton("Pausar");
         botonPausa.setFocusable(false);
@@ -70,20 +77,18 @@ public class PongGUI extends JFrame implements ActionListener{
         timer = new Timer(10, this);
         timer.start();
         
-        menuPausa = new MenuPausaPong();
-        menuPausa.setVisible(false);
+        menuPausa = new MenuPausa();
+        menuPausa.setBackground(Color.BLACK);
+		layeredPane.add(menuPausa, JLayeredPane.PALETTE_LAYER);
+		menuPausa.setVisible(false);
+		menuPausa.setBounds(0, 0, 360, 540);
+        layeredPane.setVisible(true);
         setVisible(true);
     }
 
     private void togglePause() {
-        isPaused = !isPaused;
-        if (isPaused) {
-            menuPausa.setVisible(true);
-            timer.stop();
-        } else {
-            menuPausa.setVisible(false); 
-            timer.start();              
-        }
+        menuPausa.setVisible(!menuPausa.isVisible());
+    	isPaused = !isPaused;
     }
 
     @Override
@@ -181,20 +186,99 @@ public class PongGUI extends JFrame implements ActionListener{
             g2d.drawString((puntuacion1 + "  -  " + puntuacion2), ANCHO/2 - 95, 70);
         }
     }
+    
+    private class MenuPausa extends JPanel {
+    	public MenuPausa() {
+	        setLayout(new BorderLayout());
+	        setBackground(Color.BLACK);
+			
+			JLabel titulo = new JLabel("PAUSADO", SwingConstants.CENTER);
+			titulo.setForeground(Color.WHITE);
+			titulo.setFont(new Font("Arial", Font.BOLD, 50));
+			add(titulo, BorderLayout.NORTH);
+			
+			JPanel botones = new JPanel();
+			botones.setLayout(new GridLayout(4,1));
+			botones.setBackground(Color.BLACK);
+			
+			Font fontBotones = new Font("Arial", Font.BOLD, 30);
+			
+			JButton Reanudar = new JButton("Reanudar");
+			Reanudar.setFocusable(false);
+			Reanudar.setBackground(Color.BLACK);
+			Reanudar.setForeground(Color.WHITE);
+			Reanudar.setFont(fontBotones);
+			Reanudar.addActionListener(new ActionListener() {
+	
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					togglePause();
+				}
+			});
+			
+			JButton Controles = new JButton("Controles");
+			Controles.setFocusable(false);
+			Controles.setBackground(Color.BLACK);
+			Controles.setForeground(Color.WHITE);
+			Controles.setFont(fontBotones);
+			Controles.addActionListener(new ActionListener() {
+	
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					ShowControles();
+				}
+			});
+			
+			JButton Restart = new JButton("Restart");
+			Restart.setFocusable(false);
+			Restart.setBackground(Color.BLACK);
+			Restart.setForeground(Color.WHITE);
+			Restart.setFont(fontBotones);
+			Restart.addActionListener(new ActionListener() {
+	
+				@Override
+				public void actionPerformed(ActionEvent e) {
+				}
+			});
+			
+			JButton MainMenu = new JButton("Menu Principal");
+			MainMenu.setFocusable(false);
+			MainMenu.setBackground(Color.BLACK);
+			MainMenu.setForeground(Color.WHITE);
+			MainMenu.setFont(fontBotones);
+			MainMenu.addActionListener(new ActionListener() {
+	
+				@Override
+				public void actionPerformed(ActionEvent e) {
+					// TODO Auto-generated method stub
+					new MainMenuGUI();
+					dispose();
+				}
+			});
+			
+			botones.add(Reanudar);
+			botones.add(Controles);
+			botones.add(Restart);
+			botones.add(MainMenu);
+			add(botones, BorderLayout.CENTER);
+    	}
+    }
 
     private class KeyHandler extends KeyAdapter {
         @Override
         public void keyPressed(KeyEvent e) {
             int tecla = e.getKeyCode();
             teclasPresionadas.add(tecla);
-            System.out.println("Se ha pulsado la tecla" + tecla);
         }
         
         @Override
         public void keyReleased(KeyEvent e) {
             int tecla = e.getKeyCode();
             teclasPresionadas.remove(tecla);
-            System.out.println("Se ha soltado la tecla" + tecla);
         }
     }
+    
+    private void ShowControles() {
+		JOptionPane.showMessageDialog(this, "Jugador 1 : W,S\nJugador 2 : Flechas");
+	}
 }
