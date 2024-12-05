@@ -254,7 +254,7 @@ public class PongGUI extends JFrame implements ActionListener{
         		bolaXDir += bolaAcel;
         		bolaBotes = 0;
         	}
-            float a = ((float)(bolaYmed - pala1Ymed) / (PALA_ALTO/2));
+            float a = ((float)(bolaYmed - pala1Ymed) / (PALA_ALTO/3));
             bolaYDir = Math.round(bolaVel * a);
             if (dificultad == Dificultad.Dificil) {
             	camino = calcularCaminoD();
@@ -269,8 +269,8 @@ public class PongGUI extends JFrame implements ActionListener{
         		bolaXDir -= bolaAcel;
         		bolaBotes = 0;
         	}
-            float a = ((float)(bolaYmed - pala1Ymed) / (PALA_ALTO/2));
-            bolaYDir = Math.round(-bolaXDir * a);
+            float a = ((float)(bolaYmed - pala2Ymed) / (PALA_ALTO/3));
+            bolaYDir = Math.round(-bolaVel * a);
             if (dificultad == Dificultad.Facil) {
             }
         }
@@ -298,11 +298,11 @@ public class PongGUI extends JFrame implements ActionListener{
     
     private ArrayList<ArrayList<Integer>> calcularCaminoD() {
     	ArrayList<ArrayList<Integer>> camino = new ArrayList<ArrayList<Integer>>();
-    	int distanceX = ANCHO - (PALA_DESP_I + PALA_ANCHO - PALA_DESP_D);
-    	int time = Math.round((distanceX - bolaX) / bolaXDir);
-    	int distanceY = Math.round(bolaY + (time * bolaYDir));
-    	int secciones = Math.round(distanceY) / ALTO_VISUAL;
-    	int timeY;
+    	int distanciaX = ANCHO - (PALA_DESP_I + PALA_ANCHO + PALA_DESP_D + BOLA_TAMAÑO);
+    	int tiempoTotal = distanciaX / bolaXDir;
+    	int distanciaY = Math.round(bolaY + (tiempoTotal * bolaYDir));
+    	int secciones = distanciaY / ALTO_REBOTE;
+    	int tiempoY;
     	int x;
     	int y;
     	// Caso 1: Bola se dirige hacia abajo
@@ -312,30 +312,73 @@ public class PongGUI extends JFrame implements ActionListener{
     			camino.add(new ArrayList<Integer>());
     			// Primera Seccion (hasta el primer rebote)
         		if (i == 0) {
-            		camino.getFirst().add(bolaX);
-            		camino.getFirst().add(bolaY);
-            		timeY = Math.round((ALTO_REBOTE - bolaY) / bolaYDir);
+            		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO);
+            		camino.getFirst().add(bolaYmed);
+            		tiempoY = Math.abs(Math.round((ALTO_REBOTE - bolaY) / bolaYDir));
         		} // Secciones 1, n-1 (del primer al ultimo rebote) 
         		else {
         			camino.get(i).add(camino.get(i-1).get(2));
         			camino.get(i).add(camino.get(i-1).getLast());
-        			timeY = Math.round(ALTO_REBOTE / bolaYDir);
+        			tiempoY = Math.abs(Math.round(ALTO_REBOTE / bolaYDir));
         		}
-        		x = Math.round(camino.get(i).get(0) + (timeY * bolaXDir));
+        		x = Math.round(camino.get(i).get(0) - (BOLA_TAMAÑO / 2) + (tiempoY * bolaXDir));
         		if ((i % 2) == 0) {
-        			y = ALTO_REBOTE;
+        			y = ALTO_REBOTE + (BOLA_TAMAÑO / 2);
         		}
         		else {
-        			y = 0;
+        			y = BOLA_TAMAÑO / 2;
         		}
         		// Seccion n (del ultimo rebote hasta la pala contraria)
         		if (i + 1 == secciones) {
-        			camino.get(i).add(ANCHO - (PALA_DESP_D + BOLA_TAMAÑO));
+        			camino.get(i).add(ANCHO - PALA_DESP_D);
         			if ((i % 2) == 0) {
-        				y = distanceY % ALTO_REBOTE;
+        				y = (distanciaY % ALTO_REBOTE) + (BOLA_TAMAÑO / 2);
             		}
             		else {
-            			y = ALTO_REBOTE - (distanceY % ALTO_REBOTE);
+            			y = ALTO_REBOTE - (distanciaY % ALTO_REBOTE) + (BOLA_TAMAÑO / 2);
+            		}
+        			camino.get(i).add(y);
+        		}
+        		else {
+        			camino.get(i).add(x + (BOLA_TAMAÑO / 2));
+        			camino.get(i).add(y);
+        		}
+        	}
+    	}
+    	//Caso 2: Bola se dirige hacia arriba
+    	if (bolaYDir < 0) {
+    		secciones = Math.abs(secciones) + 1;
+    		if (distanciaY < 0) {
+    			secciones++;
+    		}
+			for (int i = 0; i < secciones; i++) {
+    			camino.add(new ArrayList<Integer>());
+    			// Primera Seccion (hasta el primer rebote)
+        		if (i == 0) {
+            		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO);
+            		camino.getFirst().add(bolaYmed);
+            		tiempoY = Math.abs(Math.round((bolaY) / bolaYDir));
+        		} // Secciones 1, n-1 (del primer al ultimo rebote) 
+        		else {
+        			camino.get(i).add(camino.get(i-1).get(2));
+        			camino.get(i).add(camino.get(i-1).getLast());
+        			tiempoY = Math.abs(Math.round(ALTO_REBOTE / bolaYDir));
+        		}
+        		x = Math.round(camino.get(i).get(0) + (tiempoY * bolaXDir));
+        		if ((i % 2) == 0) {
+        			y = 0;
+        		}
+        		else {
+        			y = ALTO_REBOTE;
+        		}
+        		// Seccion n (del ultimo rebote hasta la pala contraria)
+        		if (i + 1 == secciones) {
+        			camino.get(i).add(ANCHO - PALA_DESP_D);
+        			if ((i % 2) == 0) {
+        				y = distanciaY % ALTO_REBOTE;
+            		}
+            		else {
+            			y = ALTO_REBOTE - (distanciaY % ALTO_REBOTE);
             		}
         			camino.get(i).add(y);
         		}
@@ -345,57 +388,12 @@ public class PongGUI extends JFrame implements ActionListener{
         		}
         	}
     	}
-    	else {
-    		//Caso 2: Bola se dirige hacia arriba y rebota al menos una vez
-    		if (distanceY < 0) {
-    			secciones = Math.abs(secciones) + 2;
-    			for (int i = 0; i < secciones; i++) {
-        			camino.add(new ArrayList<Integer>());
-        			// Primera Seccion (hasta el primer rebote)
-            		if (i == 0) {
-                		camino.getFirst().add(bolaX);
-                		camino.getFirst().add(bolaY);
-                		timeY = Math.round((bolaY) / bolaYDir);
-                		System.out.println(camino);
-            		} // Secciones 1, n-1 (del primer al ultimo rebote) 
-            		else {
-            			camino.get(i).add(camino.get(i-1).get(2));
-            			camino.get(i).add(camino.get(i-1).getLast());
-            			timeY = Math.round(ALTO_VISUAL / bolaYDir);
-            		}
-            		x = Math.round(camino.get(i).get(0) + (timeY * bolaXDir));
-            		if ((i % 2) == 0) {
-            			y = ALTO_VISUAL;
-            		}
-            		else {
-            			y = 0;
-            		}
-            		// Seccion n (del ultimo rebote hasta la pala contraria)
-            		if (i + 1 == secciones) {
-            			camino.get(i).add(ANCHO - (PALA_DESP_D + BOLA_TAMAÑO));
-            			if ((i % 2) == 0) {
-            				y = distanceY % ALTO_VISUAL;
-                		}
-                		else {
-                			y = ALTO_VISUAL - (distanceY % ALTO_VISUAL);
-                		}
-            			camino.get(i).add(y);
-            		}
-            		else {
-            			camino.get(i).add(x);
-            			camino.get(i).add(y);
-            		}
-            	}
-    		}
-    		//Caso 3: Bola se dirige hacia arriba y no rebota
-    		else {
-    			secciones = 1;
-    			camino.add(new ArrayList<Integer>());
-    			camino.getFirst().add(bolaX);
-        		camino.getFirst().add(bolaY);
-        		camino.getFirst().add(ANCHO - (PALA_DESP_D + BOLA_TAMAÑO));
-        		camino.getFirst().add(distanceY);
-    		}
+    	if (bolaYDir == 0) {
+    		camino.add(new ArrayList<Integer>());
+    		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO);
+    		camino.getFirst().add(bolaYmed);
+    		camino.getFirst().add(ANCHO - PALA_DESP_D);
+    		camino.getFirst().add(bolaYmed);
     	}
     	System.out.println(camino);
     	return camino;
