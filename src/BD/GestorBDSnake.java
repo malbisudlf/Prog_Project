@@ -22,7 +22,7 @@ public class GestorBDSnake {
             puntuacion_maxima INTEGER DEFAULT 0,
             puntos_totales INTEGER DEFAULT 0
         );
-    """; 
+    """;
 
     public GestorBDSnake() {
         try (Connection conn = DriverManager.getConnection(DB_URL);
