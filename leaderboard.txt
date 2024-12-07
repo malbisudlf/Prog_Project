@@ -28,3 +28,5 @@ Héctor, 78
 Clara, 23
 MESSI,38
 V,0
+null,20
+null,10

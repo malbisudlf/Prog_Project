@@ -19,6 +19,9 @@ public class menuSnake extends JFrame{
     
     public menuSnake(UsuarioSnake usuario) {
         
+    	if (usuario == null) {
+            throw new IllegalArgumentException("UsuarioSnake cannot be null");
+        }
         menuSnake.usuario = usuario;
         
         // CONFIGURACIÓN DE LA VENTANA PRINCIPAL
