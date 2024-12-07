@@ -22,6 +22,8 @@ public class Main {
         for (UsuarioSnake usuario : gestorBD.getAllUsers()) {
             System.out.println(usuario);
         }
+        
+        
 
         // Iniciar la interfaz gráfica
         new MainMenuGUI();
