@@ -30,3 +30,5 @@ MESSI,38
 V,0
 null,20
 null,10
+null,20
+Usuario{id=2, nombre='MalbisuDLF', puntuacionAlta=1, monedas=1},10

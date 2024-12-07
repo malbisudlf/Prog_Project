@@ -17,7 +17,7 @@ public class MenuPong extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
 	public static UsuarioSnake usuario;
-	public MenuPong() {
+	public MenuPong(UsuarioSnake usuario) {
 		menuSnake.usuario = usuario;
 		
 		setTitle("PONG");
@@ -92,7 +92,7 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MenuDificultadPong();
+				new MenuDificultadPong(usuario);
 				dispose();
 			}
 		});

@@ -30,7 +30,7 @@ public class menuAhorcado extends JFrame{
 	private static final long serialVersionUID = 1L;
 	public static UsuarioSnake usuario;
 
-		public menuAhorcado() {
+		public menuAhorcado(UsuarioSnake usuario) {
 			menuSnake.usuario = usuario;
 			setTitle("MENU AHORCADO");
 			setSize(600, 500);
@@ -70,7 +70,7 @@ public class menuAhorcado extends JFrame{
 				@Override
 				public void actionPerformed(ActionEvent e) {
 					
-					new AhorcadoGUI();
+					new AhorcadoGUI(usuario);
 					dispose();
 				}
 				
@@ -86,7 +86,7 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new AhorcadoLeaderboard();
+					new AhorcadoLeaderboard(usuario);
 					dispose();
 					
 				}

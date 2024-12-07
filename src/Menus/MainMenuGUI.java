@@ -148,7 +148,7 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new menuAhorcado();
+				 new menuAhorcado(usuario);
 				 dispose();
 			}
 		});
@@ -159,7 +159,7 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new MenuPong();
+				 new MenuPong(usuario);
 				 dispose();
 			}
 		});

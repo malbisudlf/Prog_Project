@@ -31,7 +31,7 @@ public class AhorcadoGUI extends JFrame {
     private JTextField inputLetra;
     private DibujoAhorcado panelAhorcado;
     public static UsuarioSnake usuario;
-    public AhorcadoGUI() {
+    public AhorcadoGUI(UsuarioSnake usuario) {
     	menuSnake.usuario = usuario;
         this.setVisible(true);
         palabras = cargarPalabrasDesdeCSV();
@@ -79,7 +79,7 @@ public class AhorcadoGUI extends JFrame {
                 
                     saveScoreToFile(usuario, score);
                 
-                new menuAhorcado();
+                new menuAhorcado(usuario);
                 dispose();
             }
         });

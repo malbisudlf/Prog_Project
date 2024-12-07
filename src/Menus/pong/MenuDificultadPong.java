@@ -18,13 +18,15 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 
 import GUI.PongGUI;
+import Menus.snake.menuSnake;
+import usuario.UsuarioSnake;
 
 public class MenuDificultadPong extends JFrame{
 	
 	private static final long serialVersionUID = 1L;
-	
-	public MenuDificultadPong() {
-		
+	public static UsuarioSnake usuario;
+	public MenuDificultadPong(UsuarioSnake usuario) {
+		menuSnake.usuario = usuario;
 		setTitle("PONG");
 		setSize(360, 540);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -107,7 +109,7 @@ public class MenuDificultadPong extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MenuPong();
+				new MenuPong(usuario);
 				dispose();
 			}
 		});

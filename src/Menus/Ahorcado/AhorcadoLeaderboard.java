@@ -4,6 +4,10 @@ import javax.swing.*;
 import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
+
+import Menus.snake.menuSnake;
+import usuario.UsuarioSnake;
+
 import java.awt.*;
 import java.io.BufferedReader;
 import java.io.FileReader;
@@ -16,8 +20,9 @@ public class AhorcadoLeaderboard extends JFrame {
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
     private static final String FILE_PATH = "leaderboard.txt";
-
-    public AhorcadoLeaderboard() {
+    public static UsuarioSnake usuario;
+    public AhorcadoLeaderboard(UsuarioSnake usuario) {
+    	menuSnake.usuario = usuario;
         setTitle("Leaderboard");
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -40,7 +45,7 @@ public class AhorcadoLeaderboard extends JFrame {
         volver.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
         panelbotton.add(volver);
         volver.addActionListener(e -> {
-            new menuAhorcado();
+            new menuAhorcado(usuario);
             dispose();
         });
 
@@ -172,6 +177,6 @@ public class AhorcadoLeaderboard extends JFrame {
     }
 
     public static void main(String[] args) {
-        new AhorcadoLeaderboard();
+        new AhorcadoLeaderboard(usuario);
     }
 }
