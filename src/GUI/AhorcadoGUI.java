@@ -5,6 +5,9 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.*;
 import Menus.Ahorcado.menuAhorcado;
+import Menus.snake.menuSnake;
+import usuario.UsuarioSnake;
+
 import java.awt.*;
 import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
@@ -27,8 +30,9 @@ public class AhorcadoGUI extends JFrame {
     private JLabel labelScore;
     private JTextField inputLetra;
     private DibujoAhorcado panelAhorcado;
-
+    public static UsuarioSnake usuario;
     public AhorcadoGUI() {
+    	menuSnake.usuario = usuario;
         this.setVisible(true);
         palabras = cargarPalabrasDesdeCSV();
         if (palabras.isEmpty()) {
@@ -72,10 +76,9 @@ public class AhorcadoGUI extends JFrame {
         volverbutton.addActionListener(e -> {
             int salida = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres acabar la partida?", "ATENCIÓN", JOptionPane.YES_NO_OPTION);
             if (salida == JOptionPane.YES_OPTION) {
-                String nombre = JOptionPane.showInputDialog("Si quieres guardar tu puntuación, ingresa tu nombre");
-                if (nombre != null && !nombre.trim().isEmpty()) {
-                    saveScoreToFile(nombre, score);
-                }
+                
+                    saveScoreToFile(usuario, score);
+                
                 new menuAhorcado();
                 dispose();
             }
@@ -184,9 +187,9 @@ public class AhorcadoGUI extends JFrame {
         return palabras;
     }
 
-    private void saveScoreToFile(String nombre, int score) {
+    private void saveScoreToFile(UsuarioSnake usuario2, int score) {
         try (FileWriter writer = new FileWriter("leaderboard.txt", true)) {
-            writer.write(nombre + "," + score + "\n");
+            writer.write(usuario2 + "," + score + "\n");
         } catch (IOException e) {
             e.printStackTrace();
         }

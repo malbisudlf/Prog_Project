@@ -20,15 +20,18 @@ import javax.swing.SwingConstants;
 
 import GUI.AhorcadoGUI;
 import Menus.MainMenuGUI;
+import Menus.snake.menuSnake;
+import usuario.UsuarioSnake;
 
 public class menuAhorcado extends JFrame{
 		/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
+	public static UsuarioSnake usuario;
 
 		public menuAhorcado() {
-			
+			menuSnake.usuario = usuario;
 			setTitle("MENU AHORCADO");
 			setSize(600, 500);
 			setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -136,7 +139,7 @@ public class menuAhorcado extends JFrame{
 
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new MainMenuGUI();
+					new MainMenuGUI(usuario);
 					dispose();
 					
 				}

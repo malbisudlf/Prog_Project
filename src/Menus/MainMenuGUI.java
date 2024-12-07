@@ -12,17 +12,21 @@ import java.awt.event.ComponentEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 
 import Menus.Ahorcado.menuAhorcado;
 import Menus.pong.MenuPong;
-
+import Menus.snake.menuSnake;
 import Menus.snake.seleccionUsuarioSnake;
+import usuario.UsuarioSnake;
 
 public class MainMenuGUI extends JFrame{
 
 	private static final long serialVersionUID = 1L;
 
-	public MainMenuGUI(){
+	public MainMenuGUI(UsuarioSnake usuario){
 		
 		// CONFIGURAR LA VENTANA PRINCIPAL DEL MENÚ
 		setTitle("MAIN MENU");
@@ -115,7 +119,24 @@ public class MainMenuGUI extends JFrame{
                 botonSnake.setIcon(new ImageIcon(imagenEscalada));
             }
         });
+
+        JMenuBar barraMenu = new JMenuBar();
+        JMenuItem itemVolver = new JMenuItem("Volver");
+
+        // Acción del botón "Volver" desde la barra de menú
+        itemVolver.addActionListener(new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                new seleccionUsuarioSnake();  // Abre la pantalla de selección de usuario
+                dispose();  // Cierra el menú principal
+            }
+        });
+
         
+        barraMenu.add(itemVolver);
+
+        // CONFIGURAR LA VENTANA CON LA BARRA DE MENÚ
+        setJMenuBar(barraMenu);
         // AÑADIR LOS BOTONES AL LAYOUT
 		add(botonAhorcado);
 		add(botonPong);
@@ -149,7 +170,7 @@ public class MainMenuGUI extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				 new seleccionUsuarioSnake();
+				 new menuSnake(usuario);
 				 dispose();
 			}
 		});

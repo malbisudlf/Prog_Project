@@ -96,7 +96,7 @@ public class menuSnake extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // VUELVE AL MENÚ PRINCIPAL
-                new MainMenuGUI();
+                new MainMenuGUI(usuario);
                 dispose();
             }
         });

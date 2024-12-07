@@ -2,6 +2,8 @@ package Menus.snake;
 
 import javax.swing.*;
 import Menus.MainMenuGUI;
+import usuario.UsuarioSnake;
+
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -11,8 +13,9 @@ public class seleccionUsuarioSnake extends JFrame{
     private static final long serialVersionUID = 1L;
     private JButton usuarioExistente;
     private JButton usuarioNuevo;
-    
+    public static UsuarioSnake usuario;
     public seleccionUsuarioSnake() {
+    	menuSnake.usuario = usuario;
         // CONFIGURACIÓN DE LA VENTANA PRINCIPAL
         setTitle("Seleccionar Usuario");
         setSize(400, 200);
@@ -96,7 +99,7 @@ public class seleccionUsuarioSnake extends JFrame{
             @Override
             public void actionPerformed(ActionEvent e) {
                 // VOLVER AL MENÚ PRINCIPAL
-                new MainMenuGUI();
+                new MainMenuGUI(usuario);
                 dispose();
             }
         });

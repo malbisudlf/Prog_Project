@@ -2,6 +2,7 @@ package Main;
 
 import BD.GestorBDSnake;
 import Menus.MainMenuGUI;
+import Menus.snake.seleccionUsuarioSnake;
 import usuario.UsuarioSnake;
 
 public class Main {
@@ -26,6 +27,6 @@ public class Main {
         
 
         // Iniciar la interfaz gráfica
-        new MainMenuGUI();
+        new seleccionUsuarioSnake();
     }
 }

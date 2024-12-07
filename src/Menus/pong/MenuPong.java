@@ -10,12 +10,15 @@ import javax.swing.*;
 
 import GUI.PongGUI;
 import Menus.MainMenuGUI;
+import Menus.snake.menuSnake;
+import usuario.UsuarioSnake;
 
 public class MenuPong extends JFrame {
 	
 	private static final long serialVersionUID = 1L;
-	
+	public static UsuarioSnake usuario;
 	public MenuPong() {
+		menuSnake.usuario = usuario;
 		
 		setTitle("PONG");
 		setSize(540, 540);
@@ -130,7 +133,7 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MainMenuGUI();
+				new MainMenuGUI(usuario);
 				dispose();
 			}
 		});

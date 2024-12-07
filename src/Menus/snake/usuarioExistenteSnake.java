@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 import BD.GestorBDSnake;  // ASEGÚRATE DE IMPORTAR LA CLASE GESTORBDSNAKE
+import Menus.MainMenuGUI;
 import usuario.UsuarioSnake;
 
 public class usuarioExistenteSnake extends JFrame {
@@ -142,7 +143,7 @@ public class usuarioExistenteSnake extends JFrame {
             // CREAMOS EL MENÚ PARA EL USUARIO SELECCIONADO
         	for (UsuarioSnake usuario : listaUsuarios) {
                 if (usuario.getNombre().equals(selectedUser)) {
-                	new menuSnake(usuario);
+                	new MainMenuGUI(usuario);
                 	dispose();
                 }
             }
