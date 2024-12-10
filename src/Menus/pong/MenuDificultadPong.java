@@ -56,7 +56,7 @@ public class MenuDificultadPong extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PongGUI(Dificultad.Facil);
+				new PongGUI(usuario, Dificultad.Facil);
 			}
 		});
 		
@@ -69,7 +69,7 @@ public class MenuDificultadPong extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PongGUI(Dificultad.Normal);
+				new PongGUI(usuario, Dificultad.Normal);
 			}
 		});
 		
@@ -82,7 +82,7 @@ public class MenuDificultadPong extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PongGUI(Dificultad.Dificil);
+				new PongGUI(usuario, Dificultad.Dificil);
 			}
 		});
 		

@@ -64,7 +64,7 @@ public class MenuPong extends JFrame {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PongGUI();
+				new PongGUI(usuario);
 				dispose();
 			}
 		});

@@ -1,15 +1,30 @@
 package GUI;
 
-import Menus.MainMenuGUI;
-import Menus.pong.*;
-import Menus.snake.menuSnake;
-import usuario.UsuarioSnake;
-
-import java.awt.*;
-import java.awt.event.*;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.Graphics;
+import java.awt.Graphics2D;
+import java.awt.GridLayout;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
+import java.util.ArrayList;
 import java.util.HashSet;
 
-import javax.swing.*;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.SwingConstants;
+import javax.swing.Timer;
+
+import Menus.MainMenuGUI;
+import Menus.pong.Dificultad;
+import usuario.UsuarioSnake;
 
 public class PongGUI extends JFrame implements ActionListener{
 	
@@ -23,22 +38,37 @@ public class PongGUI extends JFrame implements ActionListener{
     private static final int PALA_ANCHO = 10;
     private static final int PALA_ALTO = 150;
     private static final int BOLA_TAMAÑO = 20;
+    private static final int ALTO_REBOTE = ALTO_VISUAL - BOLA_TAMAÑO;
     private static final int PALA_VELOCIDAD = 6;
+    private static final int BOLA_VELOCIDAD = 5;
+    private static final int BOLA_ACELERACION = 1;
+    private static final int NIVEL_REBOTE = 2; // Con que angulo sale la bola dependiendo de donde en la pala choca (AnguloMaximo = 22,5 ; 45 ; 66,6...)
     
-    private int pala1Y = ALTO / 2 - PALA_ALTO / 2;
-    private int pala2Y = ALTO / 2 - PALA_ALTO / 2;
-    private int bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
-    private int bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
-    private float bolaVel = 3f;
-    private float bolaAcel = 0.75f;
-    private float bolaXDir = bolaVel;
-    private float bolaYDir = 0f;
+    // Coordenadas reales (Esquina superior izquierda) de los objetos
+    private int pala1Y = (ALTO_VISUAL / 2) - (PALA_ALTO / 2);
+    private int pala2Y = (ALTO_VISUAL / 2) - (PALA_ALTO / 2);
+    private int bolaX = (ANCHO / 2) - (BOLA_TAMAÑO / 2);
+    private int bolaY = (ALTO_VISUAL / 2) - (BOLA_TAMAÑO / 2);
+    
+    // Coordenadas de la mitad de los objetos
+    private int pala1Ymed = ALTO_VISUAL / 2;
+    private int pala2Ymed = ALTO_VISUAL / 2;
+    private int bolaYmed = ALTO_VISUAL / 2;
+    
+    // Offset de la coordenada de la bolaY para la dificultad facil
+    private int signoOffset = 0;
+    private int bolaYoffset = 0;
+    
+    private int bolaVel = BOLA_VELOCIDAD;
+    private int bolaBotes = 0;
+    private int bolaXDir = bolaVel;
+    private int bolaYDir = 0;
     
     private final HashSet<Integer> teclasPresionadas = new HashSet<>();
     
     private int puntuacion1 = 0;
     private int puntuacion2 = 0;
-    public static UsuarioSnake usuario;
+    
     //IAG (herramienta: ChatGPT)
 	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del Timer de chatgpt
 	//y la trasladamos con algun cambio para que se adapte a nuestra idea.
@@ -48,10 +78,12 @@ public class PongGUI extends JFrame implements ActionListener{
     private GamePanel gamePanel;
     private MenuPausa menuPausa;
 	private Dificultad dificultad;
+	private UsuarioSnake usuario;
+	private ArrayList<ArrayList<Integer>> camino;
 
-    public PongGUI() {
-    	menuSnake.usuario = usuario;
+    public PongGUI(UsuarioSnake usuario) {
     	this.dificultad = null;
+    	this.usuario = usuario;
     	setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(ANCHO, ALTO);
@@ -82,8 +114,10 @@ public class PongGUI extends JFrame implements ActionListener{
         ShowControlesPvP();
     }
     
-    public PongGUI(Dificultad dificultad) {
+    public PongGUI(UsuarioSnake usuario, Dificultad dificultad) {
+    	this.usuario = usuario;
     	this.dificultad = dificultad;
+    	camino = new ArrayList<ArrayList<Integer>>();
     	setTitle("PONG");
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setSize(ANCHO, ALTO);
@@ -132,33 +166,80 @@ public class PongGUI extends JFrame implements ActionListener{
     private void moverBola() {
         bolaX += bolaXDir;
         bolaY += bolaYDir;
+        bolaYmed += bolaYDir;
     }
     
     private void moverPalas() {
     	// Controles jugador 1
         if (teclasPresionadas.contains(KeyEvent.VK_W) && pala1Y > 0) {
             pala1Y -= PALA_VELOCIDAD;
+            pala1Ymed -= PALA_VELOCIDAD;
         }
         if (teclasPresionadas.contains(KeyEvent.VK_S) && pala1Y < ALTO_VISUAL - PALA_ALTO) {
             pala1Y += PALA_VELOCIDAD;
+            pala1Ymed += PALA_VELOCIDAD;
         }
         
         if (dificultad == null) {
 	        // Controles jugador 2
 	        if (teclasPresionadas.contains(KeyEvent.VK_UP) && pala2Y > 0) {
 	            pala2Y -= PALA_VELOCIDAD;
+	            pala2Ymed -= PALA_VELOCIDAD;
 	        }
 	        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	            pala2Y += PALA_VELOCIDAD;
+	            pala2Ymed += PALA_VELOCIDAD;
 	        }
         }
-        if (dificultad == Dificultad.Dificil) {
-        	if (pala2Y + (PALA_ALTO/2) < bolaY - (BOLA_TAMAÑO/2) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
-        		pala2Y += PALA_VELOCIDAD;
-        	}
-        	if (pala2Y + (PALA_ALTO/2) > bolaY - (BOLA_TAMAÑO/2) && pala2Y > 0) {
-        		pala2Y -= PALA_VELOCIDAD;
-        	}
+        else {
+	        if (teclasPresionadas.contains(KeyEvent.VK_UP) && pala1Y > 0) {
+	            pala1Y -= PALA_VELOCIDAD;
+	            pala1Ymed -= PALA_VELOCIDAD;
+	        }
+	        if (teclasPresionadas.contains(KeyEvent.VK_DOWN) && pala1Y < ALTO_VISUAL - PALA_ALTO) {
+	            pala1Y += PALA_VELOCIDAD;
+	            pala1Ymed += PALA_VELOCIDAD;
+	        }
+	        if (dificultad == Dificultad.Facil && bolaXDir > 0) {
+	        	if (pala2Ymed < (bolaYmed + (1.2f*(bolaYoffset * signoOffset))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        		pala2Y += PALA_VELOCIDAD;
+	        		pala2Ymed += PALA_VELOCIDAD;
+	        	}
+	        	if (pala2Ymed > (bolaYmed + (1.2f*(bolaYoffset * signoOffset))) && pala2Y > 0) {
+	        		pala2Y -= PALA_VELOCIDAD;
+	        		pala2Ymed -= PALA_VELOCIDAD;
+	        	}
+	        }
+	        if (dificultad == Dificultad.Normal && bolaXDir > 0) {
+	        	if (pala2Ymed < (bolaYmed + (0.8f*(bolaYoffset * signoOffset))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        		pala2Y += PALA_VELOCIDAD;
+	        		pala2Ymed += PALA_VELOCIDAD;
+	        	}
+	        	if (pala2Ymed > (bolaYmed + (0.8f*(bolaYoffset * signoOffset))) && pala2Y > 0) {
+	        		pala2Y -= PALA_VELOCIDAD;
+	        		pala2Ymed -= PALA_VELOCIDAD;
+	        	}
+	        }
+	        if (dificultad == Dificultad.Dificil && bolaXDir > 0) {
+	        	if (pala2Ymed < (bolaYmed + (0.4f*(bolaYoffset * signoOffset))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        		pala2Y += PALA_VELOCIDAD;
+	        		pala2Ymed += PALA_VELOCIDAD;
+	        	}
+	        	if (pala2Ymed > (bolaYmed + (0.4f*(bolaYoffset * signoOffset))) && pala2Y > 0) {
+	        		pala2Y -= PALA_VELOCIDAD;
+	        		pala2Ymed -= PALA_VELOCIDAD;
+	        	}
+	        }
+	        if (dificultad == Dificultad.MuyDificil && !camino.isEmpty()) {
+	        	if (pala2Ymed < camino.getLast().getLast() && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        		pala2Y += PALA_VELOCIDAD;
+	        		pala2Ymed += PALA_VELOCIDAD;
+	        	}
+	        	if (pala2Ymed > camino.getLast().getLast() && pala2Y > 0) {
+	        		pala2Y -= PALA_VELOCIDAD;
+	        		pala2Ymed -= PALA_VELOCIDAD;
+	        	}
+	        }
         }
     }
 
@@ -168,41 +249,175 @@ public class PongGUI extends JFrame implements ActionListener{
         	bolaY = 0;
             bolaYDir = -bolaYDir;
         }
-        if (bolaY >= ALTO_VISUAL - BOLA_TAMAÑO) {
-        	bolaY = ALTO_VISUAL - BOLA_TAMAÑO;
+        if (bolaY >= ALTO_REBOTE) {
+        	bolaY = ALTO_REBOTE;
         	bolaYDir = -bolaYDir;
         }
 
-        // Colision con palas
-        if (bolaX <= (PALA_DESP_I + PALA_ANCHO) && bolaY >= pala1Y && bolaY <= pala1Y + PALA_ALTO) {
-            bolaXDir = -bolaXDir + bolaAcel;
-            float a = ((float)((pala1Y + (PALA_ALTO/2)) - bolaY) / (PALA_ALTO/2));
-            bolaYDir = -bolaXDir * a;
+        // Colision con pala 1
+        if (bolaX <= (PALA_DESP_I + PALA_ANCHO) && bolaYmed >= pala1Y && bolaYmed <= pala1Y + PALA_ALTO) {
+        	bolaBotes++;
+        	bolaXDir = -bolaXDir;
+        	if (bolaBotes == 3) {
+        		bolaVel += BOLA_ACELERACION;
+        		bolaXDir += BOLA_ACELERACION;
+        		bolaBotes = 0;
+        	}
+            float a = ((float)(bolaYmed - pala1Ymed) / (PALA_ALTO/NIVEL_REBOTE));
+            bolaYDir = Math.round(bolaVel * a);
+            //if (dificultad == Dificultad.MuyDificil) {
+            //	camino = calcularCaminoD();
+            //}
         }
-        if (bolaX >= ANCHO - (PALA_DESP_D + BOLA_TAMAÑO) && bolaY >= pala2Y && bolaY <= pala2Y + PALA_ALTO) {
-            bolaXDir = -bolaXDir - bolaAcel;
-            float a = ((float)((pala2Y + (PALA_ALTO/2)) - bolaY) / (PALA_ALTO/2));
-            bolaYDir = bolaXDir * a;
+        // Colision con pala 2
+        if (bolaX >= ANCHO - (PALA_DESP_D + BOLA_TAMAÑO) && bolaYmed >= pala2Y && bolaYmed <= pala2Y + PALA_ALTO) {
+        	bolaBotes++;
+        	bolaXDir = -bolaXDir;
+        	if (bolaBotes == 3) {
+        		bolaVel += BOLA_ACELERACION;
+        		bolaXDir -= BOLA_ACELERACION;
+        		bolaBotes = 0;
+        	}
+            float a = ((float)(bolaYmed - pala2Ymed) / (PALA_ALTO/NIVEL_REBOTE));
+            bolaYDir = Math.round(bolaVel * a);
+            bolaYoffset = (int) Math.round(Math.random() * PALA_ALTO);
+            signoOffset = (int) Math.round(Math.random());
+            signoOffset = (2 * signoOffset) - 1;
+            System.out.println(bolaYoffset);
+            System.out.println(signoOffset);
         }
 
         // Resetear la bola si se sale de los lados y cambiar puntuacion
         if (bolaX < 0) {
-            bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
-            bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
+            bolaX = (ANCHO / 2) - (BOLA_TAMAÑO / 2);
+            bolaY = (ALTO_VISUAL / 2) - (BOLA_TAMAÑO / 2);
+            bolaYmed = ALTO_VISUAL / 2;
+            bolaVel = BOLA_VELOCIDAD;
             bolaXDir = -bolaVel;
-            bolaYDir = 0f;
+            bolaYDir = 0;
+            bolaYoffset = 0;
             puntuacion2++;
+            camino = new ArrayList<ArrayList<Integer>>();
         }
         if (bolaX > (ANCHO - BOLA_TAMAÑO)) {
-            bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
-            bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
+            bolaX = (ANCHO / 2) - (BOLA_TAMAÑO / 2);
+            bolaY = (ALTO_VISUAL / 2) - (BOLA_TAMAÑO / 2);
+            bolaYmed = ALTO_VISUAL / 2;
+            bolaVel = BOLA_VELOCIDAD;
             bolaXDir = bolaVel;
-            bolaYDir = 0f;
+            bolaYDir = 0;
+            bolaYoffset = 0;
             puntuacion1++;
+            camino = new ArrayList<ArrayList<Integer>>();
         }
     }
     
-    private class GamePanel extends JPanel {
+    /*Ignorar esta funcion por ahora
+    private ArrayList<ArrayList<Integer>> calcularCaminoD() {
+    	ArrayList<ArrayList<Integer>> camino = new ArrayList<ArrayList<Integer>>();
+    	int distanciaX = ANCHO - (PALA_DESP_I + PALA_ANCHO + PALA_DESP_D + BOLA_TAMAÑO);
+    	int tiempoTotal = distanciaX / bolaXDir;
+    	int distanciaY = Math.round(bolaY + (tiempoTotal * bolaYDir));
+    	int secciones = distanciaY / ALTO_REBOTE;
+    	int tiempoY;
+    	int x;
+    	int y;
+    	// Caso 1: Bola se dirige hacia abajo
+    	if (bolaYDir > 0) {
+    		secciones++;
+    		for (int i = 0; i < secciones; i++) {
+    			camino.add(new ArrayList<Integer>());
+    			// Primera Seccion (hasta el primer rebote)
+        		if (i == 0) {
+            		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO);
+            		camino.getFirst().add(bolaYmed);
+            		tiempoY = Math.abs(Math.round((ALTO_REBOTE - bolaY) / bolaYDir));
+        		} // Secciones 1, n-1 (del primer al ultimo rebote) 
+        		else {
+        			camino.get(i).add(camino.get(i-1).get(2));
+        			camino.get(i).add(camino.get(i-1).getLast());
+        			tiempoY = Math.abs(Math.round(ALTO_REBOTE / bolaYDir));
+        		}
+        		x = Math.round(camino.get(i).get(0) - (BOLA_TAMAÑO / 2) + (tiempoY * bolaXDir));
+        		if ((i % 2) == 0) {
+        			y = ALTO_REBOTE + (BOLA_TAMAÑO / 2);
+        		}
+        		else {
+        			y = BOLA_TAMAÑO / 2;
+        		}
+        		// Seccion n (del ultimo rebote hasta la pala contraria)
+        		if (i + 1 == secciones) {
+        			camino.get(i).add(ANCHO - PALA_DESP_D);
+        			if ((i % 2) == 0) {
+        				y = (distanciaY % ALTO_REBOTE) + (BOLA_TAMAÑO / 2);
+            		}
+            		else {
+            			y = ALTO_REBOTE - (distanciaY % ALTO_REBOTE) + (BOLA_TAMAÑO / 2);
+            		}
+        			camino.get(i).add(y);
+        		}
+        		else {
+        			camino.get(i).add(x + (BOLA_TAMAÑO / 2));
+        			camino.get(i).add(y);
+        		}
+        	}
+    	}
+    	//Caso 2: Bola se dirige hacia arriba
+    	if (bolaYDir < 0) {
+    		secciones = Math.abs(secciones) + 1;
+    		if (distanciaY < 0) {
+    			secciones++;
+    		}
+			for (int i = 0; i < secciones; i++) {
+    			camino.add(new ArrayList<Integer>());
+    			// Primera Seccion (hasta el primer rebote)
+        		if (i == 0) {
+            		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO);
+            		camino.getFirst().add(bolaYmed);
+            		tiempoY = Math.abs(Math.round((bolaY) / bolaYDir));
+        		} // Secciones 1, n-1 (del primer al ultimo rebote) 
+        		else {
+        			camino.get(i).add(camino.get(i-1).get(2));
+        			camino.get(i).add(camino.get(i-1).getLast());
+        			tiempoY = Math.abs(Math.round(ALTO_REBOTE / bolaYDir));
+        		}
+        		x = Math.round(camino.get(i).get(0) + (tiempoY * bolaXDir));
+        		if ((i % 2) == 0) {
+        			y = 0;
+        		}
+        		else {
+        			y = ALTO_REBOTE;
+        		}
+        		// Seccion n (del ultimo rebote hasta la pala contraria)
+        		if (i + 1 == secciones) {
+        			camino.get(i).add(ANCHO - PALA_DESP_D);
+        			if ((i % 2) == 0) {
+        				y = distanciaY % ALTO_REBOTE;
+            		}
+            		else {
+            			y = ALTO_REBOTE - (distanciaY % ALTO_REBOTE);
+            		}
+        			camino.get(i).add(y);
+        		}
+        		else {
+        			camino.get(i).add(x);
+        			camino.get(i).add(y);
+        		}
+        	}
+    	}
+    	if (bolaYDir == 0) {
+    		camino.add(new ArrayList<Integer>());
+    		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO);
+    		camino.getFirst().add(bolaYmed);
+    		camino.getFirst().add(ANCHO - PALA_DESP_D);
+    		camino.getFirst().add(bolaYmed);
+    	}
+    	System.out.println(camino);
+    	return camino;
+	}*/
+
+
+	private class GamePanel extends JPanel {
 
 		private static final long serialVersionUID = 1L;
 
@@ -220,6 +435,11 @@ public class PongGUI extends JFrame implements ActionListener{
             g2d.setColor(Color.WHITE);
             
             g2d.drawString((puntuacion1 + "  -  " + puntuacion2), ANCHO/2 - 95, 70);
+            if (camino != null) {
+            	for (ArrayList<Integer> seccion : camino) {
+                	g.drawLine(seccion.get(0), seccion.get(1), seccion.get(2), seccion.get(3));
+                }
+            }
         }
     }
     
@@ -281,15 +501,24 @@ public class PongGUI extends JFrame implements ActionListener{
 	
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					pala1Y = ALTO / 2 - PALA_ALTO / 2;
-				    pala2Y = ALTO / 2 - PALA_ALTO / 2;
-				    bolaX = ANCHO / 2 - BOLA_TAMAÑO / 2;
-				    bolaY = ALTO / 2 - BOLA_TAMAÑO / 2;
+					pala1Y = (ALTO_VISUAL / 2) - (PALA_ALTO / 2);
+				    pala2Y = (ALTO_VISUAL / 2) - (PALA_ALTO / 2);
+				    bolaX = (ANCHO / 2) - (BOLA_TAMAÑO / 2);
+				    bolaY = (ALTO_VISUAL / 2) - (BOLA_TAMAÑO / 2);
+				    
+				    pala1Ymed = ALTO_VISUAL / 2;
+				    pala2Ymed = ALTO_VISUAL / 2;
+				    bolaYmed = ALTO_VISUAL / 2;
+				    
+				    bolaVel = BOLA_VELOCIDAD;
+				    bolaBotes = 0;
 				    bolaXDir = bolaVel;
-				    bolaYDir = 0f;
+				    bolaYDir = 0;
 				    
 				    puntuacion1 = 0;
 				    puntuacion2 = 0;
+				    
+				    camino = new ArrayList<ArrayList<Integer>>();
 				    togglePause();
 				}
 			});
@@ -339,6 +568,6 @@ public class PongGUI extends JFrame implements ActionListener{
 	}
     
     private void ShowControlesPvC() {
-		JOptionPane.showMessageDialog(this, "Jugador : W,S\nPausar/Reanudar : Espacio", "Controles", JOptionPane.INFORMATION_MESSAGE);
+		JOptionPane.showMessageDialog(this, "Jugador : W,S - Flechas\nPausar/Reanudar : Espacio", "Controles", JOptionPane.INFORMATION_MESSAGE);
 	}
 }
