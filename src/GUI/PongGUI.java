@@ -41,9 +41,9 @@ public class PongGUI extends JFrame{
     private static final int PALA_VELOCIDAD = 6;
     private static final int BOLA_VELOCIDAD = 5;
     private static final int BOLA_ACELERACION = 1;
-    private static final int NIVEL_REBOTE = 2; // Con que angulo sale la bola dependiendo de donde en la pala choca (AnguloMaximo = 22,5 ; 45 ; 66,6...)
+    private static final int NIVEL_REBOTE = 3; // Con que angulo sale la bola dependiendo de donde en la pala choca (AnguloMaximo = 22,5 ; 45 ; 66,6...)
     
-    // Coordenadas reales (Esquina superior izquierda) de los objetos
+    // Coordenadas reales (Esquina superior izquierda) de las 
     private int pala1Y = (ALTO_VISUAL / 2) - (PALA_ALTO / 2);
     private int pala2Y = (ALTO_VISUAL / 2) - (PALA_ALTO / 2);
     private int bolaX = (ANCHO / 2) - (BOLA_TAMAÑO / 2);
@@ -251,7 +251,7 @@ public class PongGUI extends JFrame{
 	        		pala2Ymed -= PALA_VELOCIDAD;
 	        	}
 	        }
-	        if (dificultad == Dificultad.Dificil && bolaXDir > 0) {
+	        if (dificultad == Dificultad.Dificil) {
 	        	if (pala2Ymed < (bolaYmed + (0.4f*(bolaYoffset * signoOffset))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	        		pala2Y += PALA_VELOCIDAD;
 	        		pala2Ymed += PALA_VELOCIDAD;
@@ -296,9 +296,9 @@ public class PongGUI extends JFrame{
         	}
             float a = ((float)(bolaYmed - pala1Ymed) / (PALA_ALTO/NIVEL_REBOTE));
             bolaYDir = Math.round(bolaVel * a);
-            //if (dificultad == Dificultad.MuyDificil) {
-            //	camino = calcularCaminoD();
-            //}
+            if (dificultad == Dificultad.MuyDificil) {
+            	camino = calcularCaminoD();
+            }
         }
         // Colision con pala 2
         if (bolaX >= ANCHO - (PALA_DESP_D + BOLA_TAMAÑO) && bolaYmed >= pala2Y && bolaYmed <= pala2Y + PALA_ALTO) {
@@ -314,8 +314,6 @@ public class PongGUI extends JFrame{
             bolaYoffset = (int) Math.round(Math.random() * PALA_ALTO);
             signoOffset = (int) Math.round(Math.random());
             signoOffset = (2 * signoOffset) - 1;
-            System.out.println(bolaYoffset);
-            System.out.println(signoOffset);
         }
 
         // Resetear la bola si se sale de los lados y cambiar puntuacion
@@ -343,12 +341,14 @@ public class PongGUI extends JFrame{
         }
     }
     
-    /*Ignorar esta funcion por ahora
+    
     private ArrayList<ArrayList<Integer>> calcularCaminoD() {
     	ArrayList<ArrayList<Integer>> camino = new ArrayList<ArrayList<Integer>>();
     	int distanciaX = ANCHO - (PALA_DESP_I + PALA_ANCHO + PALA_DESP_D + BOLA_TAMAÑO);
     	int tiempoTotal = distanciaX / bolaXDir;
     	int distanciaY = Math.round(bolaY + (tiempoTotal * bolaYDir));
+    	System.out.println(distanciaY);
+    	System.out.println(distanciaY % ALTO_REBOTE);
     	int secciones = distanciaY / ALTO_REBOTE;
     	int tiempoY;
     	int x;
@@ -423,11 +423,15 @@ public class PongGUI extends JFrame{
         		if (i + 1 == secciones) {
         			camino.get(i).add(ANCHO - PALA_DESP_D);
         			if ((i % 2) == 0) {
-        				y = distanciaY % ALTO_REBOTE;
+        				y = ALTO_REBOTE - Math.abs(distanciaY % ALTO_REBOTE);
             		}
             		else {
-            			y = ALTO_REBOTE - (distanciaY % ALTO_REBOTE);
+            			y = Math.abs(distanciaY % ALTO_REBOTE);
             		}
+        			// No rebota
+        			if (i == 0) {
+        				y = distanciaY % ALTO_REBOTE;
+        			}
         			camino.get(i).add(y);
         		}
         		else {
@@ -445,7 +449,7 @@ public class PongGUI extends JFrame{
     	}
     	System.out.println(camino);
     	return camino;
-	}*/
+	}
 
 
 	private class GamePanel extends JPanel {

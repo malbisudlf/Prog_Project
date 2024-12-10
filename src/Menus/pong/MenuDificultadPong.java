@@ -42,7 +42,7 @@ public class MenuDificultadPong extends JFrame{
 		add(titulo, BorderLayout.NORTH);
 		
 		JPanel botones = new JPanel();
-		botones.setLayout(new GridLayout(4,1));
+		botones.setLayout(new GridLayout(5,1));
 		botones.setBackground(Color.BLACK);
 		
 		Font fontBotones = new Font("Arial", Font.BOLD, 30);
@@ -57,6 +57,7 @@ public class MenuDificultadPong extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new PongGUI(usuario, Dificultad.Facil);
+				dispose();
 			}
 		});
 		
@@ -70,6 +71,7 @@ public class MenuDificultadPong extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new PongGUI(usuario, Dificultad.Normal);
+				dispose();
 			}
 		});
 		
@@ -83,6 +85,21 @@ public class MenuDificultadPong extends JFrame{
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				new PongGUI(usuario, Dificultad.Dificil);
+				dispose();
+			}
+		});
+		
+		JButton MuyDificil = new JButton("MUY DIFICIL");
+		MuyDificil.setFocusable(false);
+		MuyDificil.setBackground(Color.BLACK);
+		MuyDificil.setForeground(Color.WHITE);
+		MuyDificil.setFont(fontBotones);
+		MuyDificil.addActionListener(new ActionListener() {
+
+			@Override
+			public void actionPerformed(ActionEvent e) {
+				new PongGUI(usuario, Dificultad.MuyDificil);
+				dispose();
 			}
 		});
 		
@@ -117,6 +134,7 @@ public class MenuDificultadPong extends JFrame{
 		botones.add(Facil);
 		botones.add(Normal);
 		botones.add(Dificil);
+		botones.add(MuyDificil);
 		botones.add(Volver);
 		add(botones, BorderLayout.CENTER);
 		setVisible(true);
