@@ -20,13 +20,12 @@ import javax.swing.JLayeredPane;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
-import javax.swing.Timer;
 
 import Menus.MainMenuGUI;
 import Menus.pong.Dificultad;
 import usuario.UsuarioSnake;
 
-public class PongGUI extends JFrame implements ActionListener{
+public class PongGUI extends JFrame{
 	
 	static final long serialVersionUID = 1L;
 	
@@ -70,9 +69,10 @@ public class PongGUI extends JFrame implements ActionListener{
     private int puntuacion2 = 0;
     
     //IAG (herramienta: ChatGPT)
-	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del Timer de chatgpt
+	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del isPaused de chatgpt
 	//y la trasladamos con algun cambio para que se adapte a nuestra idea.
-    private Timer timer;
+    private BolaThread bolaThread;
+    private PalasThread palasThread;
     private boolean isPaused = true;
 
     private GamePanel gamePanel;
@@ -99,10 +99,6 @@ public class PongGUI extends JFrame implements ActionListener{
         add(layeredPane, BorderLayout.CENTER);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
         gamePanel.setBounds(0, 0, ANCHO, ALTO);
-
-        addKeyListener(new KeyHandler());
-        timer = new Timer(10, this);
-        timer.start();
         
         menuPausa = new MenuPausa();
         menuPausa.setBackground(Color.BLACK);
@@ -112,6 +108,13 @@ public class PongGUI extends JFrame implements ActionListener{
         layeredPane.setVisible(true);
         setVisible(true);
         ShowControlesPvP();
+        
+        addKeyListener(new KeyHandler());
+        
+        bolaThread = new BolaThread();
+        palasThread = new PalasThread();
+        bolaThread.start();
+        palasThread.start();
     }
     
     public PongGUI(UsuarioSnake usuario, Dificultad dificultad) {
@@ -133,10 +136,6 @@ public class PongGUI extends JFrame implements ActionListener{
         add(layeredPane, BorderLayout.CENTER);
         layeredPane.add(gamePanel, JLayeredPane.DEFAULT_LAYER);
         gamePanel.setBounds(0, 0, ANCHO, ALTO);
-
-        addKeyListener(new KeyHandler());
-        timer = new Timer(10, this);
-        timer.start();
         
         menuPausa = new MenuPausa();
         menuPausa.setBackground(Color.BLACK);
@@ -146,21 +145,53 @@ public class PongGUI extends JFrame implements ActionListener{
         layeredPane.setVisible(true);
         setVisible(true);
         ShowControlesPvC();
+        
+        addKeyListener(new KeyHandler());
+        
+        bolaThread = new BolaThread();
+        palasThread = new PalasThread();
+        bolaThread.start();
+        palasThread.start();
+    }
+    
+    private class BolaThread extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                if (!isPaused) {
+                    moverBola();
+                    checkColisiones();
+                    gamePanel.repaint();
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }
+    }
+    
+    private class PalasThread extends Thread {
+        @Override
+        public void run() {
+            while (true) {
+                if (!isPaused) {
+                    moverPalas();
+                    gamePanel.repaint();
+                }
+                try {
+                    Thread.sleep(10);
+                } catch (InterruptedException e) {
+                    break;
+                }
+            }
+        }
     }
 
     private void togglePause() {
     	isPaused = !isPaused;
     	menuPausa.setVisible(isPaused);
-    }
-
-    @Override
-    public void actionPerformed(ActionEvent e) {
-        if (!isPaused) {
-            moverBola();
-            moverPalas();
-            checkColisiones();
-            repaint();
-        }
     }
 
     private void moverBola() {
@@ -570,4 +601,12 @@ public class PongGUI extends JFrame implements ActionListener{
     private void ShowControlesPvC() {
 		JOptionPane.showMessageDialog(this, "Jugador : W,S - Flechas\nPausar/Reanudar : Espacio", "Controles", JOptionPane.INFORMATION_MESSAGE);
 	}
+    
+    @Override
+    public void dispose() {
+        bolaThread.interrupt();
+        palasThread.interrupt();
+        super.dispose();
+    }
+
 }
