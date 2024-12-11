@@ -89,7 +89,7 @@ public class MenuDificultadPong extends JFrame{
 			}
 		});
 		
-		JButton MuyDificil = new JButton("MUY DIFICIL");
+		JButton MuyDificil = new JButton("99% IMPOSIBLE");
 		MuyDificil.setFocusable(false);
 		MuyDificil.setBackground(Color.BLACK);
 		MuyDificil.setForeground(Color.WHITE);
@@ -98,7 +98,7 @@ public class MenuDificultadPong extends JFrame{
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new PongGUI(usuario, Dificultad.MuyDificil);
+				new PongGUI(usuario, Dificultad.Imposible);
 				dispose();
 			}
 		});
