@@ -35,14 +35,14 @@ public class PongGUI extends JFrame{
     private static final int PALA_DESP_I = 20;
     private static final int PALA_DESP_D = PALA_DESP_I + 20;
     private static final int PALA_ANCHO = 10;
-    private static final int PALA_ALTO = 120; // Evitar numeros impares
+    private static final int PALA_ALTO = 130;
     private static final int MEDIA_PALA = PALA_ALTO / 2;
-    private static final int BOLA_TAMAÑO = 20; // Evitar numeros impares
+    private static final int BOLA_TAMAÑO = 20;
     private static final int MEDIA_BOLA = BOLA_TAMAÑO / 2;
     private static final int ALTO_REBOTE = ALTO_VISUAL - BOLA_TAMAÑO; // Altura que recorre la bola de rebote a rebote
-    private static final int PALA_VELOCIDAD = 8; 
-    private static final int BOLA_VELOCIDAD = 6; // Velocidad inicial
-    private static final int BOLA_ACELERACION = 3; // Numero de rebotes para acelerar
+    private static final int PALA_VELOCIDAD = 10; 
+    private static final int BOLA_VELOCIDAD = 8; // Velocidad inicial
+    private static final int BOLA_ACELERACION = 5; // Numero de rebotes para acelerar
     private static final int NIVEL_REBOTE = 3; // Agresividad del angulo de salida de la bola al rebotar con pala
     
     // Coordenadas reales (Esquina superior izquierda) de las 
@@ -235,6 +235,16 @@ public class PongGUI extends JFrame{
 	            pala1Ymed += PALA_VELOCIDAD;
 	        }
 	        if (dificultad == Dificultad.Facil && bolaXDir > 0) {
+	        	if (pala2Ymed < (bolaYmed + (1.2f*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        		pala2Y += PALA_VELOCIDAD;
+	        		pala2Ymed += PALA_VELOCIDAD;
+	        	}
+	        	if (pala2Ymed > (bolaYmed + (1.2f*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
+	        		pala2Y -= PALA_VELOCIDAD;
+	        		pala2Ymed -= PALA_VELOCIDAD;
+	        	}
+	        }
+	        if (dificultad == Dificultad.Normal && bolaXDir > 0) {
 	        	if (pala2Ymed < (bolaYmed + (1.1f*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	        		pala2Y += PALA_VELOCIDAD;
 	        		pala2Ymed += PALA_VELOCIDAD;
@@ -244,22 +254,12 @@ public class PongGUI extends JFrame{
 	        		pala2Ymed -= PALA_VELOCIDAD;
 	        	}
 	        }
-	        if (dificultad == Dificultad.Normal && bolaXDir > 0) {
+	        if (dificultad == Dificultad.Dificil && bolaXDir > 0) {
 	        	if (pala2Ymed < (bolaYmed + (bolaYDesvio * signoDesvio)) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	        		pala2Y += PALA_VELOCIDAD;
 	        		pala2Ymed += PALA_VELOCIDAD;
 	        	}
 	        	if (pala2Ymed > (bolaYmed + (bolaYDesvio * signoDesvio)) && pala2Y > 0) {
-	        		pala2Y -= PALA_VELOCIDAD;
-	        		pala2Ymed -= PALA_VELOCIDAD;
-	        	}
-	        }
-	        if (dificultad == Dificultad.Dificil && bolaXDir > 0) {
-	        	if (pala2Ymed < (bolaYmed + (0.8f*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
-	        		pala2Y += PALA_VELOCIDAD;
-	        		pala2Ymed += PALA_VELOCIDAD;
-	        	}
-	        	if (pala2Ymed > (bolaYmed + (0.8f*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
 	        		pala2Y -= PALA_VELOCIDAD;
 	        		pala2Ymed -= PALA_VELOCIDAD;
 	        	}
@@ -355,7 +355,7 @@ public class PongGUI extends JFrame{
         }
 
         // Resetear la bola si se sale de los lados y cambiar puntuacion
-        if (bolaX < 0) {
+        if (bolaX < -BOLA_TAMAÑO) {
             bolaX = (ANCHO / 2) - MEDIA_BOLA;
             bolaY = (ALTO_VISUAL / 2) - MEDIA_BOLA;
             bolaYmed = ALTO_VISUAL / 2;
@@ -604,7 +604,11 @@ public class PongGUI extends JFrame{
         public void paintComponent(Graphics g) {
             super.paintComponent(g);
             g.setColor(Color.WHITE);
-            
+            for (int i = 0; i < ALTO_VISUAL / 10; i++) {
+            	if (i % 2 == 0) {
+            		g.fillRect((ANCHO/2 - 5), i * 10 + 5, 10, 10);
+            	}
+            }
             g.fillRect(PALA_DESP_I, pala1Y, PALA_ANCHO, PALA_ALTO);
             g.fillRect(ANCHO - PALA_DESP_D, pala2Y, PALA_ANCHO, PALA_ALTO);
             g.fillOval(bolaX, bolaY, BOLA_TAMAÑO, BOLA_TAMAÑO);
