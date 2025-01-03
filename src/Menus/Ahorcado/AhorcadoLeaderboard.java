@@ -1,7 +1,6 @@
 package Menus.Ahorcado;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -9,14 +8,8 @@ import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Vector;
 
@@ -55,47 +48,6 @@ public class AhorcadoLeaderboard extends JFrame {
             new menuAhorcado(usuario);
             dispose();
         });
-
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        topPanel.setBackground(new Color(240, 240, 240));
-        JLabel ordenarLabel = new JLabel("Ordenar por:");
-        ordenarLabel.setForeground(Color.DARK_GRAY);
-        ordenarLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        topPanel.add(ordenarLabel);
-
-        JComboBox<String> ordenarCombo = new JComboBox<>(new String[]{"Puntuación (Mayor a Menor)", "Antigüedad"});
-        ordenarCombo.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        ordenarCombo.setBackground(new Color(240, 240, 240));
-        ordenarCombo.setForeground(Color.DARK_GRAY);
-        ordenarCombo.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-
-        ordenarCombo.setRenderer(new BasicComboBoxRenderer() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (isSelected) {
-                    label.setBackground(new Color(41, 121, 255));
-                    label.setForeground(Color.WHITE);
-                } else {
-                    label.setBackground(new Color(240, 240, 240));
-                    label.setForeground(Color.DARK_GRAY);
-                }
-                return label;
-            }
-        });
-
-        ordenarCombo.addActionListener(e -> {
-            if (ordenarCombo.getSelectedIndex() == 0) {
-                sortLeaderboardByScore();  // Ordena por puntuación
-            } else {
-                displayLeaderboardInOrder(true);  // Carga por antigüedad
-            }
-        });
-
-        topPanel.add(ordenarCombo);
-        mainPanel.add(topPanel, BorderLayout.NORTH);
 
         Vector<String> cabeceraLeaderboard = new Vector<>(Arrays.asList("Nombre", "Puntuación"));
         this.modeloLeaderboard = new DefaultTableModel(new Vector<>(), cabeceraLeaderboard) {
@@ -149,31 +101,25 @@ public class AhorcadoLeaderboard extends JFrame {
 
         mainPanel.add(scrollboard, BorderLayout.CENTER);
 
-        loadScoresFromDatabase(false);  // Cargar por puntuación inicialmente
+        loadScoresFromDatabase();  // Cargar por puntuación inicialmente
         setVisible(true);
     }
 
-    private void loadScoresFromDatabase(boolean ordenarPorAntiguedad) {
+    private void loadScoresFromDatabase() {
         try (Connection conn = DriverManager.getConnection(DB_URL)) {
-            String sql = ordenarPorAntiguedad ? "SELECT nombre, puntuacion, fecha FROM ahorcado ORDER BY fecha ASC" : "SELECT nombre, puntuacion FROM ahorcado ORDER BY puntuacion DESC";
+            String sql = "SELECT nombre, puntuacion FROM ahorcado ORDER BY puntuacion DESC";
             try (PreparedStatement pstmt = conn.prepareStatement(sql);
                  ResultSet rs = pstmt.executeQuery()) {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     int puntuacion = rs.getInt("puntuacion");
-                    String fecha = rs.getString("fecha");  // Suponiendo que tienes un campo 'fecha'
-                    Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacion, fecha));
+                    Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacion));
                     modeloLeaderboard.addRow(row);
                 }
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private void displayLeaderboardInOrder(boolean ordenarPorAntiguedad) {
-        modeloLeaderboard.setRowCount(0);
-        loadScoresFromDatabase(ordenarPorAntiguedad);
     }
 
     @SuppressWarnings("unchecked")

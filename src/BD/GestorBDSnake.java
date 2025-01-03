@@ -34,10 +34,9 @@ public class GestorBDSnake {
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
             puntuacion INTEGER DEFAULT 0,
-            fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
             FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
         );
-    """;
+    """;  // Removed the 'fecha' field
 
     public GestorBDSnake() {
         loadConfig();
@@ -152,28 +151,25 @@ public class GestorBDSnake {
             if (saveToCSV) {
                 saveToCSV();
             }
-            if (saveToTxt) {
-                saveScoresToTxt();
-            }
+           
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
             return false;
         }
     }
+    
 
     // Método para actualizar las puntuaciones del juego Ahorcado
     public boolean updateAhorcadoScores(String nombre, int puntuacion) {
-        String sql = "INSERT OR REPLACE INTO ahorcado(nombre, puntuacion, fecha) VALUES (?, ?, CURRENT_TIMESTAMP)";
+        String sql = "INSERT OR REPLACE INTO ahorcado(nombre, puntuacion) VALUES (?, ?)";
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
             pstmt.setString(1, nombre);
             pstmt.setInt(2, puntuacion);
             pstmt.executeUpdate();
 
-            if (saveToCSV) {
-                saveToCSV();
-            }
+            
             if (saveToTxt) {
                 saveScoresToTxt();
             }
@@ -268,27 +264,29 @@ public class GestorBDSnake {
         }
     }
 
-    // Funciones para manejar la tabla de puntuaciones del Ahorcado
     private void loadScoresFromTxt() {
-        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH))) {
+        try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH));
+             Connection conn = DriverManager.getConnection(DB_URL)) {
+
+            // Eliminar todos los registros actuales en la tabla 'ahorcado' antes de cargar los nuevos
+            String deleteAllSql = "DELETE FROM ahorcado";
+            try (PreparedStatement deleteStmt = conn.prepareStatement(deleteAllSql)) {
+                deleteStmt.executeUpdate();
+            }
+
             String line;
-            Connection conn = DriverManager.getConnection(DB_URL);
             while ((line = br.readLine()) != null) {
                 String[] parts = line.split(",");
-                if (parts.length < 3) continue;
+                if (parts.length < 2) continue;
 
                 String nombre = parts[0].trim();
                 int puntuacion = Integer.parseInt(parts[1].trim());
-                String fechaString = parts[2].trim();
 
-                // Convierte la fecha de la cadena a un objeto Timestamp
-                Timestamp fecha = Timestamp.valueOf(fechaString); // Convierte la fecha desde el archivo
-
-                String sql = "INSERT OR REPLACE INTO ahorcado(nombre, puntuacion, fecha) VALUES (?, ?, ?)";
+                // Insertar los nuevos datos desde el archivo
+                String sql = "INSERT INTO ahorcado(nombre, puntuacion) VALUES (?, ?)";
                 try (PreparedStatement pstmt = conn.prepareStatement(sql)) {
                     pstmt.setString(1, nombre);
-                    pstmt.setInt(2, puntuacion);
-                    pstmt.setTimestamp(3, fecha);  // Guarda la fecha
+                    pstmt.setInt(2, puntuacion);  // Ya no se guarda la fecha
                     pstmt.executeUpdate();
                 }
             }
@@ -297,10 +295,9 @@ public class GestorBDSnake {
         }
     }
 
-
     private void saveScoresToTxt() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
-            String sql = "SELECT nombre, puntuacion, fecha FROM ahorcado ORDER BY puntuacion DESC";
+            String sql = "SELECT nombre, puntuacion FROM ahorcado ORDER BY puntuacion DESC";
             try (Connection conn = DriverManager.getConnection(DB_URL);
                  Statement stmt = conn.createStatement();
                  ResultSet rs = stmt.executeQuery(sql)) {
@@ -308,12 +305,8 @@ public class GestorBDSnake {
                 while (rs.next()) {
                     String nombre = rs.getString("nombre");
                     int puntuacion = rs.getInt("puntuacion");
-                    Timestamp fecha = rs.getTimestamp("fecha"); // Obtén la fecha
 
-                    // Formatea la fecha a una cadena adecuada
-                    String fechaString = fecha != null ? fecha.toString() : "Sin fecha";
-
-                    bw.write(nombre + "," + puntuacion + "," + fechaString);
+                    bw.write(nombre + "," + puntuacion);
                     bw.newLine();
                 }
             }
@@ -321,39 +314,7 @@ public class GestorBDSnake {
             e.printStackTrace();
         }
     }
-    public void addFechaColumnIfNotExists() {
-        String checkColumnQuery = "PRAGMA table_info(ahorcado);";
-        String alterTableQuery = "ALTER TABLE ahorcado ADD COLUMN fecha TIMESTAMP DEFAULT CURRENT_TIMESTAMP;";
-
-        try (Connection conn = DriverManager.getConnection(DB_URL);
-             Statement stmt = conn.createStatement();
-             ResultSet rs = stmt.executeQuery(checkColumnQuery)) {
-
-            boolean columnExists = false;
-
-            // Verificar si la columna 'fecha' ya existe
-            while (rs.next()) {
-                String columnName = rs.getString("name");
-                if ("fecha".equals(columnName)) {
-                    columnExists = true;
-                    break;
-                }
-            }
-
-            // Si la columna no existe, agregarla
-            if (!columnExists) {
-                try (Statement alterStmt = conn.createStatement()) {
-                    alterStmt.executeUpdate(alterTableQuery);
-                    System.out.println("Columna 'fecha' añadida correctamente.");
-                }
-            }
-        } catch (SQLException e) {
-            System.err.println("Error al verificar o agregar la columna 'fecha': " + e.getMessage());
-        }
-    }
-
-
-
+    
     private void resetTxt() {
         try (BufferedWriter bw = new BufferedWriter(new FileWriter(FILE_PATH, false))) {
             bw.write(""); // Borra todo el contenido del archivo
@@ -361,4 +322,5 @@ public class GestorBDSnake {
             e.printStackTrace();
         }
     }
+
 }

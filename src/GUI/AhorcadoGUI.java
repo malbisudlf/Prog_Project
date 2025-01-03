@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 import javax.swing.*;
+
+import BD.GestorBDSnake;
 import Menus.Ahorcado.menuAhorcado;
 import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
@@ -77,10 +79,18 @@ public class AhorcadoGUI extends JFrame {
             int salida = JOptionPane.showConfirmDialog(null, "¿Seguro que quieres acabar la partida?", "ATENCIÓN", JOptionPane.YES_NO_OPTION);
             if (salida == JOptionPane.YES_OPTION) {
                 
-                    saveScoreToFile(usuario, score);
+            	 
                 
-                new menuAhorcado(usuario);
-                dispose();
+            	 GestorBDSnake gestorBD = new GestorBDSnake();
+
+                 if (gestorBD.updateAhorcadoScores(usuario.getNombre(), score)) {
+                     usuario.setPuntuacionAlta(usuario.getPuntuacionAlta()); // Actualiza la nueva puntuación más alta
+                 } else {
+                     JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
+                 }
+
+                 new menuAhorcado(usuario);
+                 dispose();
             }
         });
 
