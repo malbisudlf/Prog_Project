@@ -9,7 +9,7 @@ public class Main {
     public static void main(String[] args) {
         // Inicializar la base de datos y cargar datos del CSV
         GestorBDSnake gestorBD = new GestorBDSnake();
-        
+        gestorBD.addFechaColumnIfNotExists();
         //DESCOMENTAR ESTO SI QUEREMOS RESETEAR LA BASE DE DATOS
         /*
         gestorBD.resetDatabase();
