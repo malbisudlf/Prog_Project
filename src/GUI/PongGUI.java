@@ -56,9 +56,13 @@ public class PongGUI extends JFrame{
     private int pala2Ymed = ALTO_VISUAL / 2;
     private int bolaYmed = ALTO_VISUAL / 2;
     
-    // Desvio de la coordenada de la bolaY para la dificultad facil
+    // Desvio de la coordenada Y de la bola
     private int signoDesvio = 0;
     private int bolaYDesvio = 0;
+    // Multiplicadores de desvio para las distintas dificultades (1 = el alto de la pala como desvio maximo)
+    private static final float DESVIO_FACIL = 1.1f;
+    private static final float DESVIO_NORMAL = 1.1f;
+    private static final float DESVIO_DIFICIL = 1f;
     
     private int bolaVel = BOLA_VELOCIDAD;
     private int bolaBotes = 0;
@@ -235,31 +239,31 @@ public class PongGUI extends JFrame{
 	            pala1Ymed += PALA_VELOCIDAD;
 	        }
 	        if (dificultad == Dificultad.Facil && bolaXDir > 0) {
-	        	if (pala2Ymed < (bolaYmed + (1.2f*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        	if (pala2Ymed < (bolaYmed + (DESVIO_FACIL*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	        		pala2Y += PALA_VELOCIDAD;
 	        		pala2Ymed += PALA_VELOCIDAD;
 	        	}
-	        	if (pala2Ymed > (bolaYmed + (1.2f*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
+	        	if (pala2Ymed > (bolaYmed + (DESVIO_FACIL*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
 	        		pala2Y -= PALA_VELOCIDAD;
 	        		pala2Ymed -= PALA_VELOCIDAD;
 	        	}
 	        }
 	        if (dificultad == Dificultad.Normal && bolaXDir > 0) {
-	        	if (pala2Ymed < (bolaYmed + (1.1f*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        	if (pala2Ymed < (bolaYmed + (DESVIO_NORMAL*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	        		pala2Y += PALA_VELOCIDAD;
 	        		pala2Ymed += PALA_VELOCIDAD;
 	        	}
-	        	if (pala2Ymed > (bolaYmed + (1.1f*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
+	        	if (pala2Ymed > (bolaYmed + (DESVIO_NORMAL*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
 	        		pala2Y -= PALA_VELOCIDAD;
 	        		pala2Ymed -= PALA_VELOCIDAD;
 	        	}
 	        }
 	        if (dificultad == Dificultad.Dificil && bolaXDir > 0) {
-	        	if (pala2Ymed < (bolaYmed + (bolaYDesvio * signoDesvio)) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
+	        	if (pala2Ymed < (bolaYmed + (DESVIO_DIFICIL*(bolaYDesvio * signoDesvio))) && pala2Y < ALTO_VISUAL - PALA_ALTO) {
 	        		pala2Y += PALA_VELOCIDAD;
 	        		pala2Ymed += PALA_VELOCIDAD;
 	        	}
-	        	if (pala2Ymed > (bolaYmed + (bolaYDesvio * signoDesvio)) && pala2Y > 0) {
+	        	if (pala2Ymed > (bolaYmed + (DESVIO_DIFICIL*(bolaYDesvio * signoDesvio))) && pala2Y > 0) {
 	        		pala2Y -= PALA_VELOCIDAD;
 	        		pala2Ymed -= PALA_VELOCIDAD;
 	        	}
@@ -312,7 +316,7 @@ public class PongGUI extends JFrame{
 	            float a = ((float)(bolaYmed - pala1Ymed) / (PALA_ALTO/NIVEL_REBOTE));
 	            bolaYDir = Math.round(bolaVel * a);
 	            if (dificultad == Dificultad.Imposible) {
-	            	camino = calcularCaminoD();
+	            	camino = calcularCaminoDRecursivo(camino, bolaX, bolaY, bolaYDir);
 	            }
 	            else {
 	            	camino = new ArrayList<ArrayList<Integer>>();
@@ -341,7 +345,7 @@ public class PongGUI extends JFrame{
 	            signoDesvio = (int) Math.round(Math.random());
 	            signoDesvio = (2 * signoDesvio) - 1;
 	            if (dificultad == Dificultad.Facil) {
-	            	camino = calcularCaminoI();
+	            	camino = calcularCaminoIRecursivo(camino, bolaX, bolaY, bolaYDir);
 	            }
 	            else {
 	            	camino = new ArrayList<ArrayList<Integer>>();
@@ -489,6 +493,46 @@ public class PongGUI extends JFrame{
     	return camino;
 	}
     
+    private ArrayList<ArrayList<Integer>> calcularCaminoDRecursivo(ArrayList<ArrayList<Integer>> camino, int x, int y, int bolaYDir) {
+    	camino.add(new ArrayList<Integer>());
+    	float tiempoRebote;
+    	int siguienteX = 0;
+    	int siguienteY = 0;
+    	if (bolaYDir == 0) {
+    		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO + MEDIA_BOLA);
+    		camino.getFirst().add(bolaYmed);
+    		camino.getFirst().add(ANCHO - (PALA_DESP_D + MEDIA_BOLA));
+    		camino.getFirst().add(bolaYmed);
+    	}
+    	else {
+    		if (bolaYDir > 0) {
+    			tiempoRebote = (ALTO_REBOTE - y) / bolaYDir;
+    			siguienteY = ALTO_REBOTE;
+    			siguienteX = (int) (x + (bolaXDir * tiempoRebote));
+    		}
+    		else {
+    			tiempoRebote = Math.abs(y / bolaYDir);
+    			siguienteY = 0;
+    			siguienteX = (int) (x + (bolaXDir * tiempoRebote));
+    		}
+    		camino.getLast().add(x + MEDIA_BOLA);
+        	camino.getLast().add(y + MEDIA_BOLA);
+        	if (siguienteX > ANCHO - PALA_DESP_D - BOLA_TAMAÑO) {
+        		tiempoRebote = (ANCHO - PALA_DESP_D - x) / bolaXDir;
+        		siguienteX = ANCHO - PALA_DESP_D - BOLA_TAMAÑO;
+        		siguienteY = (int) (y + (bolaYDir * tiempoRebote));
+        		camino.getLast().add(siguienteX + MEDIA_BOLA);
+            	camino.getLast().add(siguienteY + MEDIA_BOLA);
+        	}
+        	else {
+        		camino.getLast().add(siguienteX + MEDIA_BOLA);
+            	camino.getLast().add(siguienteY + MEDIA_BOLA);
+            	camino = calcularCaminoDRecursivo(camino, siguienteX, siguienteY, -bolaYDir);
+        	}
+    	}
+    	return camino;
+	}
+    
     private ArrayList<ArrayList<Integer>> calcularCaminoI() {
     	ArrayList<ArrayList<Integer>> camino = new ArrayList<ArrayList<Integer>>();
     	int distanciaX = ANCHO - (PALA_DESP_I + PALA_ANCHO + PALA_DESP_D + BOLA_TAMAÑO);
@@ -591,6 +635,46 @@ public class PongGUI extends JFrame{
     		camino.getFirst().add(bolaYmed);
     		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO + MEDIA_BOLA);
     		camino.getFirst().add(bolaYmed);
+    	}
+    	return camino;
+	}
+    
+    private ArrayList<ArrayList<Integer>> calcularCaminoIRecursivo(ArrayList<ArrayList<Integer>> camino, int x, int y, int bolaYDir) {
+    	camino.add(new ArrayList<Integer>());
+    	float tiempoRebote;
+    	int siguienteX = 0;
+    	int siguienteY = 0;
+    	if (bolaYDir == 0) {
+    		camino.getFirst().add(ANCHO - (PALA_DESP_D + MEDIA_BOLA));
+    		camino.getFirst().add(bolaYmed);
+    		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO + MEDIA_BOLA);
+    		camino.getFirst().add(bolaYmed);
+    	}
+    	else {
+    		if (bolaYDir > 0) {
+    			tiempoRebote = (ALTO_REBOTE - y) / bolaYDir;
+    			siguienteY = ALTO_REBOTE;
+    			siguienteX = (int) (x + (bolaXDir * tiempoRebote));
+    		}
+    		else {
+    			tiempoRebote = Math.abs(y / bolaYDir);
+    			siguienteY = 0;
+    			siguienteX = (int) (x + (bolaXDir * tiempoRebote));
+    		}
+    		camino.getLast().add(x + MEDIA_BOLA);
+        	camino.getLast().add(y + MEDIA_BOLA);
+        	if (siguienteX < PALA_DESP_I + PALA_ANCHO) {
+        		tiempoRebote = Math.abs((x - (PALA_DESP_I + PALA_ANCHO)) / bolaXDir);
+        		siguienteX = PALA_DESP_I + PALA_ANCHO;
+        		siguienteY = (int) (y + (bolaYDir * tiempoRebote));
+        		camino.getLast().add(siguienteX + MEDIA_BOLA);
+            	camino.getLast().add(siguienteY + MEDIA_BOLA);
+        	}
+        	else {
+        		camino.getLast().add(siguienteX + MEDIA_BOLA);
+            	camino.getLast().add(siguienteY + MEDIA_BOLA);
+            	camino = calcularCaminoIRecursivo(camino, siguienteX, siguienteY, -bolaYDir);
+        	}
     	}
     	return camino;
 	}
