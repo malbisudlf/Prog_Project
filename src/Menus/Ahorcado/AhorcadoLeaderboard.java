@@ -1,7 +1,6 @@
 package Menus.Ahorcado;
 
 import javax.swing.*;
-import javax.swing.plaf.basic.BasicComboBoxRenderer;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
@@ -9,20 +8,21 @@ import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
-import java.io.BufferedReader;
-import java.io.FileReader;
 import java.io.IOException;
+import java.sql.*;
 import java.util.Arrays;
 import java.util.Vector;
 
 public class AhorcadoLeaderboard extends JFrame {
+    private static final String DB_URL = "jdbc:sqlite:snake_game.db";
     private static final long serialVersionUID = 1L;
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
     private static final String FILE_PATH = "leaderboard.txt";
     public static UsuarioSnake usuario;
+
     public AhorcadoLeaderboard(UsuarioSnake usuario) {
-    	menuSnake.usuario = usuario;
+        menuSnake.usuario = usuario;
         setTitle("Leaderboard");
         setSize(600, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
@@ -48,48 +48,6 @@ public class AhorcadoLeaderboard extends JFrame {
             new menuAhorcado(usuario);
             dispose();
         });
-
-        JPanel topPanel = new JPanel(new FlowLayout(FlowLayout.LEFT));
-        topPanel.setBackground(new Color(240, 240, 240));
-        JLabel ordenarLabel = new JLabel("Ordenar por:");
-        ordenarLabel.setForeground(Color.DARK_GRAY);
-        ordenarLabel.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        topPanel.add(ordenarLabel);
-
-        JComboBox<String> ordenarCombo = new JComboBox<>(new String[]{"Puntuación (Mayor a Menor)", "Antigüedad"});
-        ordenarCombo.setFont(new Font("SansSerif", Font.PLAIN, 14));
-        ordenarCombo.setBackground(new Color(240, 240, 240));
-        ordenarCombo.setForeground(Color.DARK_GRAY);
-        ordenarCombo.setBorder(BorderFactory.createLineBorder(new Color(200, 200, 200)));
-
-        ordenarCombo.setRenderer(new BasicComboBoxRenderer() {
-            
-			private static final long serialVersionUID = 1L;
-
-			@Override
-            public Component getListCellRendererComponent(JList<?> list, Object value, int index, boolean isSelected, boolean cellHasFocus) {
-                JLabel label = (JLabel) super.getListCellRendererComponent(list, value, index, isSelected, cellHasFocus);
-                if (isSelected) {
-                    label.setBackground(new Color(41, 121, 255));
-                    label.setForeground(Color.WHITE);
-                } else {
-                    label.setBackground(new Color(240, 240, 240));
-                    label.setForeground(Color.DARK_GRAY);
-                }
-                return label;
-            }
-        });
-
-        ordenarCombo.addActionListener(e -> {
-            if (ordenarCombo.getSelectedIndex() == 0) {
-                sortLeaderboardByScore();
-            } else {
-                displayLeaderboardInOrder();
-            }
-        });
-
-        topPanel.add(ordenarCombo);
-        mainPanel.add(topPanel, BorderLayout.NORTH);
 
         Vector<String> cabeceraLeaderboard = new Vector<>(Arrays.asList("Nombre", "Puntuación"));
         this.modeloLeaderboard = new DefaultTableModel(new Vector<>(), cabeceraLeaderboard) {
@@ -143,36 +101,41 @@ public class AhorcadoLeaderboard extends JFrame {
 
         mainPanel.add(scrollboard, BorderLayout.CENTER);
 
-        loadScoresFromFile();
+        loadScoresFromDatabase();  // Cargar por puntuación inicialmente
         setVisible(true);
     }
 
-    private void loadScoresFromFile() {
-        try (BufferedReader reader = new BufferedReader(new FileReader(FILE_PATH))) {
-            String line;
-            while ((line = reader.readLine()) != null) {
-                String[] parts = line.split(",");
-                if (parts.length == 2) {
-                    String nombre = parts[0];
-                    long puntuacion = Long.parseLong(parts[1].trim());
+    private void loadScoresFromDatabase() {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            String sql = "SELECT nombre, puntuacion FROM ahorcado ORDER BY puntuacion DESC";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql);
+                 ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    int puntuacion = rs.getInt("puntuacion");
                     Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacion));
                     modeloLeaderboard.addRow(row);
                 }
             }
-        } catch (IOException e) {
+        } catch (SQLException e) {
             e.printStackTrace();
         }
-    }
-
-    private void displayLeaderboardInOrder() {
-        modeloLeaderboard.setRowCount(0);
-        loadScoresFromFile();
     }
 
     @SuppressWarnings("unchecked")
     private void sortLeaderboardByScore() {
         Vector<Vector<Object>> data = (Vector<Vector<Object>>) (Vector<?>) modeloLeaderboard.getDataVector();
-        data.sort((row1, row2) -> Long.compare((Long) row2.get(1), (Long) row1.get(1)));
+        
+        // Ordenar los datos de mayor a menor por puntuación (Integer)
+        data.sort((row1, row2) -> Integer.compare((Integer) row2.get(1), (Integer) row1.get(1))); 
+        
+        // Asegúrate de actualizar el modelo después de ordenar
+        modeloLeaderboard.setRowCount(0); // Limpiar los datos actuales
+        for (Vector<Object> row : data) {
+            modeloLeaderboard.addRow(row); // Añadir los datos ordenados de nuevo
+        }
+
+        // Notificar que los datos han cambiado
         modeloLeaderboard.fireTableDataChanged();
     }
 

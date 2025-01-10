@@ -1,165 +1,114 @@
 package Menus.Ahorcado;
 
-import java.awt.BorderLayout;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.Image;
+import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
 
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.SwingConstants;
+import javax.swing.*;
 
+import BD.GestorBDSnake;
 import GUI.AhorcadoGUI;
 import Menus.MainMenuGUI;
 import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
 
-public class menuAhorcado extends JFrame{
-		/**
-	 * 
-	 */
-	private static final long serialVersionUID = 1L;
-	public static UsuarioSnake usuario;
+public class menuAhorcado extends JFrame {
+    private static final long serialVersionUID = 1L;
+    public static UsuarioSnake usuario;
 
-		public menuAhorcado(UsuarioSnake usuario) {
-			menuSnake.usuario = usuario;
-			setTitle("MENU AHORCADO");
-			setSize(600, 500);
-			setDefaultCloseOperation(EXIT_ON_CLOSE);
-			setLocationRelativeTo(null);
-			
-			
-			
-			setBackground(Color.BLACK);
-			
-			JPanel mainpanel = new JPanel();
-			mainpanel.setLayout(new BorderLayout());
-			mainpanel.setBackground(Color.BLACK);
-			
-			JLabel titulo = new JLabel("AHORCADO", SwingConstants.CENTER);
-			titulo.setFont(new Font("Arial", Font.BOLD, 50));
-			mainpanel.add(titulo, BorderLayout.NORTH);
-			titulo.setBackground(Color.BLACK);
-	        titulo.setForeground(Color.WHITE);
-	        Font fontBotones = new Font("MV BOLI", Font.BOLD, 30);
-	        
-			
-			JPanel button = new JPanel();
-			button.setLayout(new GridLayout(2,2));
-			button.setBackground(Color.BLACK);
-			
-			
-			JButton playbutton = new JButton("JUGAR");
-			playbutton.setFocusable(false);
-			playbutton.setBackground(Color.BLACK);
-			playbutton.setForeground(Color.WHITE);
-			playbutton.setFont(fontBotones);
-			
-			
-			playbutton.addActionListener(new ActionListener() {
+    public menuAhorcado(UsuarioSnake usuario) {
+        menuSnake.usuario = usuario;
+        setTitle("MENU AHORCADO");
+        setSize(600, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					
-					new AhorcadoGUI(usuario);
-					dispose();
-				}
-				
-			}
-			);
-			
-			JButton leaderbutton = new JButton("LEADERBOARD");
-			leaderbutton.setFocusable(false);
-			leaderbutton.setBackground(Color.BLACK);
-			leaderbutton.setForeground(Color.WHITE);
-			leaderbutton.setFont(fontBotones);
-			leaderbutton.addActionListener(new ActionListener() {
+        setBackground(Color.BLACK);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					new AhorcadoLeaderboard(usuario);
-					dispose();
-					
-				}
-				
-			
-			});
-			
-			JButton skinbutton = new JButton("SKINS");
-			skinbutton.setFocusable(false);
-			skinbutton.setBackground(Color.BLACK);
-			skinbutton.setForeground(Color.WHITE);
-			skinbutton.setFont(fontBotones);
-			
-			skinbutton.addActionListener(new ActionListener() {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        mainPanel.setBackground(Color.BLACK);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					AhorcadoSkin();
-					
-				}
-				
-			});
-			
-			JButton volverbutton = new JButton();
-			volverbutton.setFocusable(false);
-			volverbutton.setBackground(Color.BLACK);
-			volverbutton.setForeground(Color.WHITE);
-			volverbutton.setFont(fontBotones);
-			
-			ImageIcon volverfoto = new ImageIcon("resources/images/volver.png");
-			
-			volverbutton.addComponentListener(new ComponentAdapter() {
-	            @Override
-	            public void componentResized(ComponentEvent e) {
-	                
-	                int anchoBoton = volverbutton.getWidth();
-	                int altoBoton = volverbutton.getHeight();
+        JLabel titulo = new JLabel("AHORCADO", SwingConstants.CENTER);
+        titulo.setFont(new Font("Arial", Font.BOLD, 50));
+        mainPanel.add(titulo, BorderLayout.NORTH);
+        titulo.setBackground(Color.BLACK);
+        titulo.setForeground(Color.WHITE);
 
-	                // IAG ChatGPT
-	                //Adaptado
-	                Image imagenEscalada = volverfoto.getImage().getScaledInstance(anchoBoton -25, altoBoton -5, Image.SCALE_SMOOTH); 
-	                //HAsta aqui uso de chatGPT
-	                volverbutton.setIcon(new ImageIcon(imagenEscalada));
-	            }
-	        });
-			volverbutton.setIcon(volverfoto);
-			
-			volverbutton.addActionListener(new ActionListener() {
-				
+        Font fontBotones = new Font("MV BOLI", Font.BOLD, 30);
 
-				@Override
-				public void actionPerformed(ActionEvent e) {
-					new MainMenuGUI(usuario);
-					dispose();
-					
-				}
-				
-			});
-			
-			button.add(playbutton);
-			button.add(leaderbutton);
-			button.add(skinbutton);
-			button.add(volverbutton);
-			mainpanel.add(button, BorderLayout.CENTER);
-			add(mainpanel);
-			setVisible(true);
-		}
-		
-		
-		
-		private void AhorcadoSkin() {
-			JOptionPane.showMessageDialog(this, "Aun sin implementar");
-		}
-		
-			
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new GridLayout(2, 2));
+        buttonPanel.setBackground(Color.BLACK);
+
+        // Botón para jugar
+        JButton playButton = new JButton("JUGAR");
+        playButton.setFocusable(false);
+        playButton.setBackground(Color.BLACK);
+        playButton.setForeground(Color.WHITE);
+        playButton.setFont(fontBotones);
+        playButton.addActionListener(e -> {
+            new AhorcadoGUI(usuario);
+            dispose();
+        });
+
+        // Botón para leaderboard
+        JButton leaderButton = new JButton("LEADERBOARD");
+        leaderButton.setFocusable(false);
+        leaderButton.setBackground(Color.BLACK);
+        leaderButton.setForeground(Color.WHITE);
+        leaderButton.setFont(fontBotones);
+        leaderButton.addActionListener(e -> {
+            new AhorcadoLeaderboard(usuario); // Ahora se utiliza directamente la clase combinada
+            dispose();
+        });
+
+        // Botón para skins (placeholder)
+        JButton skinButton = new JButton("SKINS");
+        skinButton.setFocusable(false);
+        skinButton.setBackground(Color.BLACK);
+        skinButton.setForeground(Color.WHITE);
+        skinButton.setFont(fontBotones);
+        skinButton.addActionListener(e -> AhorcadoSkin());
+
+        // Botón para volver al menú principal
+        JButton volverButton = new JButton();
+        volverButton.setFocusable(false);
+        volverButton.setBackground(Color.BLACK);
+        volverButton.setForeground(Color.WHITE);
+        volverButton.setFont(fontBotones);
+
+        ImageIcon volverFoto = new ImageIcon("resources/images/volver.png");
+        volverButton.addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                int anchoBoton = volverButton.getWidth();
+                int altoBoton = volverButton.getHeight();
+
+                Image imagenEscalada = volverFoto.getImage().getScaledInstance(anchoBoton - 25, altoBoton - 5, Image.SCALE_SMOOTH);
+                volverButton.setIcon(new ImageIcon(imagenEscalada));
+            }
+        });
+        volverButton.setIcon(volverFoto);
+        volverButton.addActionListener(e -> {
+            new MainMenuGUI(usuario);
+            dispose();
+        });
+
+        // Añadir botones al panel
+        buttonPanel.add(playButton);
+        buttonPanel.add(leaderButton);
+        buttonPanel.add(skinButton);
+        buttonPanel.add(volverButton);
+
+        mainPanel.add(buttonPanel, BorderLayout.CENTER);
+        add(mainPanel);
+        setVisible(true);
+    }
+
+    private void AhorcadoSkin() {
+        JOptionPane.showMessageDialog(this, "Aún sin implementar");
+    }
 }
