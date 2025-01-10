@@ -37,6 +37,15 @@ public class GestorBDSnake {
             FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
         );
     """;  // Removed the 'fecha' field
+    
+    private static final String CREATE_PONG_TABLE = """
+        CREATE TABLE IF NOT EXISTS pong (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            puntuacion INTEGER DEFAULT 0,
+            FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
+        );
+    """;
 
     public GestorBDSnake() {
         loadConfig();
@@ -50,6 +59,7 @@ public class GestorBDSnake {
 
             stmt.execute(CREATE_USERS_TABLE);
             stmt.execute(CREATE_AHORCADO_TABLE);
+            stmt.execute(CREATE_PONG_TABLE);
 
             if (loadFromCSV) {
                 loadFromCSV();
@@ -173,6 +183,21 @@ public class GestorBDSnake {
             if (saveToTxt) {
                 saveScoresToTxt();
             }
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+    
+ // Método para actualizar las puntuaciones del juego Ahorcado
+    public boolean updatePongScores(String nombre, int puntuacion) {
+        String sql = "INSERT OR REPLACE INTO pong(nombre, puntuacion) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombre);
+            pstmt.setInt(2, puntuacion);
+            pstmt.executeUpdate();
             return true;
         } catch (SQLException e) {
             e.printStackTrace();

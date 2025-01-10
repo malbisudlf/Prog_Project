@@ -97,16 +97,17 @@ public class MenuPong extends JFrame {
 			}
 		});
 		
-		JButton Skins = new JButton("Skins");
-		Skins.setFocusable(false);
-		Skins.setBackground(Color.BLACK);
-		Skins.setForeground(Color.WHITE);
-		Skins.setFont(fontBotones);
-		Skins.addActionListener(new ActionListener() {
+		JButton Leaderboard = new JButton("Leaderboard");
+		Leaderboard.setFocusable(false);
+		Leaderboard.setBackground(Color.BLACK);
+		Leaderboard.setForeground(Color.WHITE);
+		Leaderboard.setFont(fontBotones);
+		Leaderboard.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				Skins();
+				new PongLeaderboard(usuario);
+				dispose();
 			}
 		});
 		
@@ -140,15 +141,10 @@ public class MenuPong extends JFrame {
 		
 		botones.add(PvP);
 		botones.add(PvC);
-		botones.add(Skins);
+		botones.add(Leaderboard);
 		botones.add(Volver);
 		panel.add(botones, BorderLayout.CENTER);
 		add(panel);
 		setVisible(true);
 	}
-
-	private void Skins() {
-		JOptionPane.showMessageDialog(this, "Aun sin implementar");
-	}
-	
 }
