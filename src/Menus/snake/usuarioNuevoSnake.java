@@ -1,7 +1,7 @@
 package Menus.snake;
 
 import javax.swing.*;
-import BD.GestorBDSnake;
+import BD.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
@@ -13,7 +13,7 @@ public class usuarioNuevoSnake extends JFrame {
     private static final long serialVersionUID = 1L;
     private JTextField campoNombre;
     private JButton botonCrearUsuario;
-    private final GestorBDSnake gestorBD = new GestorBDSnake();  // USAMOS EL GESTOR DE BASE DE DATOS
+    private final GestorBD gestorBD = new GestorBD();  // USAMOS EL GESTOR DE BASE DE DATOS
 
     public usuarioNuevoSnake() {  
         // CONFIGURAMOS LA VENTANA PRINCIPAL

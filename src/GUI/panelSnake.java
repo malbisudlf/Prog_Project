@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-import BD.GestorBDSnake;
+import BD.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
@@ -173,7 +173,7 @@ public class panelSnake extends JPanel implements ActionListener, KeyListener {
         SnakeGUI.usuario.agregarPuntosTotales(score);
 
         // Guardar cambios en la base de datos
-        GestorBDSnake gestorBD = new GestorBDSnake();
+        GestorBD gestorBD = new GestorBD();
         
         if (gestorBD.updateSnakeScores(SnakeGUI.usuario.getNombre(), highScore, score)) {
         	

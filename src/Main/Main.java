@@ -1,6 +1,6 @@
 package Main;
 
-import BD.GestorBDSnake;
+import BD.GestorBD;
 import Menus.MainMenuGUI;
 import Menus.snake.seleccionUsuarioSnake;
 import usuario.UsuarioSnake;
@@ -8,7 +8,7 @@ import usuario.UsuarioSnake;
 public class Main {
     public static void main(String[] args) {
         // Inicializar la base de datos y cargar datos del CSV
-        GestorBDSnake gestorBD = new GestorBDSnake();
+        GestorBD gestorBD = new GestorBD();
         
         //DESCOMENTAR ESTO SI QUEREMOS RESETEAR LA BASE DE DATOS
         /*

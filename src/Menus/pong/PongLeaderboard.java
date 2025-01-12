@@ -10,7 +10,7 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import BD.GestorBDSnake;
+import BD.GestorBD;
 import Menus.pong.PongLeaderboard;
 import Menus.pong.MenuPong;
 import Menus.snake.SnakeLeaderboard;
@@ -32,7 +32,7 @@ private static final long serialVersionUID = 1L;
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		GestorBDSnake gestorBDSnake = new GestorBDSnake();
+		GestorBD gestorBDSnake = new GestorBD();
 		
 		List<UsuarioSnake> usuarios = gestorBDSnake.getAllUsers();
 		
@@ -160,7 +160,7 @@ private static final long serialVersionUID = 1L;
         JPanel restoPaneles = new JPanel();
         restoPaneles.setBackground(Color.BLACK);
         
-        JLabel labelArriba = new JLabel("LEADERBOARD SNAKE");
+        JLabel labelArriba = new JLabel("LEADERBOARD PONG");
         
         labelArriba.setHorizontalAlignment(SwingConstants.CENTER);
         
@@ -183,7 +183,7 @@ private static final long serialVersionUID = 1L;
         botonVolver.setFocusable(false);
         
         botonVolver.addActionListener(e -> {
-        	new menuSnake(usuarioSnake);
+        	new MenuPong(usuarioSnake);
         	dispose();
         });
         

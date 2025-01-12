@@ -9,7 +9,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import BD.GestorBDSnake;  // ASEGÚRATE DE IMPORTAR LA CLASE GESTORBDSNAKE
+import BD.GestorBD;  // ASEGÚRATE DE IMPORTAR LA CLASE GESTORBDSNAKE
 import Menus.MainMenuGUI;
 import usuario.UsuarioSnake;
 
@@ -20,7 +20,7 @@ public class usuarioExistenteSnake extends JFrame {
     private JList<String> userList;
     private DefaultListModel<String> listModel;
     private List<String> allUsers;
-    private final GestorBDSnake gestorBD = new GestorBDSnake();  // INSTANCIA DE GESTORBDSNAKE
+    private final GestorBD gestorBD = new GestorBD();  // INSTANCIA DE GESTORBDSNAKE
     
     public usuarioExistenteSnake() {
         // CONFIGURACIÓN DE LA VENTANA PRINCIPAL

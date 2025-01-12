@@ -8,7 +8,7 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
-import BD.GestorBDSnake;
+import BD.GestorBD;
 import GUI.AhorcadoGUI;
 import Menus.MainMenuGUI;
 import Menus.snake.menuSnake;

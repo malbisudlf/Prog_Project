@@ -5,7 +5,7 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.*;
 
-import BD.GestorBDSnake;
+import BD.GestorBD;
 import Menus.Ahorcado.menuAhorcado;
 import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
@@ -81,7 +81,7 @@ public class AhorcadoGUI extends JFrame {
                 
             	 
                 
-            	 GestorBDSnake gestorBD = new GestorBDSnake();
+            	 GestorBD gestorBD = new GestorBD();
 
                  if (gestorBD.updateAhorcadoScores(usuario.getNombre(), score)) {
                      usuario.setPuntuacionAlta(usuario.getPuntuacionAlta()); // Actualiza la nueva puntuación más alta
