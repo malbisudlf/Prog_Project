@@ -1,10 +1,7 @@
 package Main;
 
-<<<<<<< HEAD
-import BD.GestorBDSnake;
-=======
+import db.GestorBD;
 import Menus.MainMenuGUI;
->>>>>>> branch 'master' of https://github.com/malbisudlf/Prog_Project.git
 import Menus.snake.seleccionUsuarioSnake;
 import db.GestorBD;
 import usuario.UsuarioSnake;
