@@ -130,6 +130,8 @@ public class GestorBD {
         return false;
     }
 
+    //IAG (herramienta: ChatGPT)
+    //SIN MODIFICAR
     public boolean isUserExists(String nombre) {
         String sql = "SELECT 1 FROM usuarios WHERE nombre = ?";
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -226,6 +228,10 @@ public class GestorBD {
         return usuarios;
     }
 
+    
+    //IAG (herramienta: ChatGPT)
+    //ADAPTADO
+    
     public void resetDatabase() {
         String dropUsersTable = "DROP TABLE IF EXISTS usuarios";
         String dropAhorcadoTable = "DROP TABLE IF EXISTS ahorcado";
@@ -242,6 +248,8 @@ public class GestorBD {
         }
     }
 
+    //IAG (herramienta: ChatGPT)
+    //ADAPTADO
     private void loadFromCSV() {
         try (BufferedReader br = new BufferedReader(new FileReader("resources/data/usuarios.csv"));
              Connection conn = DriverManager.getConnection(DB_URL)) {
@@ -270,7 +278,9 @@ public class GestorBD {
             e.printStackTrace();
         }
     }
-
+    
+    //IAG (herramienta: ChatGPT)
+    //ADAPTADO
     public void saveToCSV() {
         String sql = "SELECT id, nombre, puntuacion_maxima, puntos_totales FROM usuarios";
         try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/data/usuarios.csv", false));
@@ -291,6 +301,8 @@ public class GestorBD {
         }
     }
 
+    //IAG (herramienta: ChatGPT)
+    //ADAPTADO
     private void loadScoresFromTxt() {
         try (BufferedReader br = new BufferedReader(new FileReader(FILE_PATH));
              Connection conn = DriverManager.getConnection(DB_URL)) {

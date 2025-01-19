@@ -87,12 +87,7 @@ public class seleccionUsuarioSnake extends JFrame{
         // AÑADIR LOS COMPONENTES AL FRAME
         add(labelPanel, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);
-        
-       
-        
-        
-      
-        
+
         // HACER VISIBLE EL FRAME
         setVisible(true);
     }
