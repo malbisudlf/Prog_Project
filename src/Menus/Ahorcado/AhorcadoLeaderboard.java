@@ -121,14 +121,18 @@ public class AhorcadoLeaderboard extends JFrame {
             e.printStackTrace();
         }
     }
+    
+    
+    //IAG: ChatGPT
+    //Sin cambios
 
     @SuppressWarnings("unchecked")
     private void sortLeaderboardByScore() {
         Vector<Vector<Object>> data = (Vector<Vector<Object>>) (Vector<?>) modeloLeaderboard.getDataVector();
-        
-        // Ordenar los datos de mayor a menor por puntuación (Integer)
-        data.sort((row1, row2) -> Integer.compare((Integer) row2.get(1), (Integer) row1.get(1))); 
-        
+
+        // Método recursivo para ordenar los datos de mayor a menor por puntuación
+        recursiveSort(data, 0, data.size() - 1);
+
         // Asegúrate de actualizar el modelo después de ordenar
         modeloLeaderboard.setRowCount(0); // Limpiar los datos actuales
         for (Vector<Object> row : data) {
@@ -138,6 +142,36 @@ public class AhorcadoLeaderboard extends JFrame {
         // Notificar que los datos han cambiado
         modeloLeaderboard.fireTableDataChanged();
     }
+
+    private void recursiveSort(Vector<Vector<Object>> data, int left, int right) {
+        if (left < right) {
+            int pivotIndex = partition(data, left, right);
+            recursiveSort(data, left, pivotIndex - 1); // Ordenar lado izquierdo
+            recursiveSort(data, pivotIndex + 1, right); // Ordenar lado derecho
+        }
+    }
+
+    private int partition(Vector<Vector<Object>> data, int left, int right) {
+        int pivot = (Integer) data.get(right).get(1); // Usar la puntuación como pivote
+        int i = left - 1;
+
+        for (int j = left; j < right; j++) {
+            if ((Integer) data.get(j).get(1) >= pivot) { // Comparar puntuación
+                i++;
+                swap(data, i, j);
+            }
+        }
+
+        swap(data, i + 1, right); // Colocar el pivote en su posición final
+        return i + 1;
+    }
+
+    private void swap(Vector<Vector<Object>> data, int i, int j) {
+        Vector<Object> temp = data.get(i);
+        data.set(i, data.get(j));
+        data.set(j, temp);
+    }
+
 
     public static void main(String[] args) {
         new AhorcadoLeaderboard(usuario);
