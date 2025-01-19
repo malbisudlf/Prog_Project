@@ -40,7 +40,7 @@ public class menuAhorcado extends JFrame {
         Font fontBotones = new Font("MV BOLI", Font.BOLD, 30);
 
         JPanel buttonPanel = new JPanel();
-        buttonPanel.setLayout(new GridLayout(2, 2));
+        buttonPanel.setLayout(new GridLayout(3, 1));
         buttonPanel.setBackground(Color.BLACK);
 
         // Botón para jugar
@@ -65,13 +65,7 @@ public class menuAhorcado extends JFrame {
             dispose();
         });
 
-        // Botón para skins (placeholder)
-        JButton skinButton = new JButton("SKINS");
-        skinButton.setFocusable(false);
-        skinButton.setBackground(Color.BLACK);
-        skinButton.setForeground(Color.WHITE);
-        skinButton.setFont(fontBotones);
-        skinButton.addActionListener(e -> AhorcadoSkin());
+       
 
         // Botón para volver al menú principal
         JButton volverButton = new JButton();
@@ -100,7 +94,7 @@ public class menuAhorcado extends JFrame {
         // Añadir botones al panel
         buttonPanel.add(playButton);
         buttonPanel.add(leaderButton);
-        buttonPanel.add(skinButton);
+        
         buttonPanel.add(volverButton);
 
         mainPanel.add(buttonPanel, BorderLayout.CENTER);
@@ -108,7 +102,5 @@ public class menuAhorcado extends JFrame {
         setVisible(true);
     }
 
-    private void AhorcadoSkin() {
-        JOptionPane.showMessageDialog(this, "Aún sin implementar");
-    }
+    
 }

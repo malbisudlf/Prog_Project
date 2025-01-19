@@ -261,6 +261,7 @@ public class GestorBD {
                         pstmt.setInt(2, puntuacionMaxima);
                         pstmt.setInt(3, puntosTotales);
                         pstmt.executeUpdate();
+                        
                     }
                 }
             }
