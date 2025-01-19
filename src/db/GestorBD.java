@@ -1,6 +1,7 @@
-package BD;
+package db;
 
 import java.io.*;
+
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
@@ -8,17 +9,17 @@ import java.util.Properties;
 
 import usuario.UsuarioSnake;
 
-public class GestorBDSnake {
+public class GestorBD {
 
-    private static final String DB_URL = "jdbc:sqlite:snake_game.db";
-    private static final String CONFIG_FILE = "resources/config.properties";
+    private static final String DB_URL = "jdbc:sqlite:resources/db/snake_game.db";
+    private static final String CONFIG_FILE = "resources/conf/config.properties";
     private boolean loadFromCSV;
     private boolean saveToCSV;
     private boolean resetDatabase;
     private boolean loadFromTxt;    // Nueva propiedad
     private boolean saveToTxt;     // Nueva propiedad
     private boolean resetTxt;      // Nueva propiedad
-    private static final String FILE_PATH = "resources/leaderboard.txt"; // Ruta del archivo de texto
+    private static final String FILE_PATH = "resources/data/leaderboard.txt"; // Ruta del archivo de texto
 
     private static final String CREATE_USERS_TABLE = """
         CREATE TABLE IF NOT EXISTS usuarios (
@@ -36,9 +37,18 @@ public class GestorBDSnake {
             puntuacion INTEGER DEFAULT 0,
             FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
         );
-    """;  // Removed the 'fecha' field
+    """;  
+    
+    private static final String CREATE_PONG_TABLE = """
+        CREATE TABLE IF NOT EXISTS pong (
+            id INTEGER PRIMARY KEY AUTOINCREMENT,
+            nombre TEXT NOT NULL,
+            puntuacion INTEGER DEFAULT 0,
+            FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
+        );
+    """;
 
-    public GestorBDSnake() {
+    public GestorBD() {
         loadConfig();
 
         try (Connection conn = DriverManager.getConnection(DB_URL);
@@ -50,6 +60,7 @@ public class GestorBDSnake {
 
             stmt.execute(CREATE_USERS_TABLE);
             stmt.execute(CREATE_AHORCADO_TABLE);
+            stmt.execute(CREATE_PONG_TABLE);
 
             if (loadFromCSV) {
                 loadFromCSV();
@@ -179,6 +190,21 @@ public class GestorBDSnake {
             return false;
         }
     }
+    
+ // Método para actualizar las puntuaciones del juego Ahorcado
+    public boolean updatePongScores(String nombre, int puntuacion) {
+        String sql = "INSERT OR REPLACE INTO pong(nombre, puntuacion) VALUES (?, ?)";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, nombre);
+            pstmt.setInt(2, puntuacion);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
     public List<UsuarioSnake> getAllUsers() {
         List<UsuarioSnake> usuarios = new ArrayList<>();
@@ -217,7 +243,7 @@ public class GestorBDSnake {
     }
 
     private void loadFromCSV() {
-        try (BufferedReader br = new BufferedReader(new FileReader("resources/usuarios.csv"));
+        try (BufferedReader br = new BufferedReader(new FileReader("resources/data/usuarios.csv"));
              Connection conn = DriverManager.getConnection(DB_URL)) {
 
             String line;
@@ -236,6 +262,7 @@ public class GestorBDSnake {
                         pstmt.setInt(2, puntuacionMaxima);
                         pstmt.setInt(3, puntosTotales);
                         pstmt.executeUpdate();
+                        
                     }
                 }
             }
@@ -246,7 +273,7 @@ public class GestorBDSnake {
 
     public void saveToCSV() {
         String sql = "SELECT id, nombre, puntuacion_maxima, puntos_totales FROM usuarios";
-        try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/usuarios.csv", false));
+        try (BufferedWriter bw = new BufferedWriter(new FileWriter("resources/data/usuarios.csv", false));
              Connection conn = DriverManager.getConnection(DB_URL);
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(sql)) {

@@ -2,9 +2,9 @@ package Menus.snake;
 
 import javax.swing.*;
 
-import BD.GestorBDSnake;
 import GUI.*;
 import Menus.MainMenuGUI;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
@@ -57,7 +57,7 @@ public class menuSnake extends JFrame{
         botonJugar.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                GestorBDSnake gestorBD = new GestorBDSnake();
+                GestorBD gestorBD = new GestorBD();
                 UsuarioSnake usuarioActualizado = gestorBD.getUserByName(usuario.getNombre());
                 
                 if (usuarioActualizado != null) {

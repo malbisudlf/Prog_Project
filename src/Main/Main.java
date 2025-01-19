@@ -1,13 +1,18 @@
 package Main;
 
+<<<<<<< HEAD
 import BD.GestorBDSnake;
+=======
+import Menus.MainMenuGUI;
+>>>>>>> branch 'master' of https://github.com/malbisudlf/Prog_Project.git
 import Menus.snake.seleccionUsuarioSnake;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class Main {
     public static void main(String[] args) {
         // Inicializar la base de datos y cargar datos del CSV
-        GestorBDSnake gestorBD = new GestorBDSnake();
+        GestorBD gestorBD = new GestorBD();
         
         //DESCOMENTAR ESTO SI QUEREMOS RESETEAR LA BASE DE DATOS
         /*

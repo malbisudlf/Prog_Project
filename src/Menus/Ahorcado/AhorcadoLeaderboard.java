@@ -8,17 +8,21 @@ import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
 import java.util.Vector;
 
 public class AhorcadoLeaderboard extends JFrame {
-    private static final String DB_URL = "jdbc:sqlite:snake_game.db";
+    private static final String DB_URL = "jdbc:sqlite:resources/db/snake_game.db";
     private static final long serialVersionUID = 1L;
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
-    private static final String FILE_PATH = "leaderboard.txt";
+    private int hoveredRow = -1;
+    private static final String FILE_PATH = "resources/data/leaderboard.txt";
     public static UsuarioSnake usuario;
 
     public AhorcadoLeaderboard(UsuarioSnake usuario) {
@@ -69,6 +73,28 @@ public class AhorcadoLeaderboard extends JFrame {
 
         tablaleader.getTableHeader().setForeground(Color.BLACK);
         tablaleader.getTableHeader().setBorder(BorderFactory.createMatteBorder(1, 0, 2, 0, new Color(25, 118, 210)));
+        
+        
+        tablaleader.addMouseMotionListener(new MouseMotionAdapter() {
+             // Índice de la fila actualmente resaltada
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+            	hoveredRow = tablaleader.rowAtPoint(e.getPoint());
+            	
+            	tablaleader.repaint();
+            }
+        });
+        
+        tablaleader.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				//Se resetea la fila/columna sobre la que está el ratón				
+				hoveredRow = -1;
+			}
+		});
+        
+        
 
         tablaleader.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             private static final long serialVersionUID = 1L;
@@ -78,16 +104,24 @@ public class AhorcadoLeaderboard extends JFrame {
                 JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 cell.setHorizontalAlignment(JLabel.CENTER);
                 cell.setFont(new Font("Thoama", Font.BOLD, 16));
-                if (row % 2 == 0) {
+
+                // Cambia el color de fondo si la fila está bajo el cursor
+                if (row == hoveredRow) {
+                    cell.setBackground(new Color(200, 230, 201)); // Verde claro
+                } else if (row % 2 == 0) {
                     cell.setBackground(new Color(230, 240, 255));
                 } else {
                     cell.setBackground(new Color(255, 245, 230));
                 }
-                cell.setForeground(new Color(33, 33, 33));
+
+                // Color de fondo si está seleccionado
                 if (isSelected) {
                     cell.setBackground(new Color(255, 171, 64));
                     cell.setForeground(Color.WHITE);
+                } else {
+                    cell.setForeground(new Color(33, 33, 33));
                 }
+
                 return cell;
             }
         });
@@ -121,23 +155,57 @@ public class AhorcadoLeaderboard extends JFrame {
             e.printStackTrace();
         }
     }
+    
+    
+    //IAG: ChatGPT
+    //Sin cambios
 
     @SuppressWarnings("unchecked")
     private void sortLeaderboardByScore() {
         Vector<Vector<Object>> data = (Vector<Vector<Object>>) (Vector<?>) modeloLeaderboard.getDataVector();
+
         
-        // Ordenar los datos de mayor a menor por puntuación (Integer)
-        data.sort((row1, row2) -> Integer.compare((Integer) row2.get(1), (Integer) row1.get(1))); 
-        
-        // Asegúrate de actualizar el modelo después de ordenar
-        modeloLeaderboard.setRowCount(0); // Limpiar los datos actuales
+        recursiveSort(data, 0, data.size() - 1);
+
+       
+        modeloLeaderboard.setRowCount(0); 
         for (Vector<Object> row : data) {
-            modeloLeaderboard.addRow(row); // Añadir los datos ordenados de nuevo
+            modeloLeaderboard.addRow(row);
         }
 
-        // Notificar que los datos han cambiado
+        
         modeloLeaderboard.fireTableDataChanged();
     }
+
+    private void recursiveSort(Vector<Vector<Object>> data, int left, int right) {
+        if (left < right) {
+            int pivotIndex = partition(data, left, right);
+            recursiveSort(data, left, pivotIndex - 1);
+            recursiveSort(data, pivotIndex + 1, right); 
+        }
+    }
+
+    private int partition(Vector<Vector<Object>> data, int left, int right) {
+        int pivot = (Integer) data.get(right).get(1);
+        int i = left - 1;
+
+        for (int j = left; j < right; j++) {
+            if ((Integer) data.get(j).get(1) >= pivot) { 
+                i++;
+                swap(data, i, j);
+            }
+        }
+
+        swap(data, i + 1, right); // Colocar el pivote en su posición final
+        return i + 1;
+    }
+
+    private void swap(Vector<Vector<Object>> data, int i, int j) {
+        Vector<Object> temp = data.get(i);
+        data.set(i, data.get(j));
+        data.set(j, temp);
+    }
+
 
     public static void main(String[] args) {
         new AhorcadoLeaderboard(usuario);

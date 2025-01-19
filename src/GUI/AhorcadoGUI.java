@@ -5,9 +5,9 @@ import java.util.List;
 import java.util.Random;
 import javax.swing.*;
 
-import BD.GestorBDSnake;
 import Menus.Ahorcado.menuAhorcado;
 import Menus.snake.menuSnake;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.BufferedReader;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.InputStreamReader;
@@ -81,13 +82,16 @@ public class AhorcadoGUI extends JFrame {
                 
             	 
                 
-            	 GestorBDSnake gestorBD = new GestorBDSnake();
+            	 GestorBD gestorBD = new GestorBD();
+            	 if(score != 0) {
+            		 if (gestorBD.updateAhorcadoScores(usuario.getNombre(), score)) {
+                         usuario.setPuntuacionAlta(usuario.getPuntuacionAlta()); // Actualiza la nueva puntuación más alta
+                     } else {
+                         JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
+                     }
+            	 }
 
-                 if (gestorBD.updateAhorcadoScores(usuario.getNombre(), score)) {
-                     usuario.setPuntuacionAlta(usuario.getPuntuacionAlta()); // Actualiza la nueva puntuación más alta
-                 } else {
-                     JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
-                 }
+                 
 
                  new menuAhorcado(usuario);
                  dispose();
@@ -184,7 +188,9 @@ public class AhorcadoGUI extends JFrame {
 
     private List<String> cargarPalabrasDesdeCSV() {
         List<String> palabras = new ArrayList<>();
-        try (BufferedReader br = new BufferedReader(new InputStreamReader(getClass().getResourceAsStream("/palabras.csv")))) {
+        String filePath = "resources/data/palabras.csv"; // Ruta relativa al archivo fuera de src
+        
+        try (BufferedReader br = new BufferedReader(new FileReader(filePath))) {
             String linea = br.readLine();
             if (linea != null) {
                 for (String palabra : linea.split(",")) {
@@ -194,8 +200,10 @@ public class AhorcadoGUI extends JFrame {
         } catch (IOException e) {
             e.printStackTrace();
         }
+        
         return palabras;
     }
+
 
     private void saveScoreToFile(UsuarioSnake usuario2, int score) {
         try (FileWriter writer = new FileWriter("leaderboard.txt", true)) {

@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import BD.GestorBDSnake;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class SnakeLeaderboard extends JFrame{
@@ -35,7 +35,7 @@ public class SnakeLeaderboard extends JFrame{
 		setLocationRelativeTo(null);
 		setDefaultCloseOperation(EXIT_ON_CLOSE);
 		
-		GestorBDSnake gestorBDSnake = new GestorBDSnake();
+		GestorBD gestorBDSnake = new GestorBD();
 		
 		List<UsuarioSnake> usuarios = gestorBDSnake.getAllUsers();
 		
