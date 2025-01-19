@@ -88,24 +88,10 @@ public class seleccionUsuarioSnake extends JFrame{
         add(labelPanel, BorderLayout.NORTH);
         add(panelBotones, BorderLayout.CENTER);
         
-        // CREAR Y CONFIGURAR EL BOTÓN "VOLVER"
-        JButton botonVolver = new JButton("VOLVER");
-        botonVolver.setFocusable(false);
-        botonVolver.setBackground(Color.BLACK);
-        botonVolver.setForeground(Color.WHITE);
+       
         
-        // ACCIÓN DEL BOTÓN "VOLVER"
-        botonVolver.addActionListener(new ActionListener() {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // VOLVER AL MENÚ PRINCIPAL
-                new MainMenuGUI(usuario);
-                dispose();
-            }
-        });
         
-        // AÑADIR EL BOTÓN "VOLVER" AL FRAME
-        add(botonVolver, BorderLayout.SOUTH);
+      
         
         // HACER VISIBLE EL FRAME
         setVisible(true);

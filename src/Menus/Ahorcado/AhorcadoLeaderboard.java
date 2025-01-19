@@ -130,33 +130,33 @@ public class AhorcadoLeaderboard extends JFrame {
     private void sortLeaderboardByScore() {
         Vector<Vector<Object>> data = (Vector<Vector<Object>>) (Vector<?>) modeloLeaderboard.getDataVector();
 
-        // Método recursivo para ordenar los datos de mayor a menor por puntuación
+        
         recursiveSort(data, 0, data.size() - 1);
 
-        // Asegúrate de actualizar el modelo después de ordenar
-        modeloLeaderboard.setRowCount(0); // Limpiar los datos actuales
+       
+        modeloLeaderboard.setRowCount(0); 
         for (Vector<Object> row : data) {
-            modeloLeaderboard.addRow(row); // Añadir los datos ordenados de nuevo
+            modeloLeaderboard.addRow(row);
         }
 
-        // Notificar que los datos han cambiado
+        
         modeloLeaderboard.fireTableDataChanged();
     }
 
     private void recursiveSort(Vector<Vector<Object>> data, int left, int right) {
         if (left < right) {
             int pivotIndex = partition(data, left, right);
-            recursiveSort(data, left, pivotIndex - 1); // Ordenar lado izquierdo
-            recursiveSort(data, pivotIndex + 1, right); // Ordenar lado derecho
+            recursiveSort(data, left, pivotIndex - 1);
+            recursiveSort(data, pivotIndex + 1, right); 
         }
     }
 
     private int partition(Vector<Vector<Object>> data, int left, int right) {
-        int pivot = (Integer) data.get(right).get(1); // Usar la puntuación como pivote
+        int pivot = (Integer) data.get(right).get(1);
         int i = left - 1;
 
         for (int j = left; j < right; j++) {
-            if ((Integer) data.get(j).get(1) >= pivot) { // Comparar puntuación
+            if ((Integer) data.get(j).get(1) >= pivot) { 
                 i++;
                 swap(data, i, j);
             }
