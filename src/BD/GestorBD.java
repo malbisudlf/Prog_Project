@@ -42,10 +42,7 @@ public class GestorBD {
         CREATE TABLE IF NOT EXISTS pong (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
-            puntuacion_facil INTEGER DEFAULT 0,
-            puntuacion_medio INTEGER DEFAULT 0,
-            puntuacion_dificil INTEGER DEFAULT 0,
-            puntuacion_imposible INTEGER DEFAULT 0,
+            puntuacion INTEGER DEFAULT 0,
             FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
         );
     """;
