@@ -8,6 +8,9 @@ import Menus.snake.menuSnake;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.io.IOException;
 import java.sql.*;
 import java.util.Arrays;
@@ -18,6 +21,7 @@ public class AhorcadoLeaderboard extends JFrame {
     private static final long serialVersionUID = 1L;
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
+    private int hoveredRow = -1;
     private static final String FILE_PATH = "resources/data/leaderboard.txt";
     public static UsuarioSnake usuario;
 
@@ -69,6 +73,28 @@ public class AhorcadoLeaderboard extends JFrame {
 
         tablaleader.getTableHeader().setForeground(Color.BLACK);
         tablaleader.getTableHeader().setBorder(BorderFactory.createMatteBorder(1, 0, 2, 0, new Color(25, 118, 210)));
+        
+        
+        tablaleader.addMouseMotionListener(new MouseMotionAdapter() {
+             // Índice de la fila actualmente resaltada
+
+            @Override
+            public void mouseMoved(MouseEvent e) {
+            	hoveredRow = tablaleader.rowAtPoint(e.getPoint());
+            	
+            	tablaleader.repaint();
+            }
+        });
+        
+        tablaleader.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseExited(MouseEvent e) {
+				//Se resetea la fila/columna sobre la que está el ratón				
+				hoveredRow = -1;
+			}
+		});
+        
+        
 
         tablaleader.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             private static final long serialVersionUID = 1L;
@@ -78,16 +104,24 @@ public class AhorcadoLeaderboard extends JFrame {
                 JLabel cell = (JLabel) super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
                 cell.setHorizontalAlignment(JLabel.CENTER);
                 cell.setFont(new Font("Thoama", Font.BOLD, 16));
-                if (row % 2 == 0) {
+
+                // Cambia el color de fondo si la fila está bajo el cursor
+                if (row == hoveredRow) {
+                    cell.setBackground(new Color(200, 230, 201)); // Verde claro
+                } else if (row % 2 == 0) {
                     cell.setBackground(new Color(230, 240, 255));
                 } else {
                     cell.setBackground(new Color(255, 245, 230));
                 }
-                cell.setForeground(new Color(33, 33, 33));
+
+                // Color de fondo si está seleccionado
                 if (isSelected) {
                     cell.setBackground(new Color(255, 171, 64));
                     cell.setForeground(Color.WHITE);
+                } else {
+                    cell.setForeground(new Color(33, 33, 33));
                 }
+
                 return cell;
             }
         });
