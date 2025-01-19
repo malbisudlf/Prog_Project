@@ -16,7 +16,7 @@ import javax.swing.SwingConstants;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import BD.GestorBD;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class SnakeLeaderboard extends JFrame{

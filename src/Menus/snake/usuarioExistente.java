@@ -9,11 +9,12 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
-import BD.GestorBD;  // ASEGÚRATE DE IMPORTAR LA CLASE GESTORBDSNAKE
+
 import Menus.MainMenuGUI;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
-public class usuarioExistenteSnake extends JFrame {
+public class usuarioExistente extends JFrame {
     
     private static final long serialVersionUID = 1L;
     private JTextField searchField;
@@ -22,7 +23,7 @@ public class usuarioExistenteSnake extends JFrame {
     private List<String> allUsers;
     private final GestorBD gestorBD = new GestorBD();  // INSTANCIA DE GESTORBDSNAKE
     
-    public usuarioExistenteSnake() {
+    public usuarioExistente() {
         // CONFIGURACIÓN DE LA VENTANA PRINCIPAL
         setTitle("Seleccionar Usuario Existente");
         setSize(400, 300);

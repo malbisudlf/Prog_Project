@@ -2,9 +2,9 @@ package Menus.snake;
 
 import javax.swing.*;
 
-import BD.GestorBD;
 import GUI.*;
 import Menus.MainMenuGUI;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;

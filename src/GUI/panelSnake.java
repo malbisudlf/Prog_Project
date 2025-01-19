@@ -2,7 +2,7 @@ package GUI;
 
 import javax.swing.*;
 
-import BD.GestorBD;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;

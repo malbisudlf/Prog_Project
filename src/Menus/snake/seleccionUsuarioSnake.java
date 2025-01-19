@@ -99,13 +99,13 @@ public class seleccionUsuarioSnake extends JFrame{
     
     // ACCIÓN AL SELECCIONAR UN USUARIO EXISTENTE
     private void pantallaUsuarioExistente() {
-        new usuarioExistenteSnake();
+        new usuarioExistente();
         dispose();
     }
     
     // ACCIÓN AL CREAR UN NUEVO USUARIO
     private void pantallaUsuarioNuevo() {
-        new usuarioNuevoSnake();
+        new usuarioNuevo();
         dispose();
     }
 }

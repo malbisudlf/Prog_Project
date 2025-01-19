@@ -10,11 +10,11 @@ import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
-import BD.GestorBD;
 import Menus.pong.PongLeaderboard;
 import Menus.pong.MenuPong;
 import Menus.snake.SnakeLeaderboard;
 import Menus.snake.menuSnake;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class PongLeaderboard extends JFrame{

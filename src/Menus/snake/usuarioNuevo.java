@@ -1,21 +1,22 @@
 package Menus.snake;
 
 import javax.swing.*;
-import BD.GestorBD;
+
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-public class usuarioNuevoSnake extends JFrame {
+public class usuarioNuevo extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JTextField campoNombre;
     private JButton botonCrearUsuario;
     private final GestorBD gestorBD = new GestorBD();  // USAMOS EL GESTOR DE BASE DE DATOS
 
-    public usuarioNuevoSnake() {  
+    public usuarioNuevo() {  
         // CONFIGURAMOS LA VENTANA PRINCIPAL
         setTitle("Crear Nuevo Usuario");
         setSize(300, 150);
@@ -54,11 +55,11 @@ public class usuarioNuevoSnake extends JFrame {
                         dispose(); // CERRAMOS LA VENTANA ACTUAL
                     } else { 
                         // SI EL NOMBRE YA EXISTE, MOSTRAMOS UN MENSAJE DE ERROR
-                        JOptionPane.showMessageDialog(usuarioNuevoSnake.this, "El nombre de usuario ya existe.");
+                        JOptionPane.showMessageDialog(usuarioNuevo.this, "El nombre de usuario ya existe.");
                     }
                 } else { 
                     // SI EL NOMBRE ESTA VACIO, MOSTRAMOS UN MENSAJE DE ERROR
-                    JOptionPane.showMessageDialog(usuarioNuevoSnake.this, "Por favor, ingresa un nombre.");
+                    JOptionPane.showMessageDialog(usuarioNuevo.this, "Por favor, ingresa un nombre.");
                 }
             }
         });

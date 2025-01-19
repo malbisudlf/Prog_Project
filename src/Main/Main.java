@@ -1,8 +1,8 @@
 package Main;
 
-import BD.GestorBD;
 import Menus.MainMenuGUI;
 import Menus.snake.seleccionUsuarioSnake;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class Main {

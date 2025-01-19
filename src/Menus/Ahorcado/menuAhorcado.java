@@ -8,10 +8,10 @@ import java.awt.event.ComponentEvent;
 
 import javax.swing.*;
 
-import BD.GestorBD;
 import GUI.AhorcadoGUI;
 import Menus.MainMenuGUI;
 import Menus.snake.menuSnake;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class menuAhorcado extends JFrame {
