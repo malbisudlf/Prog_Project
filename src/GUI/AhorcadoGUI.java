@@ -85,7 +85,7 @@ public class AhorcadoGUI extends JFrame {
             	 GestorBD gestorBD = new GestorBD();
             	 if(score != 0) {
             		 if (gestorBD.updateAhorcadoScores(usuario.getNombre(), score)) {
-                         usuario.setPuntuacionAlta(usuario.getPuntuacionAlta()); // Actualiza la nueva puntuación más alta
+                          
                      } else {
                          JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
                      }
