@@ -14,11 +14,11 @@ import java.util.Arrays;
 import java.util.Vector;
 
 public class AhorcadoLeaderboard extends JFrame {
-    private static final String DB_URL = "jdbc:sqlite:snake_game.db";
+    private static final String DB_URL = "jdbc:sqlite:resources/db/snake_game.db";
     private static final long serialVersionUID = 1L;
     private DefaultTableModel modeloLeaderboard;
     private JTable tablaleader;
-    private static final String FILE_PATH = "leaderboard.txt";
+    private static final String FILE_PATH = "resources/data/leaderboard.txt";
     public static UsuarioSnake usuario;
 
     public AhorcadoLeaderboard(UsuarioSnake usuario) {
