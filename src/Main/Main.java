@@ -1,5 +1,6 @@
 package Main;
 
+import db.GestorBD;
 import Menus.MainMenuGUI;
 import Menus.snake.seleccionUsuarioSnake;
 import db.GestorBD;
@@ -23,8 +24,6 @@ public class Main {
         for (UsuarioSnake usuario : gestorBD.getAllUsers()) {
             System.out.println(usuario);
         }
-        
-        
 
         // Iniciar la interfaz gráfica
         new seleccionUsuarioSnake();

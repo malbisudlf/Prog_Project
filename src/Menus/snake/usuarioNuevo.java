@@ -126,6 +126,9 @@ public class usuarioNuevo extends JFrame {
         return gestorBD.getUserByName(userName) == null;  // VERIFICAMOS SI YA EXISTE UN USUARIO CON ESE NOMBRE
     }
 
+    
+    //IAG (herramienta: ChatGPT)
+    //Modificado
     // GUARDAR EL NUEVO USUARIO EN LA BASE DE DATOS
     private void saveNewUser(String userName) {
         // CREAR UN NUEVO USUARIO CON PUNTUACIONES INICIALIZADAS A CERO
