@@ -48,11 +48,11 @@ public class menuSnake extends JFrame{
         
         // PANEL CON LOS BOTONES
         JPanel botones = new JPanel();
-        botones.setLayout(new GridLayout(2, 2, 10, 10)); // JUGAR, LEADERBOARD, SKINS, VOLVER
+        botones.setLayout(new GridLayout(3, 1, 10, 10)); // JUGAR, LEADERBOARD, SKINS, VOLVER
         botones.setBackground(Color.BLACK);
         
         // Botón para empezar a jugar
-        JButton botonJugar = buttonWithIcon("resources/images/row-1-column-1.png", "JUGAR");
+        JButton botonJugar = buttonWithIcon("resources/images/row0.jpg", "JUGAR");
         
         botonJugar.addActionListener(new ActionListener() {
             @Override
@@ -72,7 +72,7 @@ public class menuSnake extends JFrame{
 
         
         // Botón para consultar el leaderboard
-        JButton botonLeaderboard = buttonWithIcon("resources/images/row-1-column-2.png", "LEADERBOARD");
+        JButton botonLeaderboard = buttonWithIcon("resources/images/row1.jpg", "LEADERBOARD");
         botonLeaderboard.addActionListener(new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
@@ -81,19 +81,9 @@ public class menuSnake extends JFrame{
             }
         });
         
-        // Botón para acceder a la tienda de skins
-        JButton botonSkins = buttonWithIcon("resources/images/row-2-column-1.png", "SKINS");
-        botonSkins.addActionListener(new ActionListener() {
-
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                // MUESTRA LA TIENDA DE SKINS (AUN NO IMPLEMENTADO)
-                showSkins();
-            }
-        });
         
         // Botón para volver al menú principal
-        JButton botonVolverMenu = buttonWithIcon("resources/images/row-2-column-2.png", "VOLVER");
+        JButton botonVolverMenu = buttonWithIcon("resources/images/row2.jpg", "VOLVER");
         botonVolverMenu.addActionListener(new ActionListener() {
             
             @Override
@@ -107,7 +97,7 @@ public class menuSnake extends JFrame{
         // AÑADIR LOS BOTONES AL PANEL
         botones.add(botonJugar);
         botones.add(botonLeaderboard);
-        botones.add(botonSkins);
+        
         botones.add(botonVolverMenu);
         
         mainPanel.add(botones, BorderLayout.CENTER);
