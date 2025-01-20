@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 
 import Menus.MainMenuGUI;
 import Menus.pong.Dificultad;
+import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class PongGUI extends JFrame{
@@ -61,8 +62,8 @@ public class PongGUI extends JFrame{
     private int bolaYDesvio = 0;
     // Multiplicadores de desvio para las distintas dificultades (1 = el alto de la pala como desvio maximo)
     private static final float DESVIO_FACIL = 1.1f;
-    private static final float DESVIO_NORMAL = 1.1f;
-    private static final float DESVIO_DIFICIL = 1f;
+    private static final float DESVIO_NORMAL = 10f;
+    private static final float DESVIO_DIFICIL = 10f;
     
     private int bolaVel = BOLA_VELOCIDAD;
     private int bolaBotes = 0;
@@ -87,6 +88,8 @@ public class PongGUI extends JFrame{
 	private Dificultad dificultad;
 	private UsuarioSnake usuario;
 	private ArrayList<ArrayList<Integer>> camino;
+	
+	private GestorBD gestorBD = new GestorBD();
 
     public PongGUI(UsuarioSnake usuario) {
     	this.dificultad = null;
@@ -382,6 +385,11 @@ public class PongGUI extends JFrame{
             puntuacion1++;
             camino = new ArrayList<ArrayList<Integer>>();
             isVivo = true;
+	       	if(puntuacion2 == 0) {
+	       		if (!gestorBD.updatePongScores(usuario.getNombre(), puntuacion1, dificultad)) {
+	       			JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
+                }
+	       	}
         }
     }
     

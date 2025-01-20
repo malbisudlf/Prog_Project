@@ -1,6 +1,9 @@
 package Menus.pong;
 
 import java.awt.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseMotionAdapter;
 import java.sql.*;
 import java.util.*;
 import java.util.List;
@@ -11,6 +14,7 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableCellRenderer;
 
 import Menus.pong.PongLeaderboard;
+import Menus.Ahorcado.menuAhorcado;
 import Menus.pong.MenuPong;
 import Menus.snake.SnakeLeaderboard;
 import Menus.snake.menuSnake;
@@ -18,181 +22,92 @@ import db.GestorBD;
 import usuario.UsuarioSnake;
 
 public class PongLeaderboard extends JFrame{
-private static final long serialVersionUID = 1L;
-	
-	private JTable leaderboardTable;
-	public static UsuarioSnake usuarioSnake;
-	
-	public PongLeaderboard(UsuarioSnake usuarioSnake) {
-		
-		SnakeLeaderboard.usuarioSnake = usuarioSnake;
-		
-		setTitle("SNAKE LEADERBOARD");
-		setSize(1000, 600);
-		setLocationRelativeTo(null);
-		setDefaultCloseOperation(EXIT_ON_CLOSE);
-		
-		GestorBD gestorBDSnake = new GestorBD();
-		
-		List<UsuarioSnake> usuarios = gestorBDSnake.getAllUsers();
-		
-		String[][] data = new String[usuarios.size()][4]; //TANTAS FILAS COMO USUARIOS Y COLUMNAS PARA NOMBRE, PUNTUACION MAXIMA Y MONEDAS
-		for (int i = 0; i < usuarios.size(); i++) {
-			
-			UsuarioSnake usuario = usuarios.get(i);
-			data[i][0] = String.valueOf(i+1); //POSICION
-			data[i][1] = usuario.getNombre(); //NOMBRE
-			data[i][2] = String.valueOf(usuario.getPuntuacionAlta()); //PUNTUACION MAS ALTA
-			data[i][3] = String.valueOf(usuario.getPuntosTotales()); //MONEDAS
-				
-		}
-		
-		String[] nombresColumnas = {"POS", "NOMBRE", "HIGH SCORE", "MONEDAS"};
-		
-		DefaultTableModel model = new DefaultTableModel(data, nombresColumnas) {
-			
-			private static final long serialVersionUID = 1L;
+	private static final String DB_URL = "jdbc:sqlite:resources/db/snake_game.db";
+    private static final long serialVersionUID = 1L;
+    private DefaultTableModel modeloLeaderboard;
+    private JTable tablaleader;
+    public static UsuarioSnake usuario;
 
-			@Override
-			public boolean isCellEditable(int row, int column) {
-				return false;
-			}
-		};
-		
-		leaderboardTable = new JTable(model);
-		
-		leaderboardTable.setRowHeight(20);
-		
-		//RENDERER PARA LOS HEADERS
-		leaderboardTable.getTableHeader().setDefaultRenderer(new TableCellRenderer() {
+    public PongLeaderboard(UsuarioSnake usuario) {
+        menuSnake.usuario = usuario;
+        setTitle("Leaderboard");
+        setSize(600, 500);
+        setDefaultCloseOperation(EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setResizable(false);
 
-			@Override
-			public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected,
-					boolean hasFocus, int row, int column) {
-				
-				JLabel headerLabel = new JLabel(value.toString());
-				
-				headerLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
-				headerLabel.setForeground(new Color(255, 204, 229)); //ROSA PASTEL CLARO
-				headerLabel.setBackground(Color.DARK_GRAY);
-				
-				headerLabel.setHorizontalAlignment(JLabel.CENTER);
-				
-				headerLabel.setOpaque(true);
-				
-								
-				return headerLabel;
-				
-			}
-		});
-		
-		//RENDERER PARA LAS CELDAS
-		
-		leaderboardTable.setDefaultRenderer(Object.class, new TableCellRenderer() {
-		    @Override
-		    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
-		                                                   int row, int column) {
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BorderLayout());
+        add(mainPanel);
 
-		        JLabel celdaLabel = new JLabel(value.toString());
-		        celdaLabel.setForeground(Color.BLACK);
-		        celdaLabel.setFont(new Font("MV BOLI", Font.BOLD, 16));
-		        celdaLabel.setHorizontalAlignment(SwingConstants.CENTER);
+        JPanel panelbotton = new JPanel();
+        panelbotton.setBackground(new Color(240, 240, 240));
+        mainPanel.add(panelbotton, BorderLayout.SOUTH);
 
-		        // Destacar la fila del usuario actual
-		        if (data[row][1].equals(usuarioSnake.getNombre())) { // Comparar el nombre del usuario
-		        	if(row == 0) {
-		        		celdaLabel.setBackground(new Color(255, 215, 0)); //DORADO
-		        	} else if (row == 1) {
-		        		celdaLabel.setBackground(new Color(192, 192, 192)); //PLATEADO
-		        	} else if (row == 2) {
-		        		celdaLabel.setBackground(new Color(205, 127, 50)); //BRONCE
-		        	} else {
-		            celdaLabel.setBackground(new Color(255, 178, 102)); // DIFERENCIA USUARIO
-		        	}
-		        } 
-		        // Premios especiales (oro, plata, bronce para el Top 3 en columna 0)
-		        else if (row == 0 && column == 0) {
-		            celdaLabel.setBackground(new Color(255, 215, 0)); // Dorado
-		        } else if (row == 1 && column == 0) {
-		            celdaLabel.setBackground(new Color(192, 192, 192)); // Plata
-		        } else if (row == 2 && column == 0) {
-		            celdaLabel.setBackground(new Color(205, 127, 50)); // Bronce
-		        } 
-		        // Fila par
-		        else if (row % 2 == 0) {
-		            if (column == 0) { // Columna Nombre
-		                celdaLabel.setBackground(new Color(255, 200, 220)); // Rosa pastel
-		            } else if (column == 1) {
-		                celdaLabel.setBackground(new Color(204, 229, 255)); // Azul pastel
-		            } else if (column == 2) {
-		                celdaLabel.setBackground(new Color(204, 255, 204)); // Verde pastel
-		            } else if (column == 3) {
-		                celdaLabel.setBackground(new Color(255, 253, 208)); // Amarillo pastel
-		            }
-		        } 
-		        // Fila impar
-		        else {
-		            if (column == 0) { // Columna Nombre
-		                celdaLabel.setBackground(new Color(255, 228, 225)); // Rosa claro pastel
-		            } else if (column == 1) {
-		                celdaLabel.setBackground(new Color(229, 243, 255)); // Azul claro pastel
-		            } else if (column == 2) {
-		                celdaLabel.setBackground(new Color(229, 255, 229)); // Verde claro pastel
-		            } else if (column == 3) {
-		                celdaLabel.setBackground(new Color(255, 255, 235)); // Amarillo claro pastel
-		            }
-		        }
-
-		        // Fila seleccionada
-		        if (isSelected) {
-		            celdaLabel.setBackground(Color.GRAY);
-		        }
-
-		        celdaLabel.setOpaque(true); // Asegura que el color de fondo se aplique
-		        return celdaLabel;
-		    }
-		});
-
-	
-		JScrollPane scrollPane = new JScrollPane(leaderboardTable);
-        add(scrollPane, BorderLayout.CENTER);
-       
-        JPanel restoPaneles = new JPanel();
-        restoPaneles.setBackground(Color.BLACK);
-        
-        JLabel labelArriba = new JLabel("LEADERBOARD PONG");
-        
-        labelArriba.setHorizontalAlignment(SwingConstants.CENTER);
-        
-        labelArriba.setFont(new Font("MV BOLI", Font.BOLD, 25));
-        labelArriba.setBackground(new Color(230, 230, 230)); //MORADO SUAVE PASTEL
-        labelArriba.setForeground(new Color(102, 51, 153)); // MORADO OSCURO PASTEL
-
-        
-        labelArriba.setOpaque(true);
-        
-        JPanel panelAbajo = new JPanel();
-        
-        panelAbajo.setBackground(new Color(230, 230, 230)); //GRIS PASTEL SUAVE
-        
-        JButton botonVolver = new JButton("VOLVER");
-        
-        botonVolver.setBackground(Color.DARK_GRAY);
-        botonVolver.setForeground(new Color(255, 204, 229));
-
-        botonVolver.setFocusable(false);
-        
-        botonVolver.addActionListener(e -> {
-        	new MenuPong(usuarioSnake);
-        	dispose();
+        JButton volver = new JButton("VOLVER");
+        volver.setFocusable(false);
+        volver.setBackground(new Color(41, 121, 255));
+        volver.setForeground(Color.WHITE);
+        volver.setFont(new Font("SansSerif", Font.BOLD, 14));
+        volver.setBorder(BorderFactory.createEmptyBorder(5, 10, 5, 10));
+        panelbotton.add(volver);
+        volver.addActionListener(e -> {
+            new MenuPong(usuario);
+            dispose();
         });
-        
-        panelAbajo.add(botonVolver, BorderLayout.WEST);
-        
-        setBackground(Color.BLACK);
-        add(panelAbajo, BorderLayout.SOUTH);
-        add(labelArriba, BorderLayout.NORTH);
-        
+
+        Vector<String> cabeceraLeaderboard = new Vector<>(Arrays.asList("Nombre", "Puntuación Normal", "Puntuación Dificil", "Puntuación Imposible"));
+        this.modeloLeaderboard = new DefaultTableModel(new Vector<>(), cabeceraLeaderboard) {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public boolean isCellEditable(int row, int column) {
+                return false;
+            }
+        };
+
+        tablaleader = new JTable(this.modeloLeaderboard);
+        tablaleader.setFont(new Font("SansSerif", Font.PLAIN, 14));
+        tablaleader.setRowHeight(30);
+        tablaleader.setGridColor(new Color(224, 224, 224));
+
+        tablaleader.getTableHeader().setFont(new Font("SansSerif", Font.BOLD, 14));
+        tablaleader.getTableHeader().setBackground(new Color(173, 216, 230));
+
+        tablaleader.getTableHeader().setForeground(Color.BLACK);
+        tablaleader.getTableHeader().setBorder(BorderFactory.createMatteBorder(1, 0, 2, 0, new Color(25, 118, 210)));
+
+        JScrollPane scrollboard = new JScrollPane(tablaleader);
+        scrollboard.setBorder(BorderFactory.createEmptyBorder());
+        scrollboard.getViewport().setBackground(new Color(245, 245, 245));
+
+        scrollboard.getVerticalScrollBar().setBackground(new Color(240, 240, 240));
+        scrollboard.getHorizontalScrollBar().setBackground(new Color(240, 240, 240));
+
+        mainPanel.add(scrollboard, BorderLayout.CENTER);
+
+        loadScoresFromDatabase();  // Cargar por puntuación inicialmente
         setVisible(true);
-	}
+    }
+
+    private void loadScoresFromDatabase() {
+        try (Connection conn = DriverManager.getConnection(DB_URL)) {
+            String sql = "SELECT nombre, puntuacionNormal, puntuacionDificil, puntuacionImposible FROM pong "
+            		+ "WHERE puntuacionNormal != 0 OR puntuacionDificil != 0 OR puntuacionImposible != 0 "
+            		+ "ORDER BY puntuacionNormal DESC, puntuacionDificil DESC, puntuacionImposible DESC";
+            try (PreparedStatement pstmt = conn.prepareStatement(sql);
+                 ResultSet rs = pstmt.executeQuery()) {
+                while (rs.next()) {
+                    String nombre = rs.getString("nombre");
+                    int puntuacionNormal = rs.getInt("puntuacionNormal");
+                    int puntuacionDificil = rs.getInt("puntuacionDificil");
+                    int puntuacionImposible = rs.getInt("puntuacionImposible");
+                    Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacionNormal + " - 0", puntuacionDificil + " - 0", puntuacionImposible + " - 0"));
+                    modeloLeaderboard.addRow(row);
+                }
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 }

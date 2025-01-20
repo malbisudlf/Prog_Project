@@ -7,6 +7,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
 
+import Menus.pong.Dificultad;
 import usuario.UsuarioSnake;
 
 public class GestorBD {
@@ -37,16 +38,26 @@ public class GestorBD {
             puntuacion INTEGER DEFAULT 0,
             FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
         );
-    """;  
+    """;
     
     private static final String CREATE_PONG_TABLE = """
         CREATE TABLE IF NOT EXISTS pong (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
             nombre TEXT NOT NULL,
-            puntuacion INTEGER DEFAULT 0,
+            puntuacionNormal INTEGER DEFAULT 0,
+            puntuacionDificil INTEGER DEFAULT 0,
+            puntuacionImposible INTEGER DEFAULT 0,
             FOREIGN KEY(nombre) REFERENCES usuarios(nombre)
         );
     """;
+    
+    private static final String INIT_PONG_TABLE = """
+    		INSERT INTO pong (nombre, puntuacionNormal, puntuacionDificil, puntuacionImposible)
+    		SELECT u.nombre, 0, 0, 0
+    		FROM usuarios u
+    		LEFT JOIN pong p ON u.nombre = p.nombre
+    		WHERE p.nombre IS NULL;
+    	""";
 
     public GestorBD() {
         loadConfig();
@@ -61,6 +72,7 @@ public class GestorBD {
             stmt.execute(CREATE_USERS_TABLE);
             stmt.execute(CREATE_AHORCADO_TABLE);
             stmt.execute(CREATE_PONG_TABLE);
+            stmt.execute(INIT_PONG_TABLE);
 
             if (loadFromCSV) {
                 loadFromCSV();
@@ -129,6 +141,19 @@ public class GestorBD {
         }
         return false;
     }
+    
+    public boolean deleteUser(String userName) {
+        String sql = "DELETE FROM usuarios WHERE nombre = ?";
+        try (Connection conn = DriverManager.getConnection(DB_URL);
+             PreparedStatement pstmt = conn.prepareStatement(sql)) {
+            pstmt.setString(1, userName);
+            pstmt.executeUpdate();
+            return true;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
 
     public boolean isUserExists(String nombre) {
         String sql = "SELECT 1 FROM usuarios WHERE nombre = ?";
@@ -180,7 +205,6 @@ public class GestorBD {
             pstmt.setInt(2, puntuacion);
             pstmt.executeUpdate();
 
-            
             if (saveToTxt) {
                 saveScoresToTxt();
             }
@@ -191,14 +215,37 @@ public class GestorBD {
         }
     }
     
- // Método para actualizar las puntuaciones del juego Ahorcado
-    public boolean updatePongScores(String nombre, int puntuacion) {
-        String sql = "INSERT OR REPLACE INTO pong(nombre, puntuacion) VALUES (?, ?)";
+ // Método para actualizar las puntuaciones del juego Pong
+    public boolean updatePongScores(String nombre, int puntuacion, Dificultad dificultad) {
+    	String sql;
+    	if (dificultad == Dificultad.Normal) {
+    		sql = """
+	            UPDATE pong
+	            SET puntuacionNormal = CASE WHEN ? > puntuacionNormal THEN ? ELSE puntuacionNormal END
+	            WHERE nombre = ?
+            """;
+    	} else if (dificultad == Dificultad.Dificil) {
+			sql = """
+                UPDATE pong
+                SET puntuacionDificil = CASE WHEN ? > puntuacionDificil THEN ? ELSE puntuacionDificil END
+                WHERE nombre = ?
+	        """;	
+		} else if (dificultad == Dificultad.Imposible) {
+			sql = """
+                UPDATE pong
+                SET puntuacionImposible = CASE WHEN ? > puntuacionImposible THEN ? ELSE puntuacionImposible END
+                WHERE nombre = ?
+	        """;
+		} else {
+			return true;
+		}
         try (Connection conn = DriverManager.getConnection(DB_URL);
              PreparedStatement pstmt = conn.prepareStatement(sql)) {
-            pstmt.setString(1, nombre);
+            pstmt.setInt(1, puntuacion);
             pstmt.setInt(2, puntuacion);
+            pstmt.setString(3, nombre);
             pstmt.executeUpdate();
+           
             return true;
         } catch (SQLException e) {
             e.printStackTrace();
