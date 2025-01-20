@@ -31,7 +31,7 @@ public class PongLeaderboard extends JFrame{
     public PongLeaderboard(UsuarioSnake usuario) {
         menuSnake.usuario = usuario;
         setTitle("Leaderboard");
-        setSize(600, 500);
+        setSize(700, 500);
         setDefaultCloseOperation(EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
         setResizable(false);
@@ -102,7 +102,7 @@ public class PongLeaderboard extends JFrame{
                     int puntuacionNormal = rs.getInt("puntuacionNormal");
                     int puntuacionDificil = rs.getInt("puntuacionDificil");
                     int puntuacionImposible = rs.getInt("puntuacionImposible");
-                    Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacionNormal + " - 0", puntuacionDificil + " - 0", puntuacionImposible + " - 0"));
+                    Vector<Object> row = new Vector<>(Arrays.asList(nombre, puntuacionNormal + " - 0", puntuacionDificil + " - 0", puntuacionImposible + " toques"));
                     modeloLeaderboard.addRow(row);
                 }
             }

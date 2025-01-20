@@ -23,6 +23,7 @@ import javax.swing.SwingConstants;
 
 import Menus.MainMenuGUI;
 import Menus.pong.Dificultad;
+import Menus.pong.MenuPong;
 import db.GestorBD;
 import usuario.UsuarioSnake;
 
@@ -62,8 +63,8 @@ public class PongGUI extends JFrame{
     private int bolaYDesvio = 0;
     // Multiplicadores de desvio para las distintas dificultades (1 = el alto de la pala como desvio maximo)
     private static final float DESVIO_FACIL = 1.1f;
-    private static final float DESVIO_NORMAL = 10f;
-    private static final float DESVIO_DIFICIL = 10f;
+    private static final float DESVIO_NORMAL = 1.1f;
+    private static final float DESVIO_DIFICIL = 1f;
     
     private int bolaVel = BOLA_VELOCIDAD;
     private int bolaBotes = 0;
@@ -74,6 +75,7 @@ public class PongGUI extends JFrame{
     
     private int puntuacion1 = 0;
     private int puntuacion2 = 0;
+    private int toques = 0;
     
     //IAG (herramienta: ChatGPT)
 	//ADAPTADO (Codigo de ChatGpt adaptado a nuestro proyecto, cogemos la idea del isPausado de chatgpt
@@ -310,6 +312,7 @@ public class PongGUI extends JFrame{
         	if (bolaYmed >= pala1Y && bolaYmed <= pala1Y + PALA_ALTO) {
 	        	bolaX = PALA_DESP_I + PALA_ANCHO;
 	        	bolaBotes++;
+	        	toques++;
 	        	bolaXDir = -bolaXDir;
 	        	if (bolaBotes == BOLA_ACELERACION) {
 	        		bolaVel += 1;
@@ -370,9 +373,16 @@ public class PongGUI extends JFrame{
             bolaXDir = -bolaVel;
             bolaYDir = 0;
             bolaYDesvio = 0;
+            bolaBotes = 0;
             puntuacion2++;
             camino = new ArrayList<ArrayList<Integer>>();
             isVivo = true;
+            if (dificultad == Dificultad.Imposible) {
+	       		if (!gestorBD.updatePongScores(usuario.getNombre(), toques, dificultad)) {
+	       			JOptionPane.showMessageDialog(this, "Error al actualizar las puntuaciones en la base de datos.");
+                }
+	       	}
+            toques = 0;
         }
         if (bolaX > (ANCHO - BOLA_TAMAÑO)) {
             bolaX = (ANCHO / 2) - MEDIA_BOLA;
@@ -382,6 +392,8 @@ public class PongGUI extends JFrame{
             bolaXDir = bolaVel;
             bolaYDir = 0;
             bolaYDesvio = 0;
+            bolaBotes = 0;
+            toques = 0;
             puntuacion1++;
             camino = new ArrayList<ArrayList<Integer>>();
             isVivo = true;
@@ -506,6 +518,7 @@ public class PongGUI extends JFrame{
     	float tiempoRebote;
     	int siguienteX = 0;
     	int siguienteY = 0;
+    	// Caso Base: La bola no va a rebotar
     	if (bolaYDir == 0) {
     		camino.getFirst().add(PALA_DESP_I + PALA_ANCHO + MEDIA_BOLA);
     		camino.getFirst().add(bolaYmed);
@@ -513,6 +526,7 @@ public class PongGUI extends JFrame{
     		camino.getFirst().add(bolaYmed);
     	}
     	else {
+    		// Caso Base: Se calcula donde será el siguiente rebote
     		if (bolaYDir > 0) {
     			tiempoRebote = (ALTO_REBOTE - y) / bolaYDir;
     			siguienteY = ALTO_REBOTE;
@@ -525,6 +539,7 @@ public class PongGUI extends JFrame{
     		}
     		camino.getLast().add(x + MEDIA_BOLA);
         	camino.getLast().add(y + MEDIA_BOLA);
+        	// Caso Final: El siguiente rebote se daría fuera del campo
         	if (siguienteX > ANCHO - PALA_DESP_D - BOLA_TAMAÑO) {
         		tiempoRebote = (ANCHO - PALA_DESP_D - x) / bolaXDir;
         		siguienteX = ANCHO - PALA_DESP_D - BOLA_TAMAÑO;
@@ -532,6 +547,7 @@ public class PongGUI extends JFrame{
         		camino.getLast().add(siguienteX + MEDIA_BOLA);
             	camino.getLast().add(siguienteY + MEDIA_BOLA);
         	}
+        	// Caso Recursivo: El siguiente rebote será dentro del campo
         	else {
         		camino.getLast().add(siguienteX + MEDIA_BOLA);
             	camino.getLast().add(siguienteY + MEDIA_BOLA);
@@ -652,6 +668,7 @@ public class PongGUI extends JFrame{
     	float tiempoRebote;
     	int siguienteX = 0;
     	int siguienteY = 0;
+    	// Caso Base: La bola no va a rebotar
     	if (bolaYDir == 0) {
     		camino.getFirst().add(ANCHO - (PALA_DESP_D + MEDIA_BOLA));
     		camino.getFirst().add(bolaYmed);
@@ -659,6 +676,7 @@ public class PongGUI extends JFrame{
     		camino.getFirst().add(bolaYmed);
     	}
     	else {
+    		// Caso Base: Se calcula donde será el siguiente rebote
     		if (bolaYDir > 0) {
     			tiempoRebote = (ALTO_REBOTE - y) / bolaYDir;
     			siguienteY = ALTO_REBOTE;
@@ -671,6 +689,7 @@ public class PongGUI extends JFrame{
     		}
     		camino.getLast().add(x + MEDIA_BOLA);
         	camino.getLast().add(y + MEDIA_BOLA);
+        	// Caso Final: El siguiente rebote se daría fuera del campo
         	if (siguienteX < PALA_DESP_I + PALA_ANCHO) {
         		tiempoRebote = Math.abs((x - (PALA_DESP_I + PALA_ANCHO)) / bolaXDir);
         		siguienteX = PALA_DESP_I + PALA_ANCHO;
@@ -678,6 +697,7 @@ public class PongGUI extends JFrame{
         		camino.getLast().add(siguienteX + MEDIA_BOLA);
             	camino.getLast().add(siguienteY + MEDIA_BOLA);
         	}
+        	// Caso Recursivo: El siguiente rebote será dentro del campo
         	else {
         		camino.getLast().add(siguienteX + MEDIA_BOLA);
             	camino.getLast().add(siguienteY + MEDIA_BOLA);
@@ -716,6 +736,9 @@ public class PongGUI extends JFrame{
                 	g.drawLine(seccion.get(0), seccion.get(1), seccion.get(2), seccion.get(3));
                 }
             }
+            g2d.setFont(new Font("Arial", Font.BOLD, (ALTO / 16)));
+            g2d.setColor(Color.GRAY);
+            g2d.drawString((""+toques), ((ANCHO/18)*17), (ALTO / 18));
         }
     }
     
@@ -788,6 +811,7 @@ public class PongGUI extends JFrame{
 				    
 				    bolaVel = BOLA_VELOCIDAD;
 				    bolaBotes = 0;
+				    toques = 0;
 				    bolaXDir = bolaVel;
 				    bolaYDir = 0;
 				    
@@ -809,7 +833,7 @@ public class PongGUI extends JFrame{
 	
 				@Override
 				public void actionPerformed(ActionEvent e) {
-					new MainMenuGUI(usuario);
+					new MenuPong(usuario);
 					dispose();
 				}
 			});
